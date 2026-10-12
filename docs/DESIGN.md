@@ -73,6 +73,6 @@ Estimated current from datasheet typical values. These are the figures the emula
 
 ## Towards a brick-sized board
 
-The original is 2 x 4 studs and five plates tall, about 31.8 x 15.8 x 16 mm. Fitting this design into that needs a custom four-layer board with the bare chips (all exist in packages of 6 mm or less), a pouch cell of around 100 mAh, a 15 x 11 mm speaker and an antenna loop around the board edge. On paper the parts fit the volume. Nothing has been laid out, and the small antenna makes risk 1 much harder. The sensible order is to prove the module build first, then shrink it. Assembly would be by a board house, not by hand.
+The original is 2 x 4 studs and five plates tall, about 31.8 x 15.8 x 16 mm. Fitting this design into that needs a custom four-layer board with the bare chips (all exist in packages of 6 mm or less), a pouch cell of around 100 mAh, a 15 x 11 mm speaker and an antenna loop around the board edge. On paper the parts fit the volume. Nothing has been laid out, and the small antenna makes risk 1 much harder. The sensible order is to prove the module build first, then shrink it. Assembly would be by a board house, not by hand. [ROADMAP.md](ROADMAP.md) sets out the steps and what could stop it fitting.
 
 If you make a shell: the stud-and-tube interface is free to use where the old patents have expired, but brick shapes and the LEGO name and logo are protected as trademarks in some countries. Do not put LEGO branding on it or sell it as a LEGO product.

@@ -5,7 +5,7 @@ This is the module build: ready-made breakout boards on a breadboard, around an 
 ## Read this first
 
 - **Nobody has built this yet.** The firmware runs in the [emulator](index.html) and compiles for the ESP32-C6, but it has not run on real hardware and has not read a real tag. If you build one you are the first tester. Please [open an issue](https://github.com/emu-commits/open-play-brick/issues) with what happens, good or bad.
-- **It is not brick-sized.** The boards together need a space about 75 x 50 x 30 mm, roughly a 10 x 7 stud box three bricks tall. A version the size of a real 2 x 4 brick needs a custom circuit board that has not been designed.
+- **It is not brick-sized.** The boards together need a space about 75 x 50 x 30 mm, roughly a 10 x 7 stud box three bricks tall. A version the size of a real 2 x 4 brick needs a custom circuit board that has not been designed. The [roadmap](https://github.com/emu-commits/open-play-brick/blob/main/docs/ROADMAP.md) explains the path to one.
 - **It needs some soldering**: plain header pins on the boards, about 70 joints, an hour for a beginner. There is no version with none.
 - **An adult should build it.** It uses a lithium battery and small parts. Give children the finished, enclosed thing.
 - It reads the same tags as the original and plays in the same spirit, with its own sounds. It does not play LEGO's sounds, and it does not talk to LEGO's bricks or app.

@@ -18,7 +18,7 @@ Some sets come with tags but no brick. The aim is to give those sets something t
 | Brick-sized board and shell | Not designed. |
 | Real tags | Not tested. Tag format and nine tag IDs come from public reverse-engineering work. |
 
-So this is a design proven in simulation, with instructions for the first real build. Whether the reader reads these tags at a useful distance is the first thing that build has to find out. See [docs/DESIGN.md](docs/DESIGN.md) for the open risks.
+So this is a design proven in simulation, with instructions for the first real build. Whether the reader reads these tags at a useful distance is the first thing that build has to find out. See [docs/DESIGN.md](docs/DESIGN.md) for the open risks, and [docs/ROADMAP.md](docs/ROADMAP.md) for the path to a brick-sized version and how achievable it is.
 
 ## What the emulator shows
 
