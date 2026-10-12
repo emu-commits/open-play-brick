@@ -23,14 +23,16 @@ jobs:
           node-version: 22
       - name: Install clang and wasm-ld
         run: sudo apt-get update && sudo apt-get install -y clang lld
-      - name: Check the pin header matches the netlist
-        run: node tools/gen_pins.mjs --check
+      - name: Check the pin header and the build guide match the netlist
+        run: node tools/gen_pins.mjs --check && node tools/gen_build_doc.mjs --check
       - name: Build the firmware for the emulator
         run: sh tools/build_wasm.sh
       - name: Run the firmware against the chip models
         run: node test/run.mjs
-      - name: Build the catalogue image for real hardware
-        run: node tools/build_catalog.mjs
+      - name: Build the ESP32-C6 firmware
+        run: docker run --rm -v "$PWD:/project" -w /project/firmware/port-espidf espressif/idf:v5.5 idf.py build
+      - name: Package the firmware for the browser installer
+        run: sh tools/make_flash_site.sh
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

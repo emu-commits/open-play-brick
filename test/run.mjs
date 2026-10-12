@@ -42,14 +42,17 @@ let b = makeBoard();
 b.runFor(1200);
 let log = b.logs.join('\n');
 check('reader answers with its version', /PN5180 product 4\.0 firmware 4\.0 eeprom 153\.0/.test(log), log);
-check('accelerometer found', /LIS2DH12 found/.test(log));
+check('accelerometer found', /LIS3DH found/.test(log));
 check('colour sensor found', /TCS3472x found, id 0x44/.test(log));
 check('fuel gauge found', /MAX17048 found, version 0x0012/.test(log));
 check('catalogue loaded', new RegExp(`Catalogue: ${cat.tags.length} tags`).test(log));
 check('no errors logged', !/ERROR/.test(log), log);
 check('state is Idle', STATES[b.status().state] === 'Idle', STATES[b.status().state]);
 check('boot sound reached the amplifier', b.audio > 2000, String(b.audio));
-check('switched rail is on', b.rail && b.level.PERIPH_EN_N === 0);
+check('pixel supply and amplifier are enabled', b.rail && b.level.PERIPH_EN === 1);
+check('sensor connector is powered', b.level.QT_PWR === 1);
+check('reader is out of reset', b.level.NFC_RST === 1 && b.nfc.powered);
+check('I2S clocks run while awake (microphone is fed)', b.trace.some(r => r.bus === 'i2sin'));
 const firstSpi = b.trace.find(r => r.bus === 'spi');
 check('first SPI frame is READ_EEPROM 0x10 x6', hexs(firstSpi.tx) === '07 10 06', hexs(firstSpi.tx));
 const inv = b.trace.find(r => r.bus === 'spi' && r.tx[0] === 0x09);
@@ -69,7 +72,7 @@ check('identified as X-Wing by CRC', /=> X-Wing \(item\), exact CRC match/.test(
 check('status reports the tag', s.tagPresent && s.tagName === 'X-Wing' && s.tagLen === 0x6B, JSON.stringify(s));
 check('state is Tag active or Gesture response', s.state === 2 || s.state === 3);
 check('pixels are lit', b.pixels.sum() > 0.2, String(b.pixels.sum()));
-check('lamp pixel beside the colour sensor is on', b.pixels.level(8) > 0.2);
+check('lamp beside the colour sensor is on', b.level.LAMP_EN === 1);
 const rf = b.trace.filter(r => r.bus === 'rf' && r.resp);
 check('tag answered Read Multiple Blocks', rf.some(r => r.req[1] === 0x23));
 
@@ -95,6 +98,22 @@ for (const [tilt, flip, expect] of [[0.9, 0, 'Tilt right'], [0, 0, null], [-0.9,
 mark = b.logs.length;
 b.runFor(20000);
 check('20 s at rest gives no false gestures', !/ while X-Wing active/.test(since(b, mark)), since(b, mark));
+
+// ---------------------------------------------------------------- microphone
+console.log('microphone');
+check('its own sounds never counted as a clap', !/Clap/.test(b.logs.join('\n')), b.logs.filter(l => /Clap/.test(l)).join('; '));
+b.runFor(1500);
+mark = b.logs.length;
+b.mic.clap(b.t);
+b.runFor(800);
+check('a clap is heard', /Clap while X-Wing active/.test(since(b, mark)), since(b, mark));
+mark = b.logs.length;
+b.motion.gesture('swing', b.t);
+b.runFor(1000);                     // the swing has been recognised and its sound is playing
+b.mic.clap(b.t);
+b.runFor(1500);
+check('a clap during its own sound effect is ignored', !/Clap/.test(since(b, mark)), since(b, mark));
+check('background level settles low', b.status().micFloor < 400, String(b.status().micFloor));
 
 // ---------------------------------------------------------------- colour
 console.log('colour');
@@ -128,7 +147,7 @@ mark = b.logs.length;
 b.removeTag();
 b.runFor(2500);
 check('tag removal is noticed', /Tag removed/.test(since(b, mark)) && !b.status().tagPresent);
-check('lamp pixel is off again', b.pixels.level(8) === 0);
+check('lamp is off again', b.level.LAMP_EN === 0);
 
 // ---------------------------------------------------------------- every catalogue tag
 console.log('catalogue');
@@ -171,9 +190,11 @@ mark = b.logs.length;
 const boots = b.bootCount;
 b.runFor(34000);
 check('sleeps after 30 s with no tag and no movement', b.asleep && /Sleeping/.test(since(b, mark)), since(b, mark));
-check('switched rail is off in sleep', !b.rail && b.level.PERIPH_EN_N === 1);
+check('pixel supply is off in sleep', !b.rail && b.level.PERIPH_EN === 0);
+check('reader is held in reset in sleep', b.level.NFC_RST === 0 && !b.nfc.powered);
+check('sensor connector stays powered in sleep', b.level.QT_PWR === 1);
 check('pixels are dark in sleep', b.pixels.sum() === 0);
-check('sleep current estimate is under 0.1 mA', b.loadMa() < 0.1, String(b.loadMa()));
+check('sleep current estimate is under 1.5 mA', b.loadMa() < 1.5, String(b.loadMa()));
 b.runFor(5000);
 check('stays asleep while still', b.asleep);
 b.motion.gesture('shake', b.t);

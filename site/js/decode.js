@@ -11,9 +11,9 @@ const PN_CMD = {
 const PN_REG = { 0x00: 'SYSTEM_CONFIG', 0x01: 'IRQ_ENABLE', 0x02: 'IRQ_STATUS', 0x03: 'IRQ_CLEAR', 0x13: 'RX_STATUS', 0x1D: 'RF_STATUS' };
 const PN_IRQ = { 0: 'RX', 1: 'TX', 2: 'IDLE', 8: 'TX_RFOFF', 9: 'TX_RFON', 14: 'RX_SOF_DET' };
 const ISO_CMD = { 0x01: 'Inventory', 0x20: 'Read Single Block', 0x23: 'Read Multiple Blocks', 0x2B: 'Get System Information' };
-const I2C_NAME = { 0x19: 'LIS2DH12', 0x29: 'TCS34725', 0x36: 'MAX17048' };
+const I2C_NAME = { 0x18: 'LIS3DH', 0x29: 'TCS34725', 0x36: 'MAX17048' };
 const I2C_REG = {
-  0x19: { 0x0F: 'WHO_AM_I', 0x20: 'CTRL_REG1', 0x21: 'CTRL_REG2', 0x22: 'CTRL_REG3', 0x23: 'CTRL_REG4', 0x24: 'CTRL_REG5', 0x26: 'REFERENCE', 0x28: 'OUT_X_L', 0x30: 'INT1_CFG', 0x31: 'INT1_SRC', 0x32: 'INT1_THS', 0x33: 'INT1_DURATION' },
+  0x18: { 0x0F: 'WHO_AM_I', 0x20: 'CTRL_REG1', 0x21: 'CTRL_REG2', 0x22: 'CTRL_REG3', 0x23: 'CTRL_REG4', 0x24: 'CTRL_REG5', 0x26: 'REFERENCE', 0x28: 'OUT_X_L', 0x30: 'INT1_CFG', 0x31: 'INT1_SRC', 0x32: 'INT1_THS', 0x33: 'INT1_DURATION' },
   0x29: { 0x00: 'ENABLE', 0x01: 'ATIME', 0x0F: 'CONTROL', 0x12: 'ID', 0x14: 'CDATAL' },
   0x36: { 0x02: 'VCELL', 0x04: 'SOC', 0x08: 'VERSION', 0x16: 'CRATE' },
 };
@@ -57,7 +57,7 @@ export class Decoder {
         const chip = I2C_NAME[r.addr] ?? '?';
         if (r.nack) return { bus: 'i2c', text: `I2C 0x${hex2(r.addr)} NACK` };
         const first = r.wr[0] ?? 0;
-        const regNo = r.addr === 0x29 ? first & 0x1F : r.addr === 0x19 ? first & 0x7F : first;
+        const regNo = r.addr === 0x29 ? first & 0x1F : r.addr === 0x18 ? first & 0x7F : first;
         const name = I2C_REG[r.addr]?.[regNo] ?? `0x${hex2(regNo)}`;
         if (r.rd.length) return { bus: 'i2c', text: `I2C ${chip}  read ${name} → ${hex(r.rd)}` };
         return { bus: 'i2c', text: `I2C ${chip}  write ${name} = ${hex(r.wr.subarray(1))}` };

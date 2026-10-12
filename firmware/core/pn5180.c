@@ -84,8 +84,12 @@ int pn5180_init(void)
     hal_gpio_mode(PIN_NFC_BUSY, HAL_GPIO_INPUT);
     hal_gpio_write(PIN_NFC_NSS, 1);
     hal_gpio_mode(PIN_NFC_NSS, HAL_GPIO_OUTPUT);
-    /* RESET_N is tied to the switched rail, so the reader has just come out
-     * of reset. It needs a couple of milliseconds to boot. */
+    /* Pulse reset, then give the reader a couple of milliseconds to boot. */
+    hal_gpio_write(PIN_NFC_RST, 0);
+    hal_gpio_mode(PIN_NFC_RST, HAL_GPIO_OUTPUT);
+    hal_gpio_hold(PIN_NFC_RST, 0);
+    hal_delay_us(1000);
+    hal_gpio_write(PIN_NFC_RST, 1);
     hal_delay_us(3000);
 
     uint8_t ver[6];
@@ -95,8 +99,10 @@ int pn5180_init(void)
     return 0;
 }
 
-void pn5180_release_bus(void)
+void pn5180_power_down(void)
 {
+    hal_gpio_write(PIN_NFC_RST, 0);
+    hal_gpio_hold(PIN_NFC_RST, 1);
     hal_gpio_mode(PIN_NFC_NSS, HAL_GPIO_HIGHZ);
 }
 

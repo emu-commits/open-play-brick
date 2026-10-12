@@ -100,14 +100,16 @@ function start({ netlist, cat, wasm }) {
     onPart(part) {
       diagram.select('part', part.id);
       const pins = part.pins.map(([pin, net]) => `<code>${pin}</code> → <code>${net}</code>`).join(', ');
-      showInfo(`<strong>${part.id} · ${part.name}</strong> — ${part.role}, ${part.package}${part.i2c ? `, I2C address ${part.i2c}` : ''}.<br>${part.why}<br><span class="hint">${pins}</span>`);
+      const buy = part.buy ? `<br>Buy as: <strong>${part.buy.item}</strong> (${part.buy.sku})${part.buy.optional ? ', optional' : ''}.` : '';
+      showInfo(`<strong>${part.id} · ${part.name}</strong> — ${part.role}; ${part.package}${part.i2c ? `; I2C address ${part.i2c}` : ''}.<br>${part.why}${buy}<br><span class="hint">${pins}</span>`);
     },
     onNet(net) {
       diagram.select('net', net);
       const n = netlist.nets[net];
       const gpio = netlist.gpio[net];
       const ends = netlist.parts.flatMap(p => p.pins.filter(([, x]) => x === net).map(([pin]) => `${p.id} ${pin}`)).join(' · ');
-      showInfo(`<strong>${net}</strong>${gpio != null ? ` — GPIO${gpio}` : ''} · ${BUS_LABEL[n.bus] ?? n.bus}<br>${n.desc}${n.bus === 'usb' ? ' Not simulated here.' : ''}<br><span class="hint">${ends}</span>`);
+      const pad = netlist.feather_pad[net];
+      showInfo(`<strong>${net}</strong>${gpio != null ? ` — GPIO${gpio}${pad ? `, Feather pad “${pad}”` : ''}` : ''} · ${BUS_LABEL[n.bus] ?? n.bus}<br>${n.desc}${n.bus === 'usb' ? ' Not simulated here.' : ''}<br><span class="hint">${ends}</span>`);
     },
   });
   $('legend').innerHTML = ['spi', 'i2c', 'i2s', 'led', 'gpio', 'rf', 'usb', 'power']
@@ -152,12 +154,13 @@ function start({ netlist, cat, wasm }) {
   const HEAT = {
     spi: r => (r.read ? ['SPI_SCK', 'SPI_MISO'] : ['SPI_SCK', 'SPI_MOSI']),
     i2c: () => ['I2C_SDA', 'I2C_SCL'],
+    i2sin: () => ['I2S_DIN'],
     led: () => ['LED_DATA'],
     rf: () => ['ANT', 'RF'],
   };
   board.onRecord = rec => {
     for (const net of HEAT[rec.bus]?.(rec) ?? []) hot[net] = true;
-    if (rec.bus === 'log') return;
+    if (rec.bus === 'log' || (rec.bus === 'i2s' && rec.peak === 0)) return;
     const d = decoder.line(rec);
     if (!d) return;
     const last = decoded[decoded.length - 1];
@@ -248,7 +251,13 @@ function start({ netlist, cat, wasm }) {
     };
     $('swatches').append(b);
   });
+  $('clap').onclick = () => { board.mic.clap(board.t); };
   $('peer-fire').onclick = () => {
+    if (!board.radioOn) {
+      consoleLines.push('(emulator) The brick only listens to the radio while a combat tag is on it. Place the X-Wing or TIE Fighter first.');
+      consoleDirty = true;
+      return;
+    }
     radioReceived++;
     board.radioReceive([0x4F, 0x50, 0x42, 1, 1, 0, peerSeq & 0xFF, peerSeq >> 8]);
     peerSeq++;
@@ -310,13 +319,14 @@ function start({ netlist, cat, wasm }) {
 
   function renderPower() {
     const c = CURRENT_MA, b = board;
+    const colourOn = (b.colour.reg[0] & 3) === 3;
     const rows = [
-      ['Microcontroller', b.asleep ? c.mcuDeepSleep : c.mcuActive, b.asleep ? 'deep sleep' : 'running'],
-      ['Regulator, accelerometer, fuel gauge', c.alwaysOn, 'always on'],
-      ['Colour sensor', (b.colour.reg[0] & 3) === 3 ? c.colourActive : 0, (b.colour.reg[0] & 3) === 3 ? 'measuring' : 'asleep'],
-      ['NFC reader', b.rail ? c.readerIdle : 0, b.rail ? 'powered; field adds 75 mA for about 12 ms per poll' : 'rail off'],
-      ['Pixels', b.rail ? b.pixels.count * c.pixelIdle + b.pixels.sum() * c.pixelFull : 0, b.rail ? 'depends on brightness' : 'rail off'],
-      ['Amplifier', b.rail && b.t < b.i2sEnd ? c.ampIdle + b.ampLevel * c.ampFullScale * 0.35 : 0, b.t < b.i2sEnd ? 'playing' : 'standby'],
+      ['Feather: microcontroller', c.boardDeepSleep + (b.asleep ? 0 : c.mcuActive), b.asleep ? 'deep sleep' : 'running'],
+      ['Radio receiver', b.radioOn ? c.radio : 0, b.radioOn ? 'listening for other bricks' : 'off: only on with a combat tag'],
+      ['Sensor connector', (b.level.QT_PWR ? c.sensorRail : 0) + (colourOn ? c.colourActive : 0) + (b.level.LAMP_EN ? c.lamp : 0), b.level.LAMP_EN ? 'lamp on' : 'accelerometer always on'],
+      ['NFC reader', b.nfc.powered ? c.readerIdle : c.readerDown, b.nfc.powered ? 'field adds 75 mA for about 12 ms per poll' : 'held in reset'],
+      ['Pixels', b.rail ? b.pixels.count * c.pixelIdle + b.pixels.sum() * c.pixelFull : 0, b.rail ? 'depends on brightness' : 'switched off'],
+      ['Amplifier and microphone', b.asleep ? 0 : c.micActive + (b.rail ? c.ampIdle + (b.t < b.i2sEnd ? b.ampLevel * c.ampFullScale * 0.35 : 0) : 0), b.asleep ? 'off' : 'clocks running'],
     ];
     const hours = avgMa > 0 ? b.battery.capacityMah * b.battery.soc / 100 / avgMa : 0;
     $('power').innerHTML = `
@@ -357,6 +367,7 @@ function start({ netlist, cat, wasm }) {
       ['Last event', s.lastEvent === 255 ? '—' : EVENTS[s.lastEvent].replace('_', ' ')],
       ['Acceleration', board.asleep ? '—' : s.accel.map(v => (v / 1000).toFixed(2)).join('  ') + ' g'],
       ['Colour seen', COLOUR_NAMES[s.colour]],
+      ['Microphone', board.asleep ? '—' : `level ${s.micLevel} · background ${s.micFloor}`],
       ['Hits taken', s.tagPresent ? String(s.hits) : '—'],
       ['Battery', `${board.battery.soc.toFixed(0)}% · ${board.battery.volts.toFixed(2)} V${board.battery.usb ? ' · charging' : ''}`],
       ['Draw (estimate)', `${avgMa.toFixed(avgMa < 1 ? 3 : 1)} mA`],
@@ -381,10 +392,11 @@ function start({ netlist, cat, wasm }) {
       avgMa += (board.battery.loadMa - avgMa) * Math.min(1, dt / 3000);
     }
     speaker.flush();
-    const audible = board.t < board.i2sEnd;
-    if (audible && running) for (const net of ['I2S_BCLK', 'I2S_LRCLK', 'I2S_DOUT', 'SPK']) hot[net] = true;
+    const audible = board.t < board.loudUntil;
+    if (running && !board.asleep) { hot.I2S_BCLK = hot.I2S_LRCLK = true; }
+    if (audible && running) { hot.I2S_DOUT = hot.SPK = true; }
     for (const net of Object.keys(hot)) { diagram.touch(net, now); delete hot[net]; }
-    diagram.update(board, now, { audible: audible && running });
+    diagram.update(board, now, { audible: audible && running, micText: `level ${board.status().micLevel}` });
     brick.update(board, placed, +tiltEl.value, flipped);
     analyzer.draw();
     renderSlow(false);

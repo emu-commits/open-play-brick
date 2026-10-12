@@ -10,7 +10,7 @@
  *                       n_segments (u16), sys_patch[4], reserved[2]
  *   tags      x 36      len, kind, profile, flags, r, g, b, reserved,
  *                       crc_a (u32), crc_b (u32), name[20]
- *   profiles  x 32      patch[16], anim[16], indexed by event
+ *   profiles  x 34      patch[17], anim[17], indexed by event
  *   patches   x 4       first_segment (u16), n_segments, flags
  *   segments  x 12      wave, volume, f0 (u16), f1 (u16), ms (u16),
  *                       attack_ms, release_ms/4, vibrato_hz, vibrato_depth
@@ -21,12 +21,12 @@
 #include <stdint.h>
 
 #define CATALOG_MAX_BYTES 8192
-#define CATALOG_VERSION   1
+#define CATALOG_VERSION   2
 
 enum {
     EV_PLACE, EV_REMOVE, EV_SHAKE, EV_SWING, EV_TILT_L, EV_TILT_R, EV_ROLL, EV_IMPACT,
     EV_THROW, EV_RED, EV_GREEN, EV_BLUE, EV_HIT, EV_DAMAGED, EV_DESTROYED, EV_AMBIENT,
-    EV_COUNT
+    EV_CLAP, EV_COUNT
 };
 
 enum { SYS_BOOT, SYS_LOW_BATTERY, SYS_UNKNOWN_TAG, SYS_SLEEP, SYS_COUNT };

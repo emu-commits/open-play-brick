@@ -68,7 +68,7 @@ LEGO sells "compatible" sets that include tags but no brick. Reported Pokémon o
 
 ## Earlier open hardware
 
-[Ellerbach/LegoSmartPlay][ellerbach] reads these tags with an ESP32-C3 Super Mini, a PN5180 module, a TCS3472x colour sensor and a YX5300 MP3 module, in .NET nanoFramework. This project keeps its SPI and I2C pin choices so the same breadboard wiring works, and replaces the MP3 module with a synthesiser and an I2S amplifier small enough for the brick.
+[Ellerbach/LegoSmartPlay][ellerbach] reads these tags with an ESP32-C3 Super Mini, a PN5180 module, a TCS3472x colour sensor and a YX5300 MP3 module, in .NET nanoFramework. This project uses the same reader and colour sensor, moves to an ESP32-C6, and replaces the MP3 module with a synthesiser and an I2S amplifier.
 
 ## What is not known
 

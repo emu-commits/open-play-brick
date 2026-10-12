@@ -1,5 +1,5 @@
-/* Accelerometer (LIS2DH12) with gesture detection, colour sensor (TCS34725)
- * and battery fuel gauge (MAX17048). All three share the I2C bus. */
+/* Accelerometer (LIS3DH) with gesture detection, colour sensor (TCS34725)
+ * and battery fuel gauge (MAX17048) on the I2C bus, and the I2S microphone. */
 #ifndef OPB_SENSORS_H
 #define OPB_SENSORS_H
 
@@ -47,5 +47,16 @@ extern gauge_state_t gauge;
 
 int  gauge_init(void);
 int  gauge_sample(void);
+
+/* ---- microphone ---- */
+typedef struct {
+    uint16_t level;          /* loudness of the latest 4 ms block */
+    uint16_t floor;          /* slow average of the background */
+} mic_state_t;
+
+extern mic_state_t mic;
+
+void mic_init(void);
+int  mic_sample(int muted);     /* drains waiting samples, returns 1 when it hears a clap */
 
 #endif

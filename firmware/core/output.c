@@ -140,15 +140,19 @@ static int32_t voice_sample(voice_t *v)
     return s;
 }
 
-void synth_fill(void)
+int synth_oneshot_busy(void)
+{
+    for (int i = 1; i < VOICES; i++) if (voices[i].active) return 1;
+    return 0;
+}
+
+void synth_fill(int deep)
 {
     static int16_t block[BLOCK];
-    static uint8_t tail;   /* blocks of silence still owed after the last voice ends */
+    /* A shallow queue keeps sounds prompt: about 50 ms from trigger to speaker. */
+    int target = deep ? HAL_I2S_BUFFER - BLOCK : 768;
 
-    for (int guard = 0; guard < 24 && hal_i2s_space() >= BLOCK; guard++) {
-        int busy = synth_busy();
-        if (!busy && !tail) return;
-        tail = busy ? 2 : (uint8_t)(tail - 1);
+    for (int guard = 0; guard < 32 && HAL_I2S_BUFFER - hal_i2s_space() < target; guard++) {
         for (int i = 0; i < BLOCK; i++) {
             int32_t mix = 0;
             for (int k = 0; k < VOICES; k++) if (voices[k].active) mix += voice_sample(&voices[k]);
@@ -171,7 +175,7 @@ typedef struct { uint8_t anim, r, g, b; uint32_t start, until; } layer_t;
 
 static layer_t base, over;
 static uint8_t frame[LED_COUNT * 3], sent[LED_COUNT * 3];
-static uint8_t illum, dirty;
+static uint8_t dirty;
 static int brightness = 140;
 static uint32_t next_frame, led_now;
 static uint32_t sparkle = 0xBEEF1234u;
@@ -181,7 +185,6 @@ void leds_init(void)
     memset(&base, 0, sizeof base);
     memset(&over, 0, sizeof over);
     memset(sent, 0xFF, sizeof sent);
-    illum = 0;
     next_frame = 0;
 }
 
@@ -198,7 +201,6 @@ void leds_overlay(int anim, uint8_t r, uint8_t g, uint8_t b, uint32_t ms)
     dirty = 1;
 }
 
-void leds_illuminate(int on) { illum = (uint8_t)on; dirty = 1; }
 void leds_set_brightness(int v) { brightness = v; }
 
 static void put(int i, uint32_t r, uint32_t g, uint32_t b, uint32_t level)
@@ -219,7 +221,7 @@ static void wheel(uint8_t pos, uint32_t *r, uint32_t *g, uint32_t *b)
 static void render(const layer_t *l, uint32_t now)
 {
     uint32_t t = now - l->start;
-    for (int i = 0; i < LED_ARRAY; i++) {
+    for (int i = 0; i < LED_COUNT; i++) {
         uint32_t r = l->r, g = l->g, b = l->b, level = 0;
         switch (l->anim) {
         case ANIM_SOLID: level = 256; break;
@@ -262,8 +264,6 @@ static void render(const layer_t *l, uint32_t now)
 
 static void send(void)
 {
-    if (illum) { frame[LED_ILLUM * 3] = 90; frame[LED_ILLUM * 3 + 1] = 90; frame[LED_ILLUM * 3 + 2] = 90; }
-    else { frame[LED_ILLUM * 3] = frame[LED_ILLUM * 3 + 1] = frame[LED_ILLUM * 3 + 2] = 0; }
     if (memcmp(frame, sent, sizeof frame) == 0) return;
     memcpy(sent, frame, sizeof frame);
     hal_led_write(frame, LED_COUNT);
@@ -283,7 +283,6 @@ void leds_tick(uint32_t now)
 void leds_blank(void)
 {
     base.anim = over.anim = ANIM_OFF;
-    illum = 0;
     memset(frame, 0, sizeof frame);
     send();
 }

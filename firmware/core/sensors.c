@@ -15,7 +15,7 @@ static int reg_read(uint8_t addr, uint8_t reg, uint8_t *dst, int n)
 }
 
 /* ------------------------------------------------------------------ */
-/* LIS2DH12                                                           */
+/* LIS3DH (the LIS2DH12 has the same registers)                       */
 /* ------------------------------------------------------------------ */
 
 #define LIS_WHO_AM_I   0x0F
@@ -80,31 +80,31 @@ static struct {
 int imu_init(void)
 {
     uint8_t id = 0;
-    if (reg_read(I2C_ADDR_LIS2DH12, LIS_WHO_AM_I, &id, 1) < 0 || id != 0x33) return -1;
-    reg_write(I2C_ADDR_LIS2DH12, LIS_CTRL1, 0x57);     /* 100 Hz, X Y Z on */
-    reg_write(I2C_ADDR_LIS2DH12, LIS_CTRL2, 0x01);     /* high-pass on the interrupt path: ignore gravity */
-    reg_write(I2C_ADDR_LIS2DH12, LIS_CTRL3, 0x40);     /* route activity interrupt to INT1 */
-    reg_write(I2C_ADDR_LIS2DH12, LIS_CTRL4, 0x98);     /* block data update, +/-4 g, high resolution */
-    reg_write(I2C_ADDR_LIS2DH12, LIS_CTRL5, 0x08);     /* latch INT1 until INT1_SRC is read */
-    reg_write(I2C_ADDR_LIS2DH12, LIS_INT1_THS, 8);     /* 8 x 32 mg = 256 mg */
-    reg_write(I2C_ADDR_LIS2DH12, LIS_INT1_DUR, 0);
-    reg_write(I2C_ADDR_LIS2DH12, LIS_INT1_CFG, 0x2A);  /* X, Y or Z above threshold */
-    reg_read(I2C_ADDR_LIS2DH12, LIS_REFERENCE, &id, 1);
+    if (reg_read(I2C_ADDR_LIS3DH, LIS_WHO_AM_I, &id, 1) < 0 || id != 0x33) return -1;
+    reg_write(I2C_ADDR_LIS3DH, LIS_CTRL1, 0x57);     /* 100 Hz, X Y Z on */
+    reg_write(I2C_ADDR_LIS3DH, LIS_CTRL2, 0x01);     /* high-pass on the interrupt path: ignore gravity */
+    reg_write(I2C_ADDR_LIS3DH, LIS_CTRL3, 0x40);     /* route activity interrupt to INT1 */
+    reg_write(I2C_ADDR_LIS3DH, LIS_CTRL4, 0x98);     /* block data update, +/-4 g, high resolution */
+    reg_write(I2C_ADDR_LIS3DH, LIS_CTRL5, 0x08);     /* latch INT1 until INT1_SRC is read */
+    reg_write(I2C_ADDR_LIS3DH, LIS_INT1_THS, 8);     /* 8 x 32 mg = 256 mg */
+    reg_write(I2C_ADDR_LIS3DH, LIS_INT1_DUR, 0);
+    reg_write(I2C_ADDR_LIS3DH, LIS_INT1_CFG, 0x2A);  /* X, Y or Z above threshold */
+    reg_read(I2C_ADDR_LIS3DH, LIS_REFERENCE, &id, 1);
     hal_gpio_mode(PIN_IMU_INT1, HAL_GPIO_INPUT);
 
     memset(&gs, 0, sizeof gs);
     gs.g16[2] = 1000 * 16;
     gs.up = 1;
     gs.shake_axis = -1;
-    opb_logf("LIS2DH12 found, +/-4 g, 100 Hz, wake-on-motion armed at 256 mg");
+    opb_logf("LIS3DH found, +/-4 g, 100 Hz, wake-on-motion armed at 256 mg");
     return 0;
 }
 
 void imu_arm_wake(void)
 {
     uint8_t src;
-    reg_read(I2C_ADDR_LIS2DH12, LIS_REFERENCE, &src, 1);
-    reg_read(I2C_ADDR_LIS2DH12, LIS_INT1_SRC, &src, 1);
+    reg_read(I2C_ADDR_LIS3DH, LIS_REFERENCE, &src, 1);
+    reg_read(I2C_ADDR_LIS3DH, LIS_INT1_SRC, &src, 1);
 }
 
 static int iabs(int v) { return v < 0 ? -v : v; }
@@ -112,10 +112,10 @@ static int iabs(int v) { return v < 0 ? -v : v; }
 int imu_sample(void)
 {
     uint8_t raw[6];
-    if (reg_read(I2C_ADDR_LIS2DH12, LIS_OUT_X_L | LIS_AUTO_INC, raw, 6) < 0) return GEST_NONE;
+    if (reg_read(I2C_ADDR_LIS3DH, LIS_OUT_X_L | LIS_AUTO_INC, raw, 6) < 0) return GEST_NONE;
     if (hal_gpio_read(PIN_IMU_INT1)) {
         uint8_t src;
-        reg_read(I2C_ADDR_LIS2DH12, LIS_INT1_SRC, &src, 1);
+        reg_read(I2C_ADDR_LIS3DH, LIS_INT1_SRC, &src, 1);
     }
 
     /* 12-bit left-justified, 2 mg per count at +/-4 g. */
@@ -329,4 +329,72 @@ int gauge_sample(void)
     if (reg_read(I2C_ADDR_MAX17048, MAX_CRATE, v, 2) < 0) return -1;
     gauge.rate = (int16_t)(((int16_t)((v[0] << 8) | v[1]) * 208) / 100);  /* 0.208 %/h per count */
     return 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Microphone                                                         */
+/* ------------------------------------------------------------------ */
+
+/* The brick listens for one thing: a short, sharp sound such as a clap.
+ * Samples are reduced to a loudness figure per 4 ms block and thrown away.
+ * Nothing is recorded, stored or transmitted. */
+#define MIC_BLOCK        64
+#define MIC_MIN_LEVEL    1200   /* a clap must be at least this loud... */
+#define MIC_RATIO        8      /* ...and this many times the background */
+#define MIC_QUIET_BLOCKS 25     /* 100 ms of calm before a clap counts */
+#define MIC_MAX_BLOCKS   40     /* longer than 160 ms is noise, not a clap */
+#define MIC_LOCKOUT      100    /* 400 ms */
+
+mic_state_t mic;
+static int32_t mic_dc;
+static uint8_t mic_burst, mic_quiet, mic_lockout;
+
+void mic_init(void)
+{
+    mic.level = 0;
+    mic.floor = 60;
+    mic_dc = 0;
+    mic_burst = 0;
+    mic_quiet = 0;
+    mic_lockout = MIC_LOCKOUT;   /* ignore the power-up thump */
+}
+
+int mic_sample(int muted)
+{
+    static int16_t buf[MIC_BLOCK];
+    int clap = 0;
+
+    for (int guard = 0; guard < 16 && hal_i2s_read(buf, MIC_BLOCK) == MIC_BLOCK; guard++) {
+        uint32_t sum = 0;
+        for (int i = 0; i < MIC_BLOCK; i++) {
+            mic_dc += (((int32_t)buf[i] << 8) - mic_dc) >> 6;   /* MEMS microphones have a DC offset */
+            int d = buf[i] - (mic_dc >> 8);
+            sum += (uint32_t)(d < 0 ? -d : d);
+        }
+        uint16_t level = (uint16_t)(sum / MIC_BLOCK);
+        uint32_t threshold = (uint32_t)mic.floor * MIC_RATIO;
+        if (threshold < MIC_MIN_LEVEL) threshold = MIC_MIN_LEVEL;
+        mic.level = level;
+        if (mic_lockout) mic_lockout--;
+
+        if (muted) {                         /* the brick's own speaker is busy */
+            mic_burst = 0;
+            mic_quiet = 0;
+        } else if (level > threshold) {
+            if (mic_burst == 0 && mic_quiet < MIC_QUIET_BLOCKS) mic_burst = 255;   /* it was already noisy */
+            else if (mic_burst < MIC_MAX_BLOCKS) mic_burst++;
+            else mic_burst = 255;
+            mic_quiet = 0;
+        } else {
+            if (mic_burst > 0 && mic_burst <= MIC_MAX_BLOCKS && !mic_lockout) {
+                clap = 1;
+                mic_lockout = MIC_LOCKOUT;
+            }
+            mic_burst = 0;
+            if (mic_quiet < 255) mic_quiet++;
+            mic.floor = (uint16_t)(mic.floor + ((int)level - (int)mic.floor) / 32);
+            if (mic.floor < 20) mic.floor = 20;
+        }
+    }
+    return clap;
 }

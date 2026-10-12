@@ -1,5 +1,5 @@
 // A picture of the brick itself: 2 x 4 studs, five plates tall, translucent,
-// with the eight array pixels shining through, the tag sitting on top and
+// with the eight pixels shining through, the tag sitting on top and
 // whatever colour is being held up to the sensor window.
 
 const NS = 'http://www.w3.org/2000/svg';
@@ -90,7 +90,7 @@ export class BrickView {
       this.leds[i].setAttribute('fill', on ? `rgb(${boost(r)},${boost(g)},${boost(b)})` : 'none');
       this.leds[i].setAttribute('opacity', on ? Math.min(1, 0.35 + Math.sqrt(Math.max(r, g, b) / 255)) : 0);
     }
-    this.lamp.setAttribute('fill', px[24] + px[25] + px[26] ? '#fffbe8' : 'none');
+    this.lamp.setAttribute('fill', board.level.LAMP_EN ? '#fffbe8' : 'none');
     this.body.style.transform = `rotate(${tiltDeg}deg) scaleY(${flipped ? -1 : 1})`;
     this.tag.setAttribute('visibility', placed ? 'visible' : 'hidden');
     if (placed) this.tagLabel.textContent = placed.name.length > 26 ? placed.name.slice(0, 25) + '…' : placed.name;

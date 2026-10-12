@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build an Open Play Brick</title>
+<meta name="description" content="Parts list, wiring and step-by-step instructions for building an Open Play Brick from off-the-shelf boards, with a one-click firmware installer.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/guide.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <h1>Open Play Brick <span class="rev">rev B · build guide</span></h1>
+    <p>Independent project, not affiliated with or endorsed by the LEGO Group.</p>
+  </div>
+  <div class="transport">
+    <a class="link" href="index.html">Emulator</a>
+    <a class="link" href="https://github.com/emu-commits/open-play-brick">Source</a>
+  </div>
+</header>
+
+<main class="guide">
+  <section class="panel install">
+    <h2>Install the firmware</h2>
+    <p>Plug the Feather into this computer with a USB-C data cable, then click the button. Works in Chrome and Edge on a desktop or laptop. It installs firmware <strong id="fw-version">…</strong> and the tag catalogue, and afterwards shows the brick's console.</p>
+    <esp-web-install-button manifest="flash/manifest.json">
+      <button slot="activate" class="primary">Install firmware</button>
+      <span slot="unsupported" class="hint">This browser cannot talk to USB serial devices. Use Chrome or Edge on a computer.</span>
+      <span slot="not-allowed" class="hint">The installer needs a secure (https) page.</span>
+    </esp-web-install-button>
+    <p class="hint" id="fw-note">This firmware compiles and passes its tests in the emulator. It has not yet been run on a real board.</p>
+  </section>
+  <article class="panel" id="guide"><p class="hint">Loading the guide…</p></article>
+</main>
+
+<footer>
+  <p>LEGO® is a trademark of the LEGO Group, which does not sponsor, authorise or endorse this project.</p>
+</footer>
+
+<script type="module" src="https://unpkg.com/esp-web-tools@10.1.1/dist/web/install-button.js?module"></script>
+<script type="module">
+  import { marked } from 'https://cdn.jsdelivr.net/npm/marked@12.0.2/lib/marked.esm.js';
+
+  const guide = document.getElementById('guide');
+  try {
+    const md = await (await fetch('BUILD.md')).text();
+    guide.innerHTML = marked.parse(md.replace(/<!--[\s\S]*?-->/g, ''));
+    for (const table of guide.querySelectorAll('table')) {
+      const wrap = document.createElement('div');
+      wrap.className = 'table-wrap';
+      table.replaceWith(wrap);
+      wrap.append(table);
+    }
+  } catch (err) {
+    guide.innerHTML = '<p>Could not load the guide. Read it on <a href="https://github.com/emu-commits/open-play-brick/blob/main/site/BUILD.md">GitHub</a>.</p>';
+  }
+
+  try {
+    const r = await fetch('flash/manifest.json');
+    if (!r.ok) throw new Error('missing');
+    document.getElementById('fw-version').textContent = (await r.json()).version;
+  } catch {
+    document.getElementById('fw-version').textContent = '(not available here)';
+    document.getElementById('fw-note').textContent = 'The firmware images are built when the site is published. They are not part of a local copy: build them with tools/make_flash_site.sh, or use the published page.';
+  }
+</script>
+</body>
+</html>

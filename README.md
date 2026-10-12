@@ -2,7 +2,8 @@
 
 An open design for a brick that reads the play tags in LEGO® SMART Play™ compatible sets and reacts with its own sounds and lights, built from parts anyone can buy. Non-commercial, and not affiliated with or endorsed by the LEGO Group.
 
-**Try the emulator: https://emu-commits.github.io/open-play-brick/**
+- **Try the emulator:** https://emu-commits.github.io/open-play-brick/
+- **Build one:** https://emu-commits.github.io/open-play-brick/build.html (parts list, wiring, step-by-step, one-click firmware install)
 
 Some sets come with tags but no brick. The aim is to give those sets something to play with: put a tagged figure or tile on the brick, shake it, swing it, show it a colour, and it responds.
 
@@ -10,18 +11,19 @@ Some sets come with tags but no brick. The aim is to give those sets something t
 
 | | |
 | --- | --- |
-| Firmware core (C) | Written. Runs in the emulator and passes 71 end-to-end checks. |
+| Firmware core (C) | Written. Runs in the emulator and passes 80 end-to-end checks. |
 | Emulator | Working. Runs that same firmware in the browser against models of every chip. |
-| ESP32-C3 port | Written, **not yet compiled or run on hardware**. |
-| Circuit board and shell | **Not designed.** There is a netlist, a parts list and a fit estimate. |
+| ESP32-C6 firmware | Compiles and links with ESP-IDF 5.5, and is published as a browser-installable image. **Not yet run on hardware.** |
+| Module build | Documented: about $85 of off-the-shelf boards on a breadboard, header-pin soldering only. **Nobody has built it yet.** It is a small box, not brick-sized. |
+| Brick-sized board and shell | Not designed. |
 | Real tags | Not tested. Tag format and nine tag IDs come from public reverse-engineering work. |
 
-So this is a design proven in simulation. Whether a small antenna reads these tags through a brick wall is the first thing a hardware build has to find out. See [docs/DESIGN.md](docs/DESIGN.md) for the open risks.
+So this is a design proven in simulation, with instructions for the first real build. Whether the reader reads these tags at a useful distance is the first thing that build has to find out. See [docs/DESIGN.md](docs/DESIGN.md) for the open risks.
 
 ## What the emulator shows
 
 - **The firmware is the real one.** `firmware/core` is compiled to WebAssembly and loaded by the page. Nothing in the browser decides what the brick does.
-- **Every hardware call becomes pin activity.** SPI bytes go to a PN5180 model that implements the reader's command set and BUSY handshake; that model passes ISO 15693 frames to a tag model. The accelerometer, colour sensor and fuel gauge are I2C register models. Audio leaves as I2S samples and is what you hear.
+- **Every hardware call becomes pin activity.** SPI bytes go to a PN5180 model that implements the reader's command set and BUSY handshake; that model passes ISO 15693 frames to a tag model. The accelerometer, colour sensor and fuel gauge are I2C register models. Audio leaves as I2S samples and is what you hear, and the microphone model feeds samples back in on the same clocks.
 - **Gestures are not faked.** The Shake button feeds an acceleration waveform into the accelerometer model. The firmware reads raw samples over I2C and has to recognise the shake itself.
 - **The wiring diagram is the netlist.** [`site/data/netlist.json`](site/data/netlist.json) draws the diagram and generates the firmware's `pins.h`. A CI check fails if they drift apart.
 - **The logic analyzer** shows each pin on the firmware's clock, down to single bits. Press Step to run one pass of the main loop and frame it.
@@ -35,7 +37,8 @@ It reads the same tags and plays in the same spirit. It is not a clone.
 - It **does not decrypt tags**. A tag is identified by its payload length and a CRC-32 of its raw contents, then mapped to a sound and light profile from this project's catalogue. All sounds are original and synthesised.
 - It does not talk to original bricks or the LEGO app.
 - One antenna, so it cannot tell where a tag sits, and it reads one tag at a time.
-- USB-C charging instead of a wireless pad. No microphone.
+- USB-C charging instead of a wireless pad.
+- The microphone only listens for a clap. It measures loudness and keeps nothing.
 
 Background and sources: [docs/RESEARCH.md](docs/RESEARCH.md).
 
@@ -52,7 +55,7 @@ To change the firmware and rebuild (needs [zig](https://ziglang.org/), or clang 
 
 ```sh
 sh tools/build_wasm.sh     # firmware/core -> site/firmware.wasm
-npm test                   # pin header check + 71 end-to-end checks
+npm test                   # netlist consistency checks + 80 end-to-end checks
 ```
 
 ## Add a tag
@@ -78,28 +81,29 @@ Adding a new gesture or colour means firmware work: see `imu_sample()` and `clas
 
 ```
 site/                 the emulator (this folder is what GitHub Pages serves)
-  data/netlist.json   wiring: parts, pins, nets, GPIO numbers
+  data/netlist.json   wiring: parts, pins, nets, GPIO numbers, what to buy
   data/tags.json      tag catalogue
   data/sounds.json    sounds and per-tag profiles
   js/board.js         virtual clock, nets, firmware hardware calls
-  js/chips.js         chip models: PN5180, tag, LIS2DH12, TCS34725, MAX17048, pixels, battery
+  js/chips.js         chip models: PN5180, tag, LIS3DH, TCS34725, MAX17048, microphone, pixels, battery
   js/catalog.js       packs the JSON into the binary the firmware reads
   js/diagram.js, analyzer.js, decode.js, brickview.js, main.js   the page
 firmware/core/        portable C: drivers, gesture detection, synthesiser, play logic
 firmware/port-wasm/   glue for the emulator
-firmware/port-espidf/ glue for the ESP32-C3 (untested)
+firmware/port-espidf/ glue for the ESP32-C6 (compiles; not yet run on hardware)
+site/BUILD.md         the build guide (parts and wiring tables generated from the netlist)
 test/run.mjs          boots the firmware headlessly and plays through every feature
 docs/                 research notes and hardware design
 ```
 
 ## Deploying
 
-Pushing to `main` runs the tests and publishes `site/` to GitHub Pages through `.github/workflows/pages.yml`. In a fork, set Settings → Pages → Source to "GitHub Actions".
+Pushing to `main` runs the tests, builds the ESP32-C6 firmware, and publishes `site/` with the firmware images to GitHub Pages through `.github/workflows/pages.yml`. In a fork, set Settings → Pages → Source to "GitHub Actions".
 
 ## Credits
 
 - [node-smartplay](https://github.com/nathankellenicki/node-smartplay) by Nathan Kellenicki, for the tag format, hardware notes and play-engine analysis.
-- [LegoSmartPlay](https://github.com/Ellerbach/LegoSmartPlay) by Laurent Ellerbach, for showing that an ESP32-C3 and a PN5180 read these tags, and for the breadboard wiring this design keeps.
+- [LegoSmartPlay](https://github.com/Ellerbach/LegoSmartPlay) by Laurent Ellerbach, for showing that an ESP32 and a PN5180 module read these tags.
 - [Coffee & Fun](https://www.coffeeandfun.com/blog/reverse-engineering-lego-smart-play-nfc-part-1/) for early tag reads.
 
 ## Legal

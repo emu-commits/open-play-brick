@@ -1,134 +1,771 @@
 {
-  "_comment": "Single source of truth for the Open Play Brick rev A wiring. The emulator draws its diagram from this file and tools/gen_pins.mjs generates firmware/core/pins.h from it, so the picture, the simulation and the firmware cannot drift apart.",
+  "_comment": "Single source of truth for the Open Play Brick rev B wiring. The emulator draws its diagram from this file, tools/gen_pins.mjs generates firmware/core/pins.h from it, and tools/gen_build_doc.mjs generates the parts list and wiring table in docs/BUILD.md from it, so the picture, the simulation, the firmware and the instructions cannot drift apart.",
   "board": {
     "name": "Open Play Brick",
-    "rev": "A",
-    "envelope_mm": [31.8, 15.8, 16.0],
-    "envelope_note": "2 x 4 studs, five plates tall (5 x 3.2 mm), plus 1.7 mm studs"
+    "rev": "B",
+    "note": "Rev B is the module build: off-the-shelf breakout boards around an Adafruit ESP32-C6 Feather. A brick-sized board would use the same chips and the same GPIO numbers."
   },
   "gpio": {
-    "IMU_INT1": 0,
-    "NFC_BUSY": 1,
-    "PERIPH_EN_N": 2,
-    "LED_DATA": 3,
-    "SPI_SCK": 4,
-    "SPI_MOSI": 5,
-    "SPI_MISO": 6,
+    "NFC_NSS": 0,
+    "IMU_INT1": 1,
+    "NFC_BUSY": 2,
+    "NFC_RST": 3,
+    "I2S_DIN": 4,
+    "I2S_BCLK": 5,
+    "I2S_LRCLK": 6,
     "I2S_DOUT": 7,
-    "I2C_SDA": 8,
-    "I2C_SCL": 9,
-    "NFC_NSS": 10,
-    "USB_DN": 18,
-    "USB_DP": 19,
-    "I2S_BCLK": 20,
-    "I2S_LRCLK": 21
+    "USB_DN": 12,
+    "USB_DP": 13,
+    "LED_DATA": 14,
+    "LAMP_EN": 16,
+    "PERIPH_EN": 17,
+    "I2C_SCL": 18,
+    "I2C_SDA": 19,
+    "QT_PWR": 20,
+    "SPI_SCK": 21,
+    "SPI_MOSI": 22,
+    "SPI_MISO": 23
+  },
+  "feather_pad": {
+    "NFC_NSS": "0",
+    "IMU_INT1": "A0",
+    "NFC_BUSY": "A5",
+    "NFC_RST": "A4",
+    "I2S_DIN": "A1",
+    "I2S_BCLK": "A3",
+    "I2S_LRCLK": "A2",
+    "I2S_DOUT": "7",
+    "LED_DATA": "14",
+    "LAMP_EN": "TX",
+    "PERIPH_EN": "RX",
+    "I2C_SCL": "SCL",
+    "I2C_SDA": "SDA",
+    "SPI_SCK": "SCK",
+    "SPI_MOSI": "MO",
+    "SPI_MISO": "MI",
+    "3V3": "3V",
+    "VBAT": "BAT",
+    "GND": "GND"
   },
   "nets": {
-    "SPI_SCK":     { "bus": "spi",   "desc": "SPI clock, mode 0, 2 MHz" },
-    "SPI_MOSI":    { "bus": "spi",   "desc": "SPI host out" },
-    "SPI_MISO":    { "bus": "spi",   "desc": "SPI host in" },
-    "NFC_NSS":     { "bus": "spi",   "desc": "PN5180 chip select, active low" },
-    "NFC_BUSY":    { "bus": "spi",   "desc": "PN5180 BUSY handshake, high while the reader works" },
-    "I2C_SDA":     { "bus": "i2c",   "desc": "I2C data, 400 kHz, 2.2k pull-up to 3V3" },
-    "I2C_SCL":     { "bus": "i2c",   "desc": "I2C clock, 2.2k pull-up (also keeps the GPIO9 boot strap high)" },
-    "IMU_INT1":    { "bus": "gpio",  "desc": "Motion interrupt, wakes the MCU from deep sleep (RTC-capable pad)" },
-    "PERIPH_EN_N": { "bus": "gpio",  "desc": "Low = switched 3V3 rail on. 10k pull-up keeps it off in reset and deep sleep, and satisfies the GPIO2 boot strap" },
-    "LED_DATA":    { "bus": "led",   "desc": "800 kHz single-wire pixel data, 9 pixels" },
-    "I2S_BCLK":    { "bus": "i2s",   "desc": "I2S bit clock, 16 kHz x 32" },
-    "I2S_LRCLK":   { "bus": "i2s",   "desc": "I2S word select" },
-    "I2S_DOUT":    { "bus": "i2s",   "desc": "I2S data to the amplifier" },
-    "USB_DP":      { "bus": "usb",   "desc": "USB D+ (built-in USB Serial/JTAG: flashing and console)" },
-    "USB_DN":      { "bus": "usb",   "desc": "USB D-" },
-    "VBUS":        { "bus": "power", "desc": "USB 5 V" },
-    "VBAT":        { "bus": "power", "desc": "Li-Po cell, 3.0 to 4.2 V" },
-    "3V3":         { "bus": "power", "desc": "Always-on 3.3 V (MCU, accelerometer, colour sensor)" },
-    "3V3_SW":      { "bus": "power", "desc": "Switched 3.3 V (NFC reader, pixels, amp enable). Off in deep sleep" },
-    "ANT":         { "bus": "rf",    "desc": "13.56 MHz loop antenna" },
-    "SPK":         { "bus": "audio", "desc": "Bridge-tied speaker drive" },
-    "GND":         { "bus": "power", "desc": "Ground" }
+    "SPI_SCK": {
+      "bus": "spi",
+      "desc": "SPI clock, mode 0, 2 MHz"
+    },
+    "SPI_MOSI": {
+      "bus": "spi",
+      "desc": "SPI host out"
+    },
+    "SPI_MISO": {
+      "bus": "spi",
+      "desc": "SPI host in"
+    },
+    "NFC_NSS": {
+      "bus": "spi",
+      "desc": "PN5180 chip select, active low"
+    },
+    "NFC_BUSY": {
+      "bus": "spi",
+      "desc": "PN5180 BUSY handshake, high while the reader works"
+    },
+    "NFC_RST": {
+      "bus": "spi",
+      "desc": "PN5180 reset. Held low it puts the reader in hard power-down, which is how it is switched off for sleep"
+    },
+    "I2C_SDA": {
+      "bus": "i2c",
+      "desc": "I2C data, 400 kHz. On the Feather this is the STEMMA QT connector"
+    },
+    "I2C_SCL": {
+      "bus": "i2c",
+      "desc": "I2C clock"
+    },
+    "IMU_INT1": {
+      "bus": "gpio",
+      "desc": "Motion interrupt. Wakes the MCU from deep sleep (GPIO0 to 7 can do that on the ESP32-C6)"
+    },
+    "PERIPH_EN": {
+      "bus": "gpio",
+      "desc": "High = pixels powered and amplifier enabled. Low in sleep"
+    },
+    "LAMP_EN": {
+      "bus": "gpio",
+      "desc": "High = the white LED beside the colour sensor is lit"
+    },
+    "QT_PWR": {
+      "bus": "gpio",
+      "desc": "Feather only: powers the STEMMA QT connector. Held high, including in sleep, so the accelerometer can wake the brick"
+    },
+    "LED_DATA": {
+      "bus": "led",
+      "desc": "800 kHz single-wire pixel data, 8 pixels"
+    },
+    "I2S_BCLK": {
+      "bus": "i2s",
+      "desc": "I2S bit clock, 16 kHz x 64. Shared by the amplifier and the microphone, and runs whenever the brick is awake"
+    },
+    "I2S_LRCLK": {
+      "bus": "i2s",
+      "desc": "I2S word select, shared"
+    },
+    "I2S_DOUT": {
+      "bus": "i2s",
+      "desc": "I2S data to the amplifier, left slot"
+    },
+    "I2S_DIN": {
+      "bus": "i2s",
+      "desc": "I2S data from the microphone, left slot"
+    },
+    "USB_DP": {
+      "bus": "usb",
+      "desc": "USB D+ (built-in USB Serial/JTAG: flashing and console)"
+    },
+    "USB_DN": {
+      "bus": "usb",
+      "desc": "USB D-"
+    },
+    "VBUS": {
+      "bus": "power",
+      "desc": "USB 5 V"
+    },
+    "VBAT": {
+      "bus": "power",
+      "desc": "Li-Po cell, 3.2 to 4.2 V"
+    },
+    "3V3": {
+      "bus": "power",
+      "desc": "3.3 V from the Feather's regulator"
+    },
+    "PIX_GND": {
+      "bus": "power",
+      "desc": "Ground return of the pixels, through the load switch. Open in sleep"
+    },
+    "ANT": {
+      "bus": "rf",
+      "desc": "13.56 MHz loop antenna"
+    },
+    "SPK": {
+      "bus": "audio",
+      "desc": "Bridge-tied speaker drive"
+    },
+    "GND": {
+      "bus": "power",
+      "desc": "Ground"
+    }
   },
   "parts": [
     {
-      "id": "U1", "name": "ESP32-C3FH4", "role": "Microcontroller",
-      "package": "QFN-32, 5 x 5 mm", "why": "RISC-V MCU with 4 MB flash in-package, BLE 5 and Wi-Fi radio, native USB. Same silicon as the common ESP32-C3 Super Mini dev board, so the breadboard build and the brick board run one firmware.",
+      "id": "U1",
+      "name": "ESP32-C6",
+      "role": "Microcontroller",
+      "package": "on the Feather; QFN-32, 5 x 5 mm as a bare chip",
+      "why": "RISC-V MCU with Wi-Fi 6, Bluetooth 5 and 802.15.4 radios and built-in USB. It has seven more GPIOs than the ESP32-C3, which is what makes room for the microphone and a proper reset line for the reader.",
+      "buy": {
+        "item": "Adafruit ESP32-C6 Feather",
+        "sku": "Adafruit 5933",
+        "usd": 14.95,
+        "note": "Also contains the fuel gauge (U5), regulator (U7), charger (U8) and USB-C socket (J1)."
+      },
       "pins": [
-        ["GPIO0", "IMU_INT1"], ["GPIO1", "NFC_BUSY"], ["GPIO2", "PERIPH_EN_N"], ["GPIO3", "LED_DATA"],
-        ["GPIO4", "SPI_SCK"], ["GPIO5", "SPI_MOSI"], ["GPIO6", "SPI_MISO"], ["GPIO7", "I2S_DOUT"],
-        ["GPIO8", "I2C_SDA"], ["GPIO9", "I2C_SCL"], ["GPIO10", "NFC_NSS"],
-        ["GPIO18", "USB_DN"], ["GPIO19", "USB_DP"], ["GPIO20", "I2S_BCLK"], ["GPIO21", "I2S_LRCLK"],
-        ["VDD", "3V3"], ["GND", "GND"]
+        [
+          "GPIO21",
+          "SPI_SCK"
+        ],
+        [
+          "GPIO22",
+          "SPI_MOSI"
+        ],
+        [
+          "GPIO23",
+          "SPI_MISO"
+        ],
+        [
+          "GPIO0",
+          "NFC_NSS"
+        ],
+        [
+          "GPIO2",
+          "NFC_BUSY"
+        ],
+        [
+          "GPIO3",
+          "NFC_RST"
+        ],
+        [
+          "GPIO19",
+          "I2C_SDA"
+        ],
+        [
+          "GPIO18",
+          "I2C_SCL"
+        ],
+        [
+          "GPIO1",
+          "IMU_INT1"
+        ],
+        [
+          "GPIO16",
+          "LAMP_EN"
+        ],
+        [
+          "GPIO5",
+          "I2S_BCLK"
+        ],
+        [
+          "GPIO6",
+          "I2S_LRCLK"
+        ],
+        [
+          "GPIO7",
+          "I2S_DOUT"
+        ],
+        [
+          "GPIO4",
+          "I2S_DIN"
+        ],
+        [
+          "GPIO14",
+          "LED_DATA"
+        ],
+        [
+          "GPIO17",
+          "PERIPH_EN"
+        ],
+        [
+          "GPIO13",
+          "USB_DP"
+        ],
+        [
+          "GPIO12",
+          "USB_DN"
+        ],
+        [
+          "GPIO20",
+          "QT_PWR"
+        ],
+        [
+          "VDD",
+          "3V3"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
       ]
     },
     {
-      "id": "U2", "name": "PN5180", "role": "NFC reader (ISO 15693)",
-      "package": "HVQFN-40, 6 x 6 mm", "why": "Full-power NFC frontend with ISO 15693 support. Already shown to read these tags in the Ellerbach project.",
+      "id": "U2",
+      "name": "PN5180",
+      "role": "NFC reader (ISO 15693)",
+      "package": "module with antenna; HVQFN-40, 6 x 6 mm as a bare chip",
+      "why": "Full-power NFC frontend with ISO 15693 support. Already shown to read these tags in the Ellerbach project.",
+      "buy": {
+        "item": "PN5180 NFC module with antenna",
+        "sku": "Elechouse PN5180, or a generic PN5180 board",
+        "usd": 12.8,
+        "note": "The one part Adafruit does not sell. Pad names differ between makers: see step 6."
+      },
+      "pads": {
+        "SCK": "SCK",
+        "MOSI": "MOSI",
+        "MISO": "MISO",
+        "NSS": "NSS",
+        "BUSY": "BUSY",
+        "RESET_N": "RST",
+        "TVDD": "5V",
+        "VDD": "3.3V",
+        "GND": "GND"
+      },
       "pins": [
-        ["SCK", "SPI_SCK"], ["MOSI", "SPI_MOSI"], ["MISO", "SPI_MISO"], ["NSS", "NFC_NSS"], ["BUSY", "NFC_BUSY"],
-        ["RESET_N", "3V3_SW"], ["VDD", "3V3_SW"], ["ANT1/2", "ANT"], ["GND", "GND"]
+        [
+          "SCK",
+          "SPI_SCK"
+        ],
+        [
+          "MOSI",
+          "SPI_MOSI"
+        ],
+        [
+          "MISO",
+          "SPI_MISO"
+        ],
+        [
+          "NSS",
+          "NFC_NSS"
+        ],
+        [
+          "BUSY",
+          "NFC_BUSY"
+        ],
+        [
+          "RESET_N",
+          "NFC_RST"
+        ],
+        [
+          "VDD",
+          "3V3"
+        ],
+        [
+          "TVDD",
+          "VBAT"
+        ],
+        [
+          "ANT1/2",
+          "ANT"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
       ]
     },
     {
-      "id": "ANT1", "name": "Loop antenna", "role": "13.56 MHz coil",
-      "package": "PCB or flex loop, about 28 x 12 mm", "why": "One coil around the board edge. Reads a tag on the top or bottom face. It cannot tell where on the brick a tag sits.",
-      "pins": [["LOOP", "ANT"]]
-    },
-    {
-      "id": "U3", "name": "LIS2DH12", "role": "Accelerometer",
-      "package": "LGA-12, 2 x 2 mm", "i2c": "0x19", "why": "3-axis, a few microamps in wake-on-motion mode, interrupt output that wakes the MCU.",
-      "pins": [["SDA", "I2C_SDA"], ["SCL", "I2C_SCL"], ["INT1", "IMU_INT1"], ["VDD", "3V3"], ["GND", "GND"]]
-    },
-    {
-      "id": "U4", "name": "TCS34725", "role": "Colour sensor",
-      "package": "FN-6, 2 x 2.4 mm", "i2c": "0x29", "why": "RGB + clear light-to-digital converter with an IR filter. Used in the Ellerbach build.",
-      "pins": [["SDA", "I2C_SDA"], ["SCL", "I2C_SCL"], ["VDD", "3V3"], ["GND", "GND"]]
-    },
-    {
-      "id": "U5", "name": "MAX17048", "role": "Battery fuel gauge",
-      "package": "TDFN-8, 2 x 2 mm", "i2c": "0x36", "why": "Reports cell voltage, state of charge and charge rate over I2C, so no ADC pin is spent on the battery.",
-      "pins": [["SDA", "I2C_SDA"], ["SCL", "I2C_SCL"], ["CELL", "VBAT"], ["GND", "GND"]]
-    },
-    {
-      "id": "U6", "name": "MAX98357A", "role": "I2S class-D amplifier",
-      "package": "TQFN-16, 3 x 3 mm", "why": "Digital audio in, speaker out, no master clock and no DAC needed.",
+      "id": "ANT1",
+      "name": "Loop antenna",
+      "role": "13.56 MHz coil",
+      "package": "printed on the PN5180 module",
+      "why": "Tags are read on the face of this coil. One coil cannot tell where on the brick a tag sits.",
       "pins": [
-        ["BCLK", "I2S_BCLK"], ["LRCLK", "I2S_LRCLK"], ["DIN", "I2S_DOUT"], ["SD_MODE", "3V3_SW"],
-        ["VDD", "VBAT"], ["OUT+/-", "SPK"], ["GND", "GND"]
+        [
+          "LOOP",
+          "ANT"
+        ]
       ]
     },
     {
-      "id": "LS1", "name": "Speaker", "role": "8 ohm micro speaker",
-      "package": "15 x 11 x 3 mm", "why": "Common phone-style rectangular micro speaker.",
-      "pins": [["+/-", "SPK"]]
+      "id": "U3",
+      "name": "LIS3DH",
+      "role": "Accelerometer",
+      "package": "STEMMA QT breakout; LGA, 3 x 3 mm as a bare chip",
+      "i2c": "0x18",
+      "why": "3-axis, a few microamps in wake-on-motion mode, with an interrupt output that wakes the MCU. The smaller LIS2DH12 has the same registers.",
+      "buy": {
+        "item": "Adafruit LIS3DH accelerometer, STEMMA QT",
+        "sku": "Adafruit 2809",
+        "usd": 4.95
+      },
+      "pads": {
+        "SDA": "QT socket",
+        "SCL": "QT socket",
+        "VDD": "QT socket",
+        "GND": "QT socket",
+        "INT1": "INT"
+      },
+      "pins": [
+        [
+          "SDA",
+          "I2C_SDA"
+        ],
+        [
+          "SCL",
+          "I2C_SCL"
+        ],
+        [
+          "INT1",
+          "IMU_INT1"
+        ],
+        [
+          "VDD",
+          "3V3"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
+      ],
+      "to": {
+        "SDA": "QT cable to the Feather",
+        "SCL": "QT cable to the Feather",
+        "VDD": "QT cable to the Feather",
+        "GND": "QT cable to the Feather"
+      }
     },
     {
-      "id": "D1", "name": "SK6805-EC15 x 9", "role": "RGB pixels",
-      "package": "1.5 x 1.5 mm each", "why": "Addressable RGB LEDs on one data wire. Pixels 0 to 7 are the light array, pixel 8 sits beside the colour sensor and lights the surface it looks at.",
-      "pins": [["DIN", "LED_DATA"], ["VDD", "3V3_SW"], ["GND", "GND"]]
+      "id": "U4",
+      "name": "TCS34725",
+      "role": "Colour sensor and lamp",
+      "package": "breakout with a white LED; FN-6, 2 x 2.4 mm as a bare chip",
+      "i2c": "0x29",
+      "why": "RGB + clear light-to-digital converter with an IR filter. The breakout carries the white LED that lights whatever is in front of it.",
+      "buy": {
+        "item": "TCS34725 colour sensor breakout with on-board white LED and LED pin",
+        "sku": "generic, or DFRobot SEN0212",
+        "usd": 6.0,
+        "note": "Adafruit's own board (1334) is retired, but copies of it are sold widely. Check that yours has a pad marked LED."
+      },
+      "pads": {
+        "SDA": "SDA",
+        "SCL": "SCL",
+        "VDD": "VIN",
+        "GND": "GND",
+        "LED": "LED"
+      },
+      "pins": [
+        [
+          "LED",
+          "LAMP_EN"
+        ],
+        [
+          "SDA",
+          "I2C_SDA"
+        ],
+        [
+          "SCL",
+          "I2C_SCL"
+        ],
+        [
+          "VDD",
+          "3V3"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
+      ],
+      "to": {
+        "SDA": "QT-to-pins cable, blue",
+        "SCL": "QT-to-pins cable, yellow",
+        "VDD": "QT-to-pins cable, red",
+        "GND": "QT-to-pins cable, black"
+      }
     },
     {
-      "id": "Q1", "name": "P-FET load switch", "role": "Switched rail",
-      "package": "SOT-723", "why": "Cuts power to the reader and pixels in deep sleep. Nine idle pixels alone draw several milliamps.",
-      "pins": [["GATE", "PERIPH_EN_N"], ["IN", "3V3"], ["OUT", "3V3_SW"]]
+      "id": "U5",
+      "name": "MAX17048",
+      "role": "Battery fuel gauge",
+      "package": "on the Feather",
+      "i2c": "0x36",
+      "why": "Reports cell voltage, state of charge and charge rate over I2C, so the firmware knows the battery level and whether it is charging.",
+      "pins": [
+        [
+          "SDA",
+          "I2C_SDA"
+        ],
+        [
+          "SCL",
+          "I2C_SCL"
+        ],
+        [
+          "CELL",
+          "VBAT"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
+      ]
     },
     {
-      "id": "U7", "name": "3.3 V LDO", "role": "Regulator",
-      "package": "SOT-23-5 or DFN", "why": "Low-dropout, low quiescent current regulator, 300 mA class (for example TLV75533).",
-      "pins": [["IN", "VBAT"], ["OUT", "3V3"], ["GND", "GND"]]
+      "id": "U6",
+      "name": "MAX98357A",
+      "role": "I2S class-D amplifier",
+      "package": "breakout; TQFN-16, 3 x 3 mm as a bare chip",
+      "why": "Digital audio in, speaker out, no DAC needed.",
+      "buy": {
+        "item": "Adafruit MAX98357A I2S 3 W amplifier",
+        "sku": "Adafruit 3006",
+        "usd": 5.95
+      },
+      "pads": {
+        "BCLK": "BCLK",
+        "LRCLK": "LRC",
+        "DIN": "DIN",
+        "SD_MODE": "SD",
+        "VDD": "Vin",
+        "GND": "GND"
+      },
+      "pins": [
+        [
+          "BCLK",
+          "I2S_BCLK"
+        ],
+        [
+          "LRCLK",
+          "I2S_LRCLK"
+        ],
+        [
+          "DIN",
+          "I2S_DOUT"
+        ],
+        [
+          "SD_MODE",
+          "PERIPH_EN"
+        ],
+        [
+          "VDD",
+          "VBAT"
+        ],
+        [
+          "OUT+/-",
+          "SPK"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
+      ]
     },
     {
-      "id": "U8", "name": "MCP73831", "role": "Li-Po charger",
-      "package": "DFN-8, 2 x 3 mm", "why": "Single-cell linear charger, programmed to about 50 mA for a small cell.",
-      "pins": [["VIN", "VBUS"], ["VBAT", "VBAT"], ["GND", "GND"]]
+      "id": "LS1",
+      "name": "Speaker",
+      "role": "8 ohm, 1 W",
+      "package": "30 x 20 mm oval with wires",
+      "why": "Small enough to tuck in, large enough to be heard.",
+      "buy": {
+        "item": "Small speaker, 4 to 8 ohm, 1 to 3 W",
+        "sku": "Adafruit 3923 or any similar",
+        "usd": 1.95,
+        "note": "Cut off any plug and put the bare wires in the amplifier's screw terminal."
+      },
+      "pins": [
+        [
+          "+/-",
+          "SPK"
+        ]
+      ],
+      "pads": {
+        "+/-": "two wires"
+      },
+      "to": {
+        "+/-": "amplifier screw terminal, either way round"
+      }
     },
     {
-      "id": "BT1", "name": "Li-Po cell", "role": "Battery",
-      "package": "401225 pouch, 4 x 12 x 25 mm, about 100 mAh", "why": "Widely sold pouch size with built-in protection board.",
-      "pins": [["+", "VBAT"], ["-", "GND"]]
+      "id": "MK1",
+      "name": "ICS-43434",
+      "role": "I2S microphone",
+      "package": "breakout; 3.5 x 2.65 mm as a bare chip",
+      "why": "Digital MEMS microphone that shares the amplifier's clocks, so it costs one GPIO. The firmware only measures loudness to hear a clap. It does not record, store or send audio.",
+      "buy": {
+        "item": "Adafruit ICS-43434 I2S MEMS microphone",
+        "sku": "Adafruit 6049",
+        "usd": 8.95,
+        "note": "An INMP441 board wires the same way."
+      },
+      "pads": {
+        "DOUT": "DOUT",
+        "BCLK": "BCLK",
+        "LRCLK": "LRCL",
+        "VDD": "3V",
+        "GND": "GND"
+      },
+      "pins": [
+        [
+          "DOUT",
+          "I2S_DIN"
+        ],
+        [
+          "BCLK",
+          "I2S_BCLK"
+        ],
+        [
+          "LRCLK",
+          "I2S_LRCLK"
+        ],
+        [
+          "VDD",
+          "3V3"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
+      ]
     },
     {
-      "id": "J1", "name": "USB-C", "role": "Charge and program",
-      "package": "Mid-mount 16-pin receptacle", "why": "Charging, flashing and serial console over one port.",
-      "pins": [["VBUS", "VBUS"], ["D+", "USB_DP"], ["D-", "USB_DN"], ["GND", "GND"]]
+      "id": "D1",
+      "name": "RGB pixels x 8",
+      "role": "Light array",
+      "package": "NeoPixel stick, 51 x 10 mm; SK6805-EC15, 1.5 mm each as bare parts",
+      "why": "Addressable RGB LEDs on one data wire.",
+      "buy": {
+        "item": "NeoPixel Stick, 8 RGB LEDs",
+        "sku": "Adafruit 1426",
+        "usd": 5.95
+      },
+      "pads": {
+        "DIN": "DIN",
+        "VDD": "5VDC",
+        "GND": "GND"
+      },
+      "pins": [
+        [
+          "DIN",
+          "LED_DATA"
+        ],
+        [
+          "VDD",
+          "VBAT"
+        ],
+        [
+          "GND",
+          "PIX_GND"
+        ]
+      ],
+      "to": {
+        "VDD": "MOSFET board, power terminal",
+        "GND": "MOSFET board, switched terminal"
+      }
+    },
+    {
+      "id": "Q1",
+      "name": "Load switch",
+      "role": "Pixel power",
+      "package": "MOSFET driver board; a load-switch IC on a brick-sized board",
+      "why": "Cuts power to the pixels in sleep. Eight idle pixels draw about 8 mA, which would flatten the battery in two or three days. Optional: without it the pixels wire straight to BAT and GND.",
+      "buy": {
+        "item": "Adafruit MOSFET driver, STEMMA JST PH",
+        "sku": "Adafruit 5648",
+        "usd": 3.95,
+        "optional": true,
+        "note": "Recommended. It switches the ground side of the pixel stick. Add its 3-pin JST PH cable when you order."
+      },
+      "pads": {
+        "GATE": "signal",
+        "V+": "V+",
+        "SOURCE": "GND"
+      },
+      "pins": [
+        [
+          "GATE",
+          "PERIPH_EN"
+        ],
+        [
+          "V+",
+          "VBAT"
+        ],
+        [
+          "DRAIN",
+          "PIX_GND"
+        ],
+        [
+          "SOURCE",
+          "GND"
+        ]
+      ]
+    },
+    {
+      "id": "U7",
+      "name": "3.3 V regulator",
+      "role": "Regulator",
+      "package": "on the Feather",
+      "why": "500 mA peak, enough for the reader's transmit bursts.",
+      "pins": [
+        [
+          "IN",
+          "VBAT"
+        ],
+        [
+          "OUT",
+          "3V3"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
+      ]
+    },
+    {
+      "id": "U8",
+      "name": "Li-Po charger",
+      "role": "Charger",
+      "package": "on the Feather",
+      "why": "Charges the cell whenever USB is plugged in.",
+      "pins": [
+        [
+          "VIN",
+          "VBUS"
+        ],
+        [
+          "VBAT",
+          "VBAT"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
+      ]
+    },
+    {
+      "id": "BT1",
+      "name": "Li-Po cell",
+      "role": "Battery",
+      "package": "500 mAh pouch with JST-PH plug, 29 x 36 x 4.75 mm",
+      "why": "Plugs straight into the Feather. Has its own protection circuit.",
+      "buy": {
+        "item": "Lithium polymer battery, 3.7 V 500 mAh",
+        "sku": "Adafruit 1578",
+        "usd": 7.95,
+        "note": "If you use another brand, check the plug polarity against the + mark on the Feather before connecting."
+      },
+      "pins": [
+        [
+          "+",
+          "VBAT"
+        ],
+        [
+          "-",
+          "GND"
+        ]
+      ]
+    },
+    {
+      "id": "J1",
+      "name": "USB-C",
+      "role": "Charge and program",
+      "package": "on the Feather",
+      "why": "Charging, flashing and serial console over one port.",
+      "pins": [
+        [
+          "VBUS",
+          "VBUS"
+        ],
+        [
+          "D+",
+          "USB_DP"
+        ],
+        [
+          "D-",
+          "USB_DN"
+        ],
+        [
+          "GND",
+          "GND"
+        ]
+      ]
     }
-  ]
+  ],
+  "extras": [
+    {
+      "item": "STEMMA QT cable, 50 or 100 mm (Feather to accelerometer)",
+      "sku": "Adafruit 4399 or 4210",
+      "qty": 1,
+      "usd": 0.95
+    },
+    {
+      "item": "STEMMA QT to male pins cable (accelerometer to colour sensor)",
+      "sku": "Adafruit 4209",
+      "qty": 1,
+      "usd": 0.95
+    },
+    {
+      "item": "Half-size breadboards",
+      "sku": "Adafruit 64",
+      "qty": 2,
+      "usd": 4.95
+    },
+    {
+      "item": "Jumper wires, male to male",
+      "sku": "Adafruit 1957 or any",
+      "qty": 1,
+      "usd": 1.95
+    },
+    {
+      "item": "USB-C cable that carries data",
+      "sku": "any",
+      "qty": 1,
+      "usd": 0
+    }
+  ],
+  "prices_checked": "2026-10-12"
 }

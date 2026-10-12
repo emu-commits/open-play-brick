@@ -1,0 +1,18 @@
+.guide { max-width: 980px; margin: 0 auto; padding: 14px 16px 30px; display: grid; gap: 14px; }
+.guide .panel { padding: 20px 24px; }
+.install p { margin: 8px 0 12px; max-width: 75ch; }
+.install esp-web-install-button { display: inline-block; margin-bottom: 8px; }
+#guide { font-size: 15px; line-height: 1.6; }
+#guide h1 { font: 600 24px/1.2 var(--mono); margin: 0 0 14px; }
+#guide h2 { font: 600 14px/1.3 var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin: 34px 0 10px; padding-top: 18px; border-top: 1px solid var(--line); }
+#guide h3 { font: 600 16px/1.3 var(--sans); margin: 24px 0 6px; }
+#guide p, #guide ul, #guide ol { margin: 0 0 12px; max-width: 78ch; }
+#guide li { margin-bottom: 5px; }
+#guide a { color: var(--accent); }
+#guide pre { background: #0d1219; border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; overflow-x: auto; font-size: 12.5px; line-height: 1.5; margin: 0 0 12px; }
+#guide pre code { color: #c3ccd9; }
+.table-wrap { overflow-x: auto; margin: 0 0 14px; }
+#guide table { font-size: 13.5px; min-width: 560px; }
+#guide th { color: var(--dim); font-weight: 600; white-space: nowrap; }
+#guide td, #guide th { padding: 6px 14px 6px 0; vertical-align: top; }
+@media (max-width: 700px) { .guide .panel { padding: 14px; } }

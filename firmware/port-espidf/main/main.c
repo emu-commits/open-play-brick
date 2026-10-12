@@ -1,12 +1,11 @@
-/* Entry point on the ESP32-C3. See hal_espidf.c for the port's status. */
+/* Entry point on the ESP32-C6. See hal_espidf.c for the port's status. */
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 
 #include "app.h"
 
-void hal_espidf_init(void);
-void hal_espidf_radio_start(void (*handler)(const uint8_t *, int));
+void hal_espidf_init(void (*on_radio)(const uint8_t *, int));
 
 typedef struct { uint8_t len; uint8_t data[32]; } packet_t;
 static QueueHandle_t radio_queue;
@@ -24,8 +23,7 @@ static void on_radio(const uint8_t *data, int len)
 void app_main(void)
 {
     radio_queue = xQueueCreate(8, sizeof(packet_t));
-    hal_espidf_init();
-    hal_espidf_radio_start(on_radio);
+    hal_espidf_init(on_radio);
     fw_init();
     for (;;) {
         packet_t p;

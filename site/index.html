@@ -10,7 +10,7 @@
 <body>
 <header class="top">
   <div class="brand">
-    <h1>Open Play Brick <span class="rev">rev A · emulator</span></h1>
+    <h1>Open Play Brick <span class="rev">rev B · emulator</span></h1>
     <p>The brick's real firmware, compiled to WebAssembly, wired to models of every chip on the board. Independent project, not affiliated with or endorsed by the LEGO Group.</p>
   </div>
   <div class="transport">
@@ -18,7 +18,8 @@
     <button id="btn-run" aria-pressed="true">Pause</button>
     <button id="btn-step" title="Run one pass of the firmware main loop and frame it in the analyzer">Step</button>
     <button id="btn-reset" title="Power-cycle the board">Reset</button>
-    <a class="link" href="https://github.com/emu-commits/open-play-brick">Source and docs</a>
+    <a class="link" href="build.html">Build one</a>
+    <a class="link" href="https://github.com/emu-commits/open-play-brick">Source</a>
   </div>
 </header>
 
@@ -59,6 +60,12 @@
     <label class="slider">Tilt <input type="range" id="tilt" min="-80" max="80" value="0"> <output id="tilt-out">0°</output></label>
     <div class="row">
       <button id="btn-device" hidden>Use this device's motion sensor</button>
+    </div>
+
+    <h2>Sound <small>what the microphone hears</small></h2>
+    <div class="row">
+      <button id="clap">Clap</button>
+      <span class="hint">It listens for loudness only. Nothing is recorded.</span>
     </div>
 
     <h2>Colour <small>held in front of the colour sensor</small></h2>

@@ -67,7 +67,7 @@ export class PN5180 {
   constructor(board) {
     this.board = board;
     this.tag = null;                    // tag in the field, or null
-    this.powered = false;
+    this.powered = false;               // false while RESET_N is low (hard power-down)
     this.reset(0);
   }
 
@@ -88,11 +88,17 @@ export class PN5180 {
     this.clocked = false;
   }
 
-  setPower(on, t) {
+  // RESET_N pin. Low is hard power-down; a rising edge restarts the chip.
+  setReset(level, t) {
+    const on = level === 1;
     if (on === this.powered) return;
     this.powered = on;
     if (on) this.reset(t);
-    else { this.rfOn = false; this.board.edge('NFC_BUSY', t, 0); }
+    else {
+      if (this.rfOn) this.board.rfField(false, t);
+      this.rfOn = false;
+      this.board.edge('NFC_BUSY', t, 0);
+    }
   }
 
   busy(t) {
@@ -211,9 +217,9 @@ export class PN5180 {
 }
 
 // ---------------------------------------------------------------------------
-// LIS2DH12 accelerometer
+// LIS3DH accelerometer (register-compatible with the LIS2DH12)
 // ---------------------------------------------------------------------------
-export class LIS2DH12 {
+export class LIS3DH {
   constructor(board, addr) {
     this.board = board;
     this.addr = addr;
@@ -339,7 +345,7 @@ export class TCS34725 {
     if (t - this.enabledAt < integrationUs + 2400) return false;   // first conversion not finished
     const gain = [1, 4, 16, 60][this.reg[0x0F] & 3];
     const scene = this.board.scene;
-    const lamp = this.board.pixels.level(8);                        // the pixel beside the sensor, 0..1
+    const lamp = this.board.level.LAMP_EN ? 0.35 : 0;               // the white LED beside the sensor
     const max = Math.min(65535, cycles * 1024);
     const k = cycles * gain * 60;
     const noise = () => 1 + (this.board.random() - 0.5) * 0.04;
@@ -433,26 +439,74 @@ export class PixelChain {
 }
 
 // ---------------------------------------------------------------------------
+// I2S microphone
+// ---------------------------------------------------------------------------
+// Produces what the microphone would pick up: room noise, a DC offset (MEMS
+// microphones have one), claps, and the brick's own speaker.
+export class Microphone {
+  constructor(board) {
+    this.board = board;
+    this.claps = [];                    // start times, microseconds
+    this.heard = [];                    // recent amplifier output: [{t0, samples}]
+  }
+
+  clap(t) { this.claps.push(t); }
+
+  speaker(samples, t0) {
+    this.heard.push({ t0, samples });
+    if (this.heard.length > 96) this.heard.shift();
+  }
+
+  // n samples starting at time t0.
+  capture(t0, n) {
+    const out = new Int16Array(n);
+    const period = 62.5;
+    this.claps = this.claps.filter(c => t0 - c < 200000);
+    for (let i = 0; i < n; i++) {
+      const t = t0 + i * period;
+      let v = 300 + (this.board.random() - 0.5) * 80;
+      for (const c of this.claps) {
+        const age = t - c;
+        if (age >= 0 && age < 90000) v += (this.board.random() - 0.5) * 2 * 20000 * Math.exp(-age / 9000);
+      }
+      for (let k = this.heard.length - 1; k >= 0; k--) {
+        const h = this.heard[k];
+        if (t < h.t0) continue;
+        const j = Math.floor((t - h.t0) / period);
+        if (j < h.samples.length) v += h.samples[j] * 0.25;
+        break;
+      }
+      out[i] = Math.max(-32768, Math.min(32767, Math.round(v)));
+    }
+    return out;
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Battery, charger and an estimate of what everything draws
 // ---------------------------------------------------------------------------
 // Typical figures from the part datasheets. They are estimates for sizing the
 // battery, not measurements of a built board.
 export const CURRENT_MA = {
-  mcuActive: 20,            // ESP32-C3, CPU running, radio idle
-  mcuDeepSleep: 0.005,
-  alwaysOn: 0.06,           // regulator, accelerometer in low-rate mode, fuel gauge, colour sensor asleep
-  readerIdle: 7,            // PN5180 powered, field off
+  mcuActive: 22,            // ESP32-C6, CPU running, radio idle
+  boardDeepSleep: 0.02,     // Feather in deep sleep with its sensor connector off
+  sensorRail: 0.9,          // sensor connector held on: accelerometer, colour sensor asleep, the Feather's own pixel
+  readerDown: 0.1,          // PN5180 module held in reset (mostly its regulator)
+  readerIdle: 7,            // PN5180 running, field off
   readerField: 75,          // extra while the 13.56 MHz field is on
-  pixelIdle: 0.5,           // per pixel, dark
-  pixelFull: 4,             // per colour channel at full brightness on 3.3 V
+  pixelIdle: 1.0,           // per pixel, dark
+  pixelFull: 10,            // per colour channel at full brightness on battery voltage
   ampIdle: 2.4,
   ampFullScale: 180,        // peak into 8 ohm from a full-scale sine at 3.7 V
+  micActive: 0.5,
   colourActive: 0.24,
-  charge: 50,
+  lamp: 5,
+  radio: 70,                // Wi-Fi receiver listening for other bricks
+  charge: 200,
 };
 
 export class Battery {
-  constructor(capacityMah = 100) {
+  constructor(capacityMah = 500) {
     this.capacityMah = capacityMah;
     this.soc = 80;                      // percent
     this.usb = false;

@@ -1,11 +1,11 @@
 // The simulated board. It loads the firmware (the same C code that runs on
-// the ESP32-C3, compiled to WebAssembly), implements the firmware's hardware
+// the ESP32-C6, compiled to WebAssembly), implements the firmware's hardware
 // calls as activity on named nets, and routes that activity to the chip
 // models. Everything is timed on a virtual clock in microseconds.
 //
 // No DOM here: the browser UI and the Node tests both drive this class.
 
-import { PN5180, LIS2DH12, TCS34725, MAX17048, PixelChain, Battery, Motion, Iso15693Tag, CURRENT_MA } from './chips.js';
+import { PN5180, LIS3DH, TCS34725, MAX17048, PixelChain, Microphone, Battery, Motion, Iso15693Tag, CURRENT_MA } from './chips.js';
 
 export const TIMING = {
   spiHz: 2_000_000,
@@ -17,8 +17,8 @@ export const TIMING = {
 };
 
 const MODE_INPUT = 0, MODE_OUTPUT = 1;
-const PULLED_UP = new Set(['PERIPH_EN_N', 'I2C_SDA', 'I2C_SCL', 'NFC_NSS']);
-const TRACE_MAX = 9000, EDGE_MAX = 4000;
+const PULLED_UP = new Set(['I2C_SDA', 'I2C_SCL']);
+const TRACE_MAX = 24000, EDGE_MAX = 4000;
 
 export const STATES = ['Boot', 'Idle', 'Tag active', 'Gesture response', 'Charging', 'Low battery', 'Asleep'];
 
@@ -43,17 +43,21 @@ export class Board {
     this.motion = new Motion(this.random);
     this.scene = { swatch: null, ambient: 0.05 };
     this.battery = new Battery();
-    this.pixels = new PixelChain(9);
+    this.pixels = new PixelChain(8);
+    this.mic = new Microphone(this);
     this.nfc = new PN5180(this);
-    this.imu = new LIS2DH12(this, addr('LIS2DH12'));
+    this.imu = new LIS3DH(this, addr('LIS3DH'));
     this.colour = new TCS34725(this, addr('TCS34725'));
     this.gauge = new MAX17048(this, addr('MAX17048'));
     this.i2cDevices = [this.imu, this.colour, this.gauge];
 
-    this.rail = false;
+    this.rail = false;                            // pixel supply and amplifier enable
+    this.hold = new Set();                        // pins frozen through deep sleep
+    this.micPos = null;
     this.rfOn = false;
     this.asleep = false;
     this.i2sEnd = 0;
+    this.loudUntil = 0;
     this.ampLevel = 0;
     this.bootCount = 0;
   }
@@ -80,17 +84,15 @@ export class Board {
     if (this.level[net] === level) return;
     this.level[net] = level;
     this.edge(net, this.t, level);
-    if (net === 'PERIPH_EN_N') this.setRail(level === 0);
+    if (net === 'PERIPH_EN') this.setRail(level === 1);
+    else if (net === 'NFC_RST') this.nfc.setReset(level, this.t);
     else if (net === 'NFC_NSS') this.nfc.setNss(level, this.t);
   }
 
   setRail(on) {
     if (on === this.rail) return;
     this.rail = on;
-    this.edge('3V3_SW', this.t, on ? 1 : 0);
-    this.nfc.setPower(on, this.t);
     this.pixels.setPower(on);
-    if (!on && this.rfOn) this.rfField(false, this.t);
   }
 
   rfField(on, t) {
@@ -108,12 +110,15 @@ export class Board {
 
   loadMa() {
     const c = CURRENT_MA;
-    let ma = c.alwaysOn + (this.asleep ? c.mcuDeepSleep : c.mcuActive);
+    let ma = c.boardDeepSleep + (this.asleep ? 0 : c.mcuActive + c.micActive);
+    if (this.level.QT_PWR) ma += c.sensorRail;
     if ((this.colour.reg[0] & 0x03) === 0x03) ma += c.colourActive;
+    if (this.level.LAMP_EN) ma += c.lamp;
+    if (this.radioOn) ma += c.radio;
+    ma += this.nfc.powered ? c.readerIdle + (this.rfOn ? c.readerField : 0) : c.readerDown;
     if (this.rail) {
-      ma += c.readerIdle + (this.rfOn ? c.readerField : 0);
       ma += this.pixels.count * c.pixelIdle + this.pixels.sum() * c.pixelFull;
-      if (this.t < this.i2sEnd) ma += c.ampIdle + this.ampLevel * c.ampFullScale * 0.35;
+      ma += c.ampIdle + (this.t < this.i2sEnd ? this.ampLevel * c.ampFullScale * 0.35 : 0);
     }
     return ma;
   }
@@ -140,12 +145,16 @@ export class Board {
         const net = this.gpioNet[pin];
         this.mode[pin] = mode;
         this.advance(0.5);
-        this.setNet(net, mode === MODE_OUTPUT ? this.latch[pin] ?? 0 : PULLED_UP.has(net) ? 1 : 0);
+        this.drive(pin);
       },
       hal_gpio_write: (pin, level) => {
         this.latch[pin] = level ? 1 : 0;
         this.advance(0.5);
-        if (this.mode[pin] === MODE_OUTPUT) this.setNet(this.gpioNet[pin], this.latch[pin]);
+        this.drive(pin);
+      },
+      hal_gpio_hold: (pin, on) => {
+        if (on) this.hold.add(pin);
+        else { this.hold.delete(pin); this.drive(pin); }
       },
       hal_gpio_read: (pin) => {
         const net = this.gpioNet[pin];
@@ -183,8 +192,28 @@ export class Board {
         let peak = 0;
         for (const s of samples) peak = Math.max(peak, Math.abs(s));
         this.ampLevel = peak / 32768;
+        if (peak > 0) this.loudUntil = this.i2sEnd;
         this.record({ bus: 'i2s', t0, t1: this.i2sEnd, samples, peak });
-        if (this.rail) this.emit('audio', samples, t0);   // SD_MODE follows the switched rail
+        if (this.micPos == null) this.micPos = t0;          // the microphone starts with the clocks
+        if (this.rail && peak > 0) {                        // SD_MODE high: the amplifier is on
+          this.mic.speaker(samples, t0);
+          this.emit('audio', samples, t0);
+        }
+      },
+      hal_i2s_read: (ptr, n) => {
+        if (this.micPos == null) return 0;
+        const period = 1e6 / TIMING.i2sRate;
+        let waiting = (this.t - this.micPos) / period;
+        if (waiting > TIMING.i2sBufferSamples) {            // receive buffer overran: oldest samples are lost
+          this.micPos = this.t - TIMING.i2sBufferSamples * period;
+          waiting = TIMING.i2sBufferSamples;
+        }
+        if (waiting < n) return 0;
+        const samples = this.mic.capture(this.micPos, n);
+        new Int16Array(this.wasm.exports.memory.buffer, ptr, n).set(samples);
+        this.record({ bus: 'i2sin', t0: this.micPos, t1: this.micPos + n * period, samples });
+        this.micPos += n * period;
+        return n;
       },
       hal_millis: () => Math.floor(this.t / 1000) >>> 0,
       hal_delay_us: (us) => this.advance(us >>> 0),
@@ -194,7 +223,9 @@ export class Board {
         mem().set(this.catalog.subarray(offset, offset + n), dst);
         return n;
       },
+      hal_radio_enable: (on) => { this.radioOn = !!on; },
       hal_radio_send: (ptr, len) => {
+        if (!this.radioOn) return;
         const data = bytes(ptr, len);
         this.record({ bus: 'radio', t0: this.t, t1: this.t + 600, dir: 'tx', data });
         this.emit('radio', data);
@@ -203,9 +234,17 @@ export class Board {
     };
   }
 
+  // Put a pin's mode and output latch onto its net, unless the pin is held.
+  drive(pin) {
+    if (this.hold.has(pin)) return;
+    const net = this.gpioNet[pin];
+    this.setNet(net, this.mode[pin] === MODE_OUTPUT ? this.latch[pin] ?? 0 : PULLED_UP.has(net) ? 1 : 0);
+  }
+
   i2c(addr, wr, rdPtr, rdLen) {
     const t0 = this.t;
-    const dev = this.i2cDevices.find(d => d.addr === addr);
+    // The bus pull-ups and the sensors hang off the switched connector supply.
+    const dev = this.level.QT_PWR ? this.i2cDevices.find(d => d.addr === addr) : null;
     const bits = 1 + 9 * (1 + wr.length) + (rdLen ? 1 + 9 * (1 + rdLen) : 0) + 1;
     let rd = new Uint8Array(0);
     if (dev) {
@@ -230,11 +269,14 @@ export class Board {
   // Power-on or wake from deep sleep: every GPIO is an input again and the
   // firmware starts from scratch with empty RAM.
   boot(reason = 'power on') {
+    if (!/^wake/.test(reason)) this.hold.clear();   // only a wake from deep sleep keeps held pins
     this.mode = {};
     this.latch = {};
     this.asleep = false;
+    this.radioOn = false;
+    this.micPos = null;
     this.bootCount++;
-    for (const net of Object.values(this.gpioNet)) this.setNet(net, PULLED_UP.has(net) ? 1 : 0);
+    for (const pin of Object.keys(this.gpioNet)) this.drive(+pin);
     this.wasm = new WebAssembly.Instance(this.module, { env: this.imports() });
     this.emit('reset', reason);
     this.log(`--- reset: ${reason} ---`);
@@ -258,7 +300,7 @@ export class Board {
 
   status() {
     const p = this.wasm.exports.fw_status();
-    const dv = new DataView(this.wasm.exports.memory.buffer, p, 56);
+    const dv = new DataView(this.wasm.exports.memory.buffer, p, 60);
     const name = new Uint8Array(this.wasm.exports.memory.buffer, p + 32, 24);
     const end = name.indexOf(0);
     return {
@@ -279,6 +321,8 @@ export class Board {
       tagCrc: dv.getUint32(20, true),
       uid: Array.from(new Uint8Array(this.wasm.exports.memory.buffer, p + 24, 8)).reverse(),
       tagName: new TextDecoder().decode(name.subarray(0, end < 0 ? 24 : end)),
+      micLevel: dv.getUint16(56, true),
+      micFloor: dv.getUint16(58, true),
     };
   }
 
@@ -289,7 +333,7 @@ export class Board {
 
   radioReceive(data) {
     this.record({ bus: 'radio', t0: this.t, t1: this.t + 600, dir: 'rx', data: Uint8Array.from(data) });
-    if (this.asleep) return;
+    if (this.asleep || !this.radioOn) return;   // nobody is listening
     const ptr = this.wasm.exports.fw_radio_buffer();
     new Uint8Array(this.wasm.exports.memory.buffer).set(data, ptr);
     this.wasm.exports.fw_on_radio(ptr, data.length);

@@ -28,8 +28,8 @@
 
 /* Returns 0 if the reader answered with a plausible version, -1 otherwise. */
 int  pn5180_init(void);
-/* Release the SPI pins before the switched rail goes down. */
-void pn5180_release_bus(void);
+/* Hold the reader in reset, which is its hard power-down state. */
+void pn5180_power_down(void);
 
 int  pn5180_rf_on(void);   /* loads the ISO 15693 RF configuration and turns the field on */
 void pn5180_rf_off(void);

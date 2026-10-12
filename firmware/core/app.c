@@ -29,7 +29,7 @@
 
 static const char *const EVENT_NAMES[EV_COUNT] = {
     "Tag placed", "Tag removed", "Shake", "Swing", "Tilt left", "Tilt right", "Roll", "Impact",
-    "Throw", "Red", "Green", "Blue", "Hit", "Damaged", "Destroyed", "Ambient"
+    "Throw", "Red", "Green", "Blue", "Hit", "Damaged", "Destroyed", "Ambient", "Clap"
 };
 
 static fw_status_t st;
@@ -37,16 +37,21 @@ static tag_info_t tag;
 static uint8_t tag_data[TAG_BLOCKS * 4];
 static uint8_t sleeping, nfc_ok, imu_ok, colour_ok, gauge_ok, low_warned, misses;
 static uint16_t radio_seq;
-static uint32_t next_imu, next_nfc, next_colour, next_gauge, gesture_until, idle_since;
+static uint32_t next_imu, next_nfc, next_colour, next_gauge, gesture_until, idle_since, mic_muted_until;
 
 /* ------------------------------------------------------------------ */
 
+/* Pixel supply and amplifier enable. */
 static void periph_power(int on)
 {
-    hal_gpio_write(PIN_PERIPH_EN_N, on ? 0 : 1);
-    hal_gpio_mode(PIN_PERIPH_EN_N, HAL_GPIO_OUTPUT);
+    hal_gpio_write(PIN_PERIPH_EN, on ? 1 : 0);
+    hal_gpio_mode(PIN_PERIPH_EN, HAL_GPIO_OUTPUT);
+    hal_gpio_hold(PIN_PERIPH_EN, !on);
     if (on) hal_delay_us(5000);
 }
+
+/* The white LED beside the colour sensor. */
+static void lamp(int on) { hal_gpio_write(PIN_LAMP_EN, on ? 1 : 0); }
 
 static void set_idle_look(void)
 {
@@ -124,7 +129,8 @@ static void tag_removed(void)
     st.tag_name[0] = 0;
     if (colour_ok) colour_enable(0);
     st.colour = COL_NONE;
-    leds_illuminate(0);
+    lamp(0);
+    hal_radio_enable(0);
     set_idle_look();
 }
 
@@ -186,13 +192,14 @@ static void tag_found(const uint8_t uid[8])
     uint8_t ambient = catalog_event_patch(tag.profile, EV_AMBIENT);
     if (ambient != PATCH_NONE) synth_play(ambient);
     set_tag_look();
-    if (colour_ok) { colour_enable(1); leds_illuminate(1); }
+    if (colour_ok) { colour_enable(1); lamp(1); }
+    if (tag.flags & TAG_FLAG_COMBAT) hal_radio_enable(1);
 }
 
 static void nfc_task(uint32_t now)
 {
     if (!nfc_ok || now < next_nfc) return;
-    synth_fill();   /* a tag read blocks for tens of milliseconds */
+    synth_fill(1);   /* a tag read blocks for tens of milliseconds */
 
     uint8_t uid[8];
     int found = -1;
@@ -257,10 +264,16 @@ static void go_to_sleep(const char *why)
     opb_logf("Sleeping: %s. Move the brick to wake it.", why);
     synth_stop_all();
     leds_blank();
+    lamp(0);
+    hal_radio_enable(0);
     if (colour_ok) colour_enable(0);
-    if (nfc_ok) pn5180_release_bus();
-    hal_gpio_write(PIN_LED_DATA, 0);
+    pn5180_power_down();
+    /* The pixel supply is switched on its ground side on the module build, so
+     * the data pin must float, not sit low, while the pixels are off. */
+    hal_gpio_mode(PIN_LED_DATA, HAL_GPIO_HIGHZ);
     periph_power(0);
+    /* The accelerometer stays powered so that it can wake the brick. */
+    hal_gpio_hold(PIN_QT_PWR, 1);
     if (imu_ok) imu_arm_wake();
     sleeping = 1;
     st.state = ST_SLEEP;
@@ -308,6 +321,11 @@ void fw_init(void)
     gesture_until = 0;
 
     opb_logf("Open Play Brick firmware %s", FW_VERSION);
+    hal_gpio_write(PIN_QT_PWR, 1);          /* sensor connector power, already on after a wake */
+    hal_gpio_mode(PIN_QT_PWR, HAL_GPIO_OUTPUT);
+    hal_gpio_hold(PIN_QT_PWR, 0);
+    hal_gpio_write(PIN_LAMP_EN, 0);
+    hal_gpio_mode(PIN_LAMP_EN, HAL_GPIO_OUTPUT);
     hal_gpio_write(PIN_LED_DATA, 0);
     hal_gpio_mode(PIN_LED_DATA, HAL_GPIO_OUTPUT);
     periph_power(1);
@@ -319,7 +337,8 @@ void fw_init(void)
     nfc_ok = pn5180_init() == 0;
     if (!nfc_ok) opb_logf("ERROR: PN5180 not responding");
     imu_ok = imu_init() == 0;
-    if (!imu_ok) opb_logf("ERROR: LIS2DH12 not responding");
+    if (!imu_ok) opb_logf("ERROR: LIS3DH not responding");
+    mic_init();
     colour_ok = colour_init() == 0;
     if (!colour_ok) opb_logf("ERROR: TCS3472x not responding");
     gauge_ok = gauge_init() == 0;
@@ -328,6 +347,7 @@ void fw_init(void)
 
     uint32_t now = hal_millis();
     next_imu = next_colour = idle_since = now;
+    mic_muted_until = now + 400;
     next_nfc = now + 300;
     next_gauge = now + GAUGE_PERIOD_MS;
 
@@ -370,6 +390,13 @@ void fw_loop(void)
         }
     }
 
+    /* The microphone hears the brick's own speaker, so claps are ignored
+     * while a sound effect plays and for a moment after. */
+    if (synth_oneshot_busy()) mic_muted_until = now + 200;
+    if (mic_sample(now < mic_muted_until)) play_event(EV_CLAP);
+    st.mic_level = mic.level;
+    st.mic_floor = mic.floor;
+
     nfc_task(now);
     if (sleeping) return;
     gauge_task(now);
@@ -377,7 +404,7 @@ void fw_loop(void)
 
     now = hal_millis();
     leds_tick(now);
-    synth_fill();
+    synth_fill(0);
     refresh_state(now);
 
     /* The sleep timer runs only while nothing at all is going on. */

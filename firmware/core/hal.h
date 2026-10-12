@@ -1,7 +1,7 @@
 /* Hardware abstraction layer.
  *
  * The core firmware touches hardware only through these calls. Two ports
- * implement them: port-espidf (the real ESP32-C3) and port-wasm (the browser
+ * implement them: port-espidf (the real ESP32-C6) and port-wasm (the browser
  * emulator, where each call drives simulated pins and chip models).
  */
 #ifndef OPB_HAL_H
@@ -23,6 +23,9 @@
 void     HAL(hal_gpio_mode)(int pin, int mode);
 void     HAL(hal_gpio_write)(int pin, int level);
 int      HAL(hal_gpio_read)(int pin);
+/* Freeze a pin at its present level, through deep sleep and the reset that
+ * follows it, until released. */
+void     HAL(hal_gpio_hold)(int pin, int on);
 
 /* SPI mode 0, MSB first, on PIN_SPI_SCK / MOSI / MISO. Chip select is a plain
  * GPIO owned by the driver. Either buffer may be null. */
@@ -35,10 +38,14 @@ int      HAL(hal_i2c_write_read)(uint8_t addr, const uint8_t *wr, int wr_len, ui
 /* Shift out pixel data (3 bytes per pixel, G R B order) on PIN_LED_DATA. */
 void     HAL(hal_led_write)(const uint8_t *grb, int n_pixels);
 
-/* I2S: 16 kHz, 16-bit mono. hal_i2s_space is the free room in the transmit
- * buffer, in samples. */
+/* I2S: 16 kHz, 16-bit mono in the left slot of 32-bit slots, both ways on
+ * shared clocks. hal_i2s_space is the free room in the transmit buffer, in
+ * samples. hal_i2s_read returns `n` microphone samples if that many are
+ * waiting, otherwise 0. */
+#define HAL_I2S_BUFFER 2048
 int      HAL(hal_i2s_space)(void);
 void     HAL(hal_i2s_write)(const int16_t *samples, int n);
+int      HAL(hal_i2s_read)(int16_t *samples, int n);
 
 uint32_t HAL(hal_millis)(void);
 void     HAL(hal_delay_us)(uint32_t us);
@@ -48,7 +55,9 @@ void     HAL(hal_log)(const char *line);
 /* Read from the catalogue data partition. Returns bytes read. */
 int      HAL(hal_storage_read)(uint32_t offset, uint8_t *dst, int len);
 
-/* Brick-to-brick broadcast (ESP-NOW on hardware). */
+/* Brick-to-brick broadcast (ESP-NOW on hardware). The receiver is power
+ * hungry, so the core turns the radio on only while it is needed. */
+void     HAL(hal_radio_enable)(int on);
 void     HAL(hal_radio_send)(const uint8_t *data, int len);
 
 /* Enter deep sleep until PIN_IMU_INT1 goes high. On hardware this does not

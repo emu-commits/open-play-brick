@@ -4,7 +4,7 @@
 
 #define HDR_SIZE  16
 #define TAG_SIZE  36
-#define PROF_SIZE 32
+#define PROF_SIZE (2 * EV_COUNT)
 #define PAT_SIZE  4
 #define SEG_SIZE  12
 

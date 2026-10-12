@@ -3,7 +3,7 @@
 // memory images. Runs in the browser and in Node.
 
 export const EVENTS = ['place', 'remove', 'shake', 'swing', 'tilt_l', 'tilt_r', 'roll', 'impact',
-  'throw', 'red', 'green', 'blue', 'hit', 'damaged', 'destroyed', 'ambient'];
+  'throw', 'red', 'green', 'blue', 'hit', 'damaged', 'destroyed', 'ambient', 'clap'];
 export const ANIMS = ['off', 'solid', 'breathe', 'flash', 'chase', 'sparkle', 'rainbow', 'alternate', 'halves', 'fade'];
 export const WAVES = ['sine', 'square', 'saw', 'triangle', 'noise', 'silence'];
 export const KINDS = ['unknown', 'identity', 'item'];
@@ -107,11 +107,11 @@ export function buildCatalog(tagsJson, soundsJson) {
     return [first, p.segs.length, p.loop ? 1 : 0];
   });
 
-  const size = 16 + tags.length * 36 + profileNames.length * 32 + patches.length * 4 + segs.length * 12;
+  const size = 16 + tags.length * 36 + profileNames.length * EVENTS.length * 2 + patches.length * 4 + segs.length * 12;
   if (size > 8192) throw new Error(`Catalogue is ${size} bytes, the firmware allows 8192`);
   const blob = new Uint8Array(size);
   const dv = new DataView(blob.buffer);
-  blob.set([0x4F, 0x50, 0x42, 0x43, 1, tags.length, profileNames.length, patches.length]);
+  blob.set([0x4F, 0x50, 0x42, 0x43, 2, tags.length, profileNames.length, patches.length]);
   dv.setUint16(8, segs.length, true);
   SYSTEM.forEach((k, i) => { blob[10 + i] = patchIndex(soundsJson.system?.[k]); });
 
@@ -133,9 +133,9 @@ export function buildCatalog(tagsJson, soundsJson) {
     EVENTS.forEach((ev, i) => {
       const [patch, anim] = p[ev] ?? [null, 'off'];
       blob[o + i] = patchIndex(patch);
-      blob[o + 16 + i] = animIndex(anim);
+      blob[o + EVENTS.length + i] = animIndex(anim);
     });
-    o += 32;
+    o += EVENTS.length * 2;
   }
   for (const [first, n, flags] of patches) { dv.setUint16(o, first, true); blob[o + 2] = n; blob[o + 3] = flags; o += 4; }
   for (const s of segs) {

@@ -10,6 +10,7 @@ const ROWS = [
   { net: 'SPI_MISO', bus: 'spi', role: 'rx' },
   { net: 'NFC_NSS', bus: 'spi', idle: 1 },
   { net: 'NFC_BUSY', bus: 'spi' },
+  { net: 'NFC_RST', bus: 'spi' },
   { net: 'RF_FIELD', bus: 'rf' },
   { net: 'I2C_SCL', bus: 'i2c', role: 'scl', idle: 1 },
   { net: 'I2C_SDA', bus: 'i2c', role: 'sda', idle: 1 },
@@ -18,7 +19,10 @@ const ROWS = [
   { net: 'I2S_BCLK', bus: 'i2s', role: 'bclk' },
   { net: 'I2S_LRCLK', bus: 'i2s', role: 'lrclk' },
   { net: 'I2S_DOUT', bus: 'i2s', role: 'dout' },
-  { net: 'PERIPH_EN_N', bus: 'gpio', idle: 1 },
+  { net: 'I2S_DIN', bus: 'i2sin', role: 'din', colour: 'i2s' },
+  { net: 'PERIPH_EN', bus: 'gpio' },
+  { net: 'LAMP_EN', bus: 'gpio' },
+  { net: 'QT_PWR', bus: 'gpio' },
 ];
 const LABEL_W = 104, ROW_H = 21, TOP = 20;
 const hex2 = v => v.toString(16).toUpperCase().padStart(2, '0');
@@ -45,19 +49,22 @@ const BUS = {
     group: 8,
     text: (r, role, g) => hex2(r.grb[g]),
   },
+  // 64 clocks per frame: a 32-bit left slot carrying 16 bits of data at the
+  // top, then an idle right slot.
   i2s: {
-    slots: r => r.samples.length * 32,
+    slots: r => r.samples.length * 64,
     level(r, role, k) {
       if (role === 'bclk') return [0, 1];
-      const pos = k & 31;
-      if (role === 'lrclk') return pos < 16 ? [0, 0] : [1, 1];
+      const pos = k & 63;
+      if (role === 'lrclk') return pos < 32 ? [0, 0] : [1, 1];
       const j = pos - 1;                              // I2S: data is one clock late
-      const bit = j >= 0 && j < 16 ? ((r.samples[k >> 5] & 0xFFFF) >> (15 - j)) & 1 : 0;
+      const bit = j >= 0 && j < 16 ? ((r.samples[k >> 6] & 0xFFFF) >> (15 - j)) & 1 : 0;
       return [bit, bit];
     },
-    group: 32,
-    text: (r, role, g) => role === 'dout' ? String(r.samples[g]) : null,
+    group: 64,
+    text: (r, role, g) => role === 'bclk' || role === 'lrclk' ? null : String(r.samples[g]),
   },
+  i2sin: null,   // filled in below: same framing as i2s
   i2c: {
     slots: r => layoutI2c(r).length,
     level(r, role, k) {
@@ -69,6 +76,8 @@ const BUS = {
     text: null,
   },
 };
+
+BUS.i2sin = BUS.i2s;
 
 function layoutI2c(r) {
   if (r._slots) return r._slots;
@@ -152,7 +161,7 @@ export class Analyzer {
       if (bus === 'spi') {                       // show the whole chip-select frame
         t0 -= 6; t1 += 30;
       } else if (bus === 'i2s') {
-        t1 = t0 + 4 * 62.5;                      // a few samples
+        t1 = t0 + 2 * 62.5;                      // two frames
       }
       this.frame(t0, t1);
       return true;
@@ -195,7 +204,7 @@ export class Analyzer {
     ROWS.forEach((row, i) => {
       const yLow = TOP + i * ROW_H + ROW_H - 5, yHigh = TOP + i * ROW_H + 5;
       const Y = v => (v ? yHigh : yLow);
-      const colour = BUS_COLOUR[row.bus];
+      const colour = BUS_COLOUR[row.colour ?? row.bus];
       ctx.fillStyle = ink; ctx.textAlign = 'right';
       ctx.fillText(row.net, LABEL_W - 8, (yLow + yHigh) / 2);
       ctx.strokeStyle = colour; ctx.fillStyle = colour; ctx.lineWidth = 1.3;

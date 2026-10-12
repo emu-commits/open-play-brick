@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define FW_VERSION "0.1.0"
+#define FW_VERSION "0.2.0"
 
 enum { ST_BOOT, ST_IDLE, ST_TAG_ACTIVE, ST_GESTURE, ST_CHARGING, ST_LOW_BATTERY, ST_SLEEP };
 
@@ -27,7 +27,9 @@ typedef struct __attribute__((packed)) {
     uint32_t tag_crc;        /* 20 */
     uint8_t  uid[8];         /* 24 */
     char     tag_name[24];   /* 32 */
-} fw_status_t;               /* 56 bytes */
+    uint16_t mic_level;      /* 56 */
+    uint16_t mic_floor;      /* 58 */
+} fw_status_t;               /* 60 bytes */
 
 void fw_init(void);
 void fw_loop(void);
