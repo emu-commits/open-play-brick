@@ -1,0 +1,1 @@
+{"type":"module","name":"open-play-brick","private":true,"scripts":{"test":"node tools/gen_pins.mjs --check && node test/run.mjs","build":"sh tools/build_wasm.sh"}}

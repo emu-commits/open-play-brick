@@ -1,0 +1,7 @@
+build/
+node_modules/
+firmware/port-espidf/build/
+firmware/port-espidf/sdkconfig
+firmware/port-espidf/managed_components/
+firmware/port-espidf/dependencies.lock
+.zig-cache/

@@ -1,0 +1,29 @@
+{
+  "_how_to_add_a_tag": [
+    "1. Scan the tag with any ISO 15693 reader (a phone with NFC Tools, a Flipper Zero, or this brick: it logs the numbers over USB).",
+    "2. Copy the second byte of block 0 into `len`. That is the payload length, and it is the only identifier you need to get started.",
+    "3. Optionally add `crc32` (the brick logs it). Two different tags can share a length; the CRC tells them apart.",
+    "4. Pick a `profile` from sounds.json and a `colour`. No code changes are needed.",
+    "`kind` is identity (a figure) or item (a tile). `combat: true` makes the tag fire on red and take hits from other bricks.",
+    "Entries with `len: null` have not been scanned yet. The emulator uses `placeholder_len` so you can still try them, and labels them as placeholders. Do not flash a placeholder length to a real brick."
+  ],
+  "tags": [
+    { "name": "X-Wing",            "len": "0x6B", "crc32": "0x90A404C8", "kind": "item",     "profile": "starfighter", "colour": "#ff5a2a", "combat": true,  "group": "Star Wars", "set": "75423", "source": "dump published in node-smartplay" },
+    { "name": "X-Wing body",       "len": "0x69", "crc32": null,         "kind": "item",     "profile": "starfighter", "colour": "#ff8a3a", "combat": true,  "group": "Star Wars", "set": "75423", "source": "length reported by Ellerbach/LegoSmartPlay" },
+    { "name": "TIE Fighter",       "len": "0x3B", "crc32": null,         "kind": "item",     "profile": "starfighter", "colour": "#39e06a", "combat": true,  "group": "Star Wars", "set": "75421", "source": "length reported by Ellerbach/LegoSmartPlay" },
+    { "name": "Lightsaber",        "len": "0x7E", "crc32": "0xAB230D12", "kind": "item",     "profile": "saber",       "colour": "#3d8bff", "combat": false, "group": "Star Wars", "set": null,    "source": "dump published in node-smartplay" },
+    { "name": "R2-D2",             "len": "0x4A", "crc32": "0x3652D8C1", "kind": "identity", "profile": "droid",       "colour": "#4f7dff", "combat": false, "group": "Star Wars", "set": "75423", "source": "dump published in node-smartplay" },
+    { "name": "Luke Skywalker",    "len": "0x9D", "crc32": "0xE8E68E59", "kind": "identity", "profile": "hero",        "colour": "#48d67a", "combat": false, "group": "Star Wars", "set": "75423", "source": "dump published in node-smartplay" },
+    { "name": "Princess Leia",     "len": "0x9E", "crc32": "0xBCA6DEC1", "kind": "identity", "profile": "hero",        "colour": "#f2ede0", "combat": false, "group": "Star Wars", "set": "75423", "source": "dump published in node-smartplay" },
+    { "name": "Darth Vader",       "len": "0xA9", "crc32": "0x85F392DC", "kind": "identity", "profile": "villain",     "colour": "#ff1f1f", "combat": false, "group": "Star Wars", "set": "75421", "source": "dump published in node-smartplay" },
+    { "name": "Emperor Palpatine", "len": "0xAB", "crc32": "0x705C2646", "kind": "identity", "profile": "villain",     "colour": "#9a4dff", "combat": false, "group": "Star Wars", "set": null,    "source": "dump published in node-smartplay" },
+
+    { "name": "Pikachu",    "len": null, "placeholder_len": "0xE1", "kind": "identity", "profile": "electric", "colour": "#ffd21f", "group": "Pokémon (not yet scanned)", "set": null,    "source": "placeholder" },
+    { "name": "Jolteon",    "len": null, "placeholder_len": "0xE2", "kind": "identity", "profile": "electric", "colour": "#ffe85a", "group": "Pokémon (not yet scanned)", "set": null,    "source": "placeholder" },
+    { "name": "Charizard",  "len": null, "placeholder_len": "0xE3", "kind": "identity", "profile": "fire",     "colour": "#ff6a1a", "group": "Pokémon (not yet scanned)", "set": null,    "source": "placeholder" },
+    { "name": "Jigglypuff", "len": null, "placeholder_len": "0xE4", "kind": "identity", "profile": "singer",   "colour": "#ff8fc7", "group": "Pokémon (not yet scanned)", "set": "72159", "source": "placeholder" },
+    { "name": "Mew",        "len": null, "placeholder_len": "0xE5", "kind": "identity", "profile": "psychic",  "colour": "#ff9fe0", "group": "Pokémon (not yet scanned)", "set": "72161", "source": "placeholder" },
+    { "name": "Mewtwo",     "len": null, "placeholder_len": "0xE6", "kind": "identity", "profile": "psychic",  "colour": "#b98cff", "group": "Pokémon (not yet scanned)", "set": "72163", "source": "placeholder" },
+    { "name": "Gengar",     "len": null, "placeholder_len": "0xE7", "kind": "identity", "profile": "ghost",    "colour": "#7a3cff", "group": "Pokémon (not yet scanned)", "set": "72166", "source": "placeholder" }
+  ]
+}

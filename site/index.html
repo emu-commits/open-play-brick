@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Play Brick: hardware emulator</title>
+<meta name="description" content="A pin-level emulator of an open, ESP32-based play brick that reads ISO 15693 play tags. The real firmware runs in your browser against models of every chip on the board.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <h1>Open Play Brick <span class="rev">rev A · emulator</span></h1>
+    <p>The brick's real firmware, compiled to WebAssembly, wired to models of every chip on the board. Independent project, not affiliated with or endorsed by the LEGO Group.</p>
+  </div>
+  <div class="transport">
+    <button id="btn-sound" class="primary" title="Browsers need a click before they play audio">Turn sound on</button>
+    <button id="btn-run" aria-pressed="true">Pause</button>
+    <button id="btn-step" title="Run one pass of the firmware main loop and frame it in the analyzer">Step</button>
+    <button id="btn-reset" title="Power-cycle the board">Reset</button>
+    <a class="link" href="https://github.com/emu-commits/open-play-brick">Source and docs</a>
+  </div>
+</header>
+
+<main class="bench">
+  <section class="panel controls" aria-label="Brick and controls">
+    <div class="brick-stage" id="brick-stage"></div>
+    <dl class="status" id="status"></dl>
+
+    <h2>Tag <small>what the NFC reader sees</small></h2>
+    <div class="row">
+      <select id="tag-select" aria-label="Tag"></select>
+    </div>
+    <div class="row">
+      <button id="tag-place" class="primary">Place tag</button>
+      <button id="tag-remove">Remove</button>
+      <button id="tag-random">Random</button>
+    </div>
+    <details>
+      <summary>Unknown or non-play tag</summary>
+      <div class="row">
+        <label>Payload length <input id="custom-len" value="0x55" size="5"></label>
+        <button id="custom-place">Place unknown tag</button>
+        <button id="blank-place">Place blank NFC tag</button>
+      </div>
+    </details>
+
+    <h2>Motion <small>what the accelerometer feels</small></h2>
+    <div class="grid" id="gestures">
+      <button data-gesture="shake">Shake</button>
+      <button data-gesture="swing">Swing</button>
+      <button data-gesture="throw">Throw</button>
+      <button data-gesture="impact">Knock</button>
+      <button data-tilt="-1">Tilt left</button>
+      <button data-tilt="1">Tilt right</button>
+      <button data-flip="1">Turn over</button>
+      <button data-level="1">Set level</button>
+    </div>
+    <label class="slider">Tilt <input type="range" id="tilt" min="-80" max="80" value="0"> <output id="tilt-out">0°</output></label>
+    <div class="row">
+      <button id="btn-device" hidden>Use this device's motion sensor</button>
+    </div>
+
+    <h2>Colour <small>held in front of the colour sensor</small></h2>
+    <div class="swatches" id="swatches"></div>
+
+    <h2>Another brick <small>over the radio</small></h2>
+    <div class="row">
+      <button id="peer-fire">Fire at this brick</button>
+      <span class="hint" id="peer-info">sent 0 · received 0</span>
+    </div>
+
+    <h2>Power</h2>
+    <div class="row">
+      <label class="check"><input type="checkbox" id="usb"> USB-C plugged in</label>
+    </div>
+    <label class="slider">Battery <input type="range" id="soc" min="0" max="100" value="80"> <output id="soc-out">80%</output></label>
+
+    <h2>Speaker</h2>
+    <label class="slider">Volume <input type="range" id="volume" min="0" max="100" value="70"> <output id="volume-out">70</output></label>
+  </section>
+
+  <section class="panel schematic" aria-label="Wiring diagram">
+    <div class="panel-head">
+      <h2>Wiring <small>drawn from the same netlist the firmware's pin header is generated from. Lines light up when something moves on them. Click a part or a wire.</small></h2>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="diagram-wrap"><svg id="diagram" role="img" aria-label="Wiring diagram of the brick"></svg></div>
+    <div class="info" id="info">Click a part to see what it is and why it was chosen.</div>
+  </section>
+
+  <section class="panel scope" aria-label="Logic analyzer">
+    <div class="panel-head">
+      <h2>Signals <small>every pin, on the firmware's own clock</small></h2>
+      <div class="scope-tools">
+        <button id="scope-follow" aria-pressed="true">Follow</button>
+        <span class="seg" id="scope-span"></span>
+        <span class="seg">
+          Jump to last
+          <button data-jump="spi">SPI</button>
+          <button data-jump="i2c">I2C</button>
+          <button data-jump="led">Pixels</button>
+          <button data-jump="i2s">I2S</button>
+        </span>
+        <span class="hint" id="scope-readout"></span>
+      </div>
+    </div>
+    <canvas id="scope" height="340"></canvas>
+    <p class="hint">Scroll to zoom, drag to pan. Pause or Step first if you want to read individual bits.</p>
+  </section>
+
+  <section class="panel logs" aria-label="Logs">
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="console" aria-selected="true">Serial console</button>
+      <button role="tab" data-tab="decode" aria-selected="false">Bus decode</button>
+      <button role="tab" data-tab="memory" aria-selected="false">Tag memory</button>
+      <button role="tab" data-tab="power" aria-selected="false">Power estimate</button>
+    </div>
+    <div class="tab-body" id="tab-console"><pre id="console" class="log"></pre></div>
+    <div class="tab-body" id="tab-decode" hidden>
+      <div class="filters" id="decode-filters"></div>
+      <pre id="decode" class="log"></pre>
+    </div>
+    <div class="tab-body" id="tab-memory" hidden><div id="memory"></div></div>
+    <div class="tab-body" id="tab-power" hidden><div id="power"></div></div>
+  </section>
+</main>
+
+<footer>
+  <p>LEGO® is a trademark of the LEGO Group, which does not sponsor, authorise or endorse this project. Tag names are used only to say what each tag is. The tag contents shown here are simulated: this project does not copy, decode or distribute any encrypted tag data, sounds or firmware.</p>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

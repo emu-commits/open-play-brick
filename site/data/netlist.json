@@ -1,0 +1,134 @@
+{
+  "_comment": "Single source of truth for the Open Play Brick rev A wiring. The emulator draws its diagram from this file and tools/gen_pins.mjs generates firmware/core/pins.h from it, so the picture, the simulation and the firmware cannot drift apart.",
+  "board": {
+    "name": "Open Play Brick",
+    "rev": "A",
+    "envelope_mm": [31.8, 15.8, 16.0],
+    "envelope_note": "2 x 4 studs, five plates tall (5 x 3.2 mm), plus 1.7 mm studs"
+  },
+  "gpio": {
+    "IMU_INT1": 0,
+    "NFC_BUSY": 1,
+    "PERIPH_EN_N": 2,
+    "LED_DATA": 3,
+    "SPI_SCK": 4,
+    "SPI_MOSI": 5,
+    "SPI_MISO": 6,
+    "I2S_DOUT": 7,
+    "I2C_SDA": 8,
+    "I2C_SCL": 9,
+    "NFC_NSS": 10,
+    "USB_DN": 18,
+    "USB_DP": 19,
+    "I2S_BCLK": 20,
+    "I2S_LRCLK": 21
+  },
+  "nets": {
+    "SPI_SCK":     { "bus": "spi",   "desc": "SPI clock, mode 0, 2 MHz" },
+    "SPI_MOSI":    { "bus": "spi",   "desc": "SPI host out" },
+    "SPI_MISO":    { "bus": "spi",   "desc": "SPI host in" },
+    "NFC_NSS":     { "bus": "spi",   "desc": "PN5180 chip select, active low" },
+    "NFC_BUSY":    { "bus": "spi",   "desc": "PN5180 BUSY handshake, high while the reader works" },
+    "I2C_SDA":     { "bus": "i2c",   "desc": "I2C data, 400 kHz, 2.2k pull-up to 3V3" },
+    "I2C_SCL":     { "bus": "i2c",   "desc": "I2C clock, 2.2k pull-up (also keeps the GPIO9 boot strap high)" },
+    "IMU_INT1":    { "bus": "gpio",  "desc": "Motion interrupt, wakes the MCU from deep sleep (RTC-capable pad)" },
+    "PERIPH_EN_N": { "bus": "gpio",  "desc": "Low = switched 3V3 rail on. 10k pull-up keeps it off in reset and deep sleep, and satisfies the GPIO2 boot strap" },
+    "LED_DATA":    { "bus": "led",   "desc": "800 kHz single-wire pixel data, 9 pixels" },
+    "I2S_BCLK":    { "bus": "i2s",   "desc": "I2S bit clock, 16 kHz x 32" },
+    "I2S_LRCLK":   { "bus": "i2s",   "desc": "I2S word select" },
+    "I2S_DOUT":    { "bus": "i2s",   "desc": "I2S data to the amplifier" },
+    "USB_DP":      { "bus": "usb",   "desc": "USB D+ (built-in USB Serial/JTAG: flashing and console)" },
+    "USB_DN":      { "bus": "usb",   "desc": "USB D-" },
+    "VBUS":        { "bus": "power", "desc": "USB 5 V" },
+    "VBAT":        { "bus": "power", "desc": "Li-Po cell, 3.0 to 4.2 V" },
+    "3V3":         { "bus": "power", "desc": "Always-on 3.3 V (MCU, accelerometer, colour sensor)" },
+    "3V3_SW":      { "bus": "power", "desc": "Switched 3.3 V (NFC reader, pixels, amp enable). Off in deep sleep" },
+    "ANT":         { "bus": "rf",    "desc": "13.56 MHz loop antenna" },
+    "SPK":         { "bus": "audio", "desc": "Bridge-tied speaker drive" },
+    "GND":         { "bus": "power", "desc": "Ground" }
+  },
+  "parts": [
+    {
+      "id": "U1", "name": "ESP32-C3FH4", "role": "Microcontroller",
+      "package": "QFN-32, 5 x 5 mm", "why": "RISC-V MCU with 4 MB flash in-package, BLE 5 and Wi-Fi radio, native USB. Same silicon as the common ESP32-C3 Super Mini dev board, so the breadboard build and the brick board run one firmware.",
+      "pins": [
+        ["GPIO0", "IMU_INT1"], ["GPIO1", "NFC_BUSY"], ["GPIO2", "PERIPH_EN_N"], ["GPIO3", "LED_DATA"],
+        ["GPIO4", "SPI_SCK"], ["GPIO5", "SPI_MOSI"], ["GPIO6", "SPI_MISO"], ["GPIO7", "I2S_DOUT"],
+        ["GPIO8", "I2C_SDA"], ["GPIO9", "I2C_SCL"], ["GPIO10", "NFC_NSS"],
+        ["GPIO18", "USB_DN"], ["GPIO19", "USB_DP"], ["GPIO20", "I2S_BCLK"], ["GPIO21", "I2S_LRCLK"],
+        ["VDD", "3V3"], ["GND", "GND"]
+      ]
+    },
+    {
+      "id": "U2", "name": "PN5180", "role": "NFC reader (ISO 15693)",
+      "package": "HVQFN-40, 6 x 6 mm", "why": "Full-power NFC frontend with ISO 15693 support. Already shown to read these tags in the Ellerbach project.",
+      "pins": [
+        ["SCK", "SPI_SCK"], ["MOSI", "SPI_MOSI"], ["MISO", "SPI_MISO"], ["NSS", "NFC_NSS"], ["BUSY", "NFC_BUSY"],
+        ["RESET_N", "3V3_SW"], ["VDD", "3V3_SW"], ["ANT1/2", "ANT"], ["GND", "GND"]
+      ]
+    },
+    {
+      "id": "ANT1", "name": "Loop antenna", "role": "13.56 MHz coil",
+      "package": "PCB or flex loop, about 28 x 12 mm", "why": "One coil around the board edge. Reads a tag on the top or bottom face. It cannot tell where on the brick a tag sits.",
+      "pins": [["LOOP", "ANT"]]
+    },
+    {
+      "id": "U3", "name": "LIS2DH12", "role": "Accelerometer",
+      "package": "LGA-12, 2 x 2 mm", "i2c": "0x19", "why": "3-axis, a few microamps in wake-on-motion mode, interrupt output that wakes the MCU.",
+      "pins": [["SDA", "I2C_SDA"], ["SCL", "I2C_SCL"], ["INT1", "IMU_INT1"], ["VDD", "3V3"], ["GND", "GND"]]
+    },
+    {
+      "id": "U4", "name": "TCS34725", "role": "Colour sensor",
+      "package": "FN-6, 2 x 2.4 mm", "i2c": "0x29", "why": "RGB + clear light-to-digital converter with an IR filter. Used in the Ellerbach build.",
+      "pins": [["SDA", "I2C_SDA"], ["SCL", "I2C_SCL"], ["VDD", "3V3"], ["GND", "GND"]]
+    },
+    {
+      "id": "U5", "name": "MAX17048", "role": "Battery fuel gauge",
+      "package": "TDFN-8, 2 x 2 mm", "i2c": "0x36", "why": "Reports cell voltage, state of charge and charge rate over I2C, so no ADC pin is spent on the battery.",
+      "pins": [["SDA", "I2C_SDA"], ["SCL", "I2C_SCL"], ["CELL", "VBAT"], ["GND", "GND"]]
+    },
+    {
+      "id": "U6", "name": "MAX98357A", "role": "I2S class-D amplifier",
+      "package": "TQFN-16, 3 x 3 mm", "why": "Digital audio in, speaker out, no master clock and no DAC needed.",
+      "pins": [
+        ["BCLK", "I2S_BCLK"], ["LRCLK", "I2S_LRCLK"], ["DIN", "I2S_DOUT"], ["SD_MODE", "3V3_SW"],
+        ["VDD", "VBAT"], ["OUT+/-", "SPK"], ["GND", "GND"]
+      ]
+    },
+    {
+      "id": "LS1", "name": "Speaker", "role": "8 ohm micro speaker",
+      "package": "15 x 11 x 3 mm", "why": "Common phone-style rectangular micro speaker.",
+      "pins": [["+/-", "SPK"]]
+    },
+    {
+      "id": "D1", "name": "SK6805-EC15 x 9", "role": "RGB pixels",
+      "package": "1.5 x 1.5 mm each", "why": "Addressable RGB LEDs on one data wire. Pixels 0 to 7 are the light array, pixel 8 sits beside the colour sensor and lights the surface it looks at.",
+      "pins": [["DIN", "LED_DATA"], ["VDD", "3V3_SW"], ["GND", "GND"]]
+    },
+    {
+      "id": "Q1", "name": "P-FET load switch", "role": "Switched rail",
+      "package": "SOT-723", "why": "Cuts power to the reader and pixels in deep sleep. Nine idle pixels alone draw several milliamps.",
+      "pins": [["GATE", "PERIPH_EN_N"], ["IN", "3V3"], ["OUT", "3V3_SW"]]
+    },
+    {
+      "id": "U7", "name": "3.3 V LDO", "role": "Regulator",
+      "package": "SOT-23-5 or DFN", "why": "Low-dropout, low quiescent current regulator, 300 mA class (for example TLV75533).",
+      "pins": [["IN", "VBAT"], ["OUT", "3V3"], ["GND", "GND"]]
+    },
+    {
+      "id": "U8", "name": "MCP73831", "role": "Li-Po charger",
+      "package": "DFN-8, 2 x 3 mm", "why": "Single-cell linear charger, programmed to about 50 mA for a small cell.",
+      "pins": [["VIN", "VBUS"], ["VBAT", "VBAT"], ["GND", "GND"]]
+    },
+    {
+      "id": "BT1", "name": "Li-Po cell", "role": "Battery",
+      "package": "401225 pouch, 4 x 12 x 25 mm, about 100 mAh", "why": "Widely sold pouch size with built-in protection board.",
+      "pins": [["+", "VBAT"], ["-", "GND"]]
+    },
+    {
+      "id": "J1", "name": "USB-C", "role": "Charge and program",
+      "package": "Mid-mount 16-pin receptacle", "why": "Charging, flashing and serial console over one port.",
+      "pins": [["VBUS", "VBUS"], ["D+", "USB_DP"], ["D-", "USB_DN"], ["GND", "GND"]]
+    }
+  ]
+}
