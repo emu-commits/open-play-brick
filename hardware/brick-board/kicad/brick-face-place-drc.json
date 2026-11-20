@@ -1,0 +1,3890 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-11-20T10:55:27+0000",
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "9.0.9",
+    "schematic_parity": [],
+    "source": "brick-face.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [PIX3] of LED3 on F.Cu",
+                    "pos": {
+                        "x": 117.26,
+                        "y": 104.55
+                    },
+                    "uuid": "e0e8c94b-69f8-4916-b34d-5dceeb12956b"
+                },
+                {
+                    "description": "Pad 3 [PIX3] of LED4 on F.Cu",
+                    "pos": {
+                        "x": 118.94,
+                        "y": 103.45
+                    },
+                    "uuid": "8f8f7302-93fa-4839-b182-71826075c3ef"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [TX2F] of C45 on B.Cu",
+                    "pos": {
+                        "x": 107.015,
+                        "y": 106.67
+                    },
+                    "uuid": "a68bd6cb-621f-4fef-805c-148ca7ea6de1"
+                },
+                {
+                    "description": "Pad 1 [TX2F] of C44 on B.Cu",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 110.11
+                    },
+                    "uuid": "46d7def5-048e-4c3b-9c2c-15f793021587"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 9 [TX2F] of J5 on B.Cu",
+                    "pos": {
+                        "x": 117.86,
+                        "y": 108.5
+                    },
+                    "uuid": "4c7ccc89-f011-462b-b2e0-1a0a9352e4da"
+                },
+                {
+                    "description": "Pad 1 [TX2F] of C45 on B.Cu",
+                    "pos": {
+                        "x": 107.015,
+                        "y": 106.67
+                    },
+                    "uuid": "a68bd6cb-621f-4fef-805c-148ca7ea6de1"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [TX1F] of C40 on B.Cu",
+                    "pos": {
+                        "x": 105.315,
+                        "y": 104.37
+                    },
+                    "uuid": "f2f990be-d0b3-4cf7-b046-a0e5e830a22d"
+                },
+                {
+                    "description": "Pad 1 [TX1F] of C41 on B.Cu",
+                    "pos": {
+                        "x": 106.11,
+                        "y": 106.915
+                    },
+                    "uuid": "3086c6df-63dd-4d9b-b579-5ef97333da55"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [TX1F] of C41 on B.Cu",
+                    "pos": {
+                        "x": 106.11,
+                        "y": 106.915
+                    },
+                    "uuid": "3086c6df-63dd-4d9b-b579-5ef97333da55"
+                },
+                {
+                    "description": "Pad 10 [TX1F] of J5 on B.Cu",
+                    "pos": {
+                        "x": 117.86,
+                        "y": 104.9
+                    },
+                    "uuid": "0b60fd28-0173-4159-9f0b-2b1cbc62d572"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 107.31
+                    },
+                    "uuid": "29c1fdc5-38ff-4bc0-8339-b86d3a5f953b"
+                },
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 107.265
+                    },
+                    "uuid": "eff57ba1-e51f-42e8-a399-071fb616ae78"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 107.31
+                    },
+                    "uuid": "29c1fdc5-38ff-4bc0-8339-b86d3a5f953b"
+                },
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.91,
+                        "y": 107.415
+                    },
+                    "uuid": "5bd654e2-71bf-46ca-9c2e-a22b777c1f76"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 107.31
+                    },
+                    "uuid": "29c1fdc5-38ff-4bc0-8339-b86d3a5f953b"
+                },
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.47,
+                        "y": 107.815
+                    },
+                    "uuid": "8fb50449-b5b8-4752-8a7a-bfd4ab221836"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 107.31
+                    },
+                    "uuid": "29c1fdc5-38ff-4bc0-8339-b86d3a5f953b"
+                },
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.56,
+                        "y": 107.265
+                    },
+                    "uuid": "54e1adce-c073-425a-bac6-8907226970bf"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.665,
+                        "y": 107.96
+                    },
+                    "uuid": "025f0ecd-fdb8-492a-8699-a58977de8e8b"
+                },
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.41,
+                        "y": 107.815
+                    },
+                    "uuid": "db690ad0-f629-4288-aafc-c91edc61f326"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.41,
+                        "y": 107.815
+                    },
+                    "uuid": "db690ad0-f629-4288-aafc-c91edc61f326"
+                },
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.515,
+                        "y": 107.81
+                    },
+                    "uuid": "f33f7f51-bd6e-41e6-acb8-51e865a90a23"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.41,
+                        "y": 107.965
+                    },
+                    "uuid": "9bd56483-5da8-4d49-8dea-f1b426db416e"
+                },
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.515,
+                        "y": 107.81
+                    },
+                    "uuid": "f33f7f51-bd6e-41e6-acb8-51e865a90a23"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.41,
+                        "y": 107.815
+                    },
+                    "uuid": "db690ad0-f629-4288-aafc-c91edc61f326"
+                },
+                {
+                    "description": "Arc of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.365,
+                        "y": 107.81
+                    },
+                    "uuid": "ff57db3a-ec69-43ab-8d65-e57d1676df4a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.41,
+                        "y": 107.965
+                    },
+                    "uuid": "9bd56483-5da8-4d49-8dea-f1b426db416e"
+                },
+                {
+                    "description": "Arc of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.365,
+                        "y": 107.81
+                    },
+                    "uuid": "ff57db3a-ec69-43ab-8d65-e57d1676df4a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.56,
+                        "y": 108.665
+                    },
+                    "uuid": "9cf5bd55-1da7-46de-8dcb-b2e4d47e0bc2"
+                },
+                {
+                    "description": "Arc of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.365,
+                        "y": 107.81
+                    },
+                    "uuid": "ff57db3a-ec69-43ab-8d65-e57d1676df4a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.47,
+                        "y": 107.815
+                    },
+                    "uuid": "8fb50449-b5b8-4752-8a7a-bfd4ab221836"
+                },
+                {
+                    "description": "Arc of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.665,
+                        "y": 107.81
+                    },
+                    "uuid": "cbc1111e-d078-443a-b356-02499636db65"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.873,
+                        "y": 108.815
+                    },
+                    "uuid": "373ad5ac-2825-422c-b3e3-d706c832b0ff"
+                },
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.47,
+                        "y": 107.815
+                    },
+                    "uuid": "8fb50449-b5b8-4752-8a7a-bfd4ab221836"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.47,
+                        "y": 107.815
+                    },
+                    "uuid": "8fb50449-b5b8-4752-8a7a-bfd4ab221836"
+                },
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.873,
+                        "y": 107.815
+                    },
+                    "uuid": "ce6c9787-92eb-4158-891f-8bca8f82c1e6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.873,
+                        "y": 108.815
+                    },
+                    "uuid": "373ad5ac-2825-422c-b3e3-d706c832b0ff"
+                },
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 107.965
+                    },
+                    "uuid": "f7b921fd-f2c6-411a-979f-51965115bb31"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.873,
+                        "y": 107.815
+                    },
+                    "uuid": "ce6c9787-92eb-4158-891f-8bca8f82c1e6"
+                },
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 107.965
+                    },
+                    "uuid": "f7b921fd-f2c6-411a-979f-51965115bb31"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.015,
+                        "y": 109.91
+                    },
+                    "uuid": "26d6f1db-5b2c-41df-8a01-45aa6763f942"
+                },
+                {
+                    "description": "Segment of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.015,
+                        "y": 110.41
+                    },
+                    "uuid": "ae0bf5eb-65f4-4f3d-8570-901aaabe7ed8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.015,
+                        "y": 109.91
+                    },
+                    "uuid": "26d6f1db-5b2c-41df-8a01-45aa6763f942"
+                },
+                {
+                    "description": "Arc of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 110.41
+                    },
+                    "uuid": "72006d2e-0ba2-4884-bd9b-a88d95b39709"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.165,
+                        "y": 110.41
+                    },
+                    "uuid": "5c981301-6d2e-4d48-834e-0811a1267d16"
+                },
+                {
+                    "description": "Segment of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.015,
+                        "y": 110.41
+                    },
+                    "uuid": "ae0bf5eb-65f4-4f3d-8570-901aaabe7ed8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.165,
+                        "y": 110.41
+                    },
+                    "uuid": "5c981301-6d2e-4d48-834e-0811a1267d16"
+                },
+                {
+                    "description": "Arc of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 110.41
+                    },
+                    "uuid": "72006d2e-0ba2-4884-bd9b-a88d95b39709"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.91,
+                        "y": 108.815
+                    },
+                    "uuid": "2a195085-d1be-4530-a162-698aef5fa45c"
+                },
+                {
+                    "description": "Segment of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.865,
+                        "y": 108.82
+                    },
+                    "uuid": "49140c17-90d6-4cea-81f2-6def40994352"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.865,
+                        "y": 108.82
+                    },
+                    "uuid": "49140c17-90d6-4cea-81f2-6def40994352"
+                },
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.815
+                    },
+                    "uuid": "62f52ac1-4f06-40b3-8f6d-b9436de15ed9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.815
+                    },
+                    "uuid": "62f52ac1-4f06-40b3-8f6d-b9436de15ed9"
+                },
+                {
+                    "description": "Arc of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.165,
+                        "y": 108.97
+                    },
+                    "uuid": "93d3bf45-939c-4816-ac32-122aba9442d7"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.665
+                    },
+                    "uuid": "1c5bb542-ecb4-4da1-82ef-c48a28b1b418"
+                },
+                {
+                    "description": "Arc of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.165,
+                        "y": 108.97
+                    },
+                    "uuid": "93d3bf45-939c-4816-ac32-122aba9442d7"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.165,
+                        "y": 108.97
+                    },
+                    "uuid": "93d3bf45-939c-4816-ac32-122aba9442d7"
+                },
+                {
+                    "description": "Segment of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.015,
+                        "y": 109.47
+                    },
+                    "uuid": "e0c7a820-242c-4e2b-8a56-34d95fcdc5e0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.97
+                    },
+                    "uuid": "7ff4bb7a-8c10-4323-a8fc-e6fde16ff658"
+                },
+                {
+                    "description": "Arc of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.165,
+                        "y": 108.97
+                    },
+                    "uuid": "93d3bf45-939c-4816-ac32-122aba9442d7"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.91,
+                        "y": 108.815
+                    },
+                    "uuid": "2a195085-d1be-4530-a162-698aef5fa45c"
+                },
+                {
+                    "description": "Arc of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.865,
+                        "y": 108.97
+                    },
+                    "uuid": "63c2c5e2-2c9d-4e06-9527-033622d522b4"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.91,
+                        "y": 108.815
+                    },
+                    "uuid": "2a195085-d1be-4530-a162-698aef5fa45c"
+                },
+                {
+                    "description": "Segment of C53 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.52,
+                        "y": 108.465
+                    },
+                    "uuid": "e3636796-3c0b-4479-b0a9-6528229d8c96"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.873,
+                        "y": 108.815
+                    },
+                    "uuid": "373ad5ac-2825-422c-b3e3-d706c832b0ff"
+                },
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.82,
+                        "y": 107.965
+                    },
+                    "uuid": "e2b8083a-2a1d-4b5e-b7f0-c978d792011c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.873,
+                        "y": 108.815
+                    },
+                    "uuid": "373ad5ac-2825-422c-b3e3-d706c832b0ff"
+                },
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.815
+                    },
+                    "uuid": "62f52ac1-4f06-40b3-8f6d-b9436de15ed9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.82
+                    },
+                    "uuid": "3b451cad-afd9-4802-8e7c-302c91bdac75"
+                },
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.815
+                    },
+                    "uuid": "62f52ac1-4f06-40b3-8f6d-b9436de15ed9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.815
+                    },
+                    "uuid": "62f52ac1-4f06-40b3-8f6d-b9436de15ed9"
+                },
+                {
+                    "description": "Arc of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.97
+                    },
+                    "uuid": "7ff4bb7a-8c10-4323-a8fc-e6fde16ff658"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.815
+                    },
+                    "uuid": "62f52ac1-4f06-40b3-8f6d-b9436de15ed9"
+                },
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.163,
+                        "y": 108.815
+                    },
+                    "uuid": "e5f066fa-5a50-4670-9f47-8bb29776eab0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.665
+                    },
+                    "uuid": "1c5bb542-ecb4-4da1-82ef-c48a28b1b418"
+                },
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.873,
+                        "y": 108.815
+                    },
+                    "uuid": "373ad5ac-2825-422c-b3e3-d706c832b0ff"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.665
+                    },
+                    "uuid": "1c5bb542-ecb4-4da1-82ef-c48a28b1b418"
+                },
+                {
+                    "description": "Segment of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.82
+                    },
+                    "uuid": "3b451cad-afd9-4802-8e7c-302c91bdac75"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.665
+                    },
+                    "uuid": "1c5bb542-ecb4-4da1-82ef-c48a28b1b418"
+                },
+                {
+                    "description": "Arc of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.97
+                    },
+                    "uuid": "7ff4bb7a-8c10-4323-a8fc-e6fde16ff658"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 108.665
+                    },
+                    "uuid": "1c5bb542-ecb4-4da1-82ef-c48a28b1b418"
+                },
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.163,
+                        "y": 108.815
+                    },
+                    "uuid": "e5f066fa-5a50-4670-9f47-8bb29776eab0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.873,
+                        "y": 108.815
+                    },
+                    "uuid": "373ad5ac-2825-422c-b3e3-d706c832b0ff"
+                },
+                {
+                    "description": "Segment of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.82
+                    },
+                    "uuid": "3b451cad-afd9-4802-8e7c-302c91bdac75"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.873,
+                        "y": 108.815
+                    },
+                    "uuid": "373ad5ac-2825-422c-b3e3-d706c832b0ff"
+                },
+                {
+                    "description": "Arc of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.97
+                    },
+                    "uuid": "7ff4bb7a-8c10-4323-a8fc-e6fde16ff658"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.015,
+                        "y": 108.97
+                    },
+                    "uuid": "cbf1896b-a1e4-4d6f-ae2f-dc5544660add"
+                },
+                {
+                    "description": "Segment of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.015,
+                        "y": 109.47
+                    },
+                    "uuid": "e0c7a820-242c-4e2b-8a56-34d95fcdc5e0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.97
+                    },
+                    "uuid": "7ff4bb7a-8c10-4323-a8fc-e6fde16ff658"
+                },
+                {
+                    "description": "Segment of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.015,
+                        "y": 108.97
+                    },
+                    "uuid": "cbf1896b-a1e4-4d6f-ae2f-dc5544660add"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.82
+                    },
+                    "uuid": "3b451cad-afd9-4802-8e7c-302c91bdac75"
+                },
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.163,
+                        "y": 108.815
+                    },
+                    "uuid": "e5f066fa-5a50-4670-9f47-8bb29776eab0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.165,
+                        "y": 108.97
+                    },
+                    "uuid": "78527a75-fc55-47be-8d6b-cafb991d3510"
+                },
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.163,
+                        "y": 108.815
+                    },
+                    "uuid": "e5f066fa-5a50-4670-9f47-8bb29776eab0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.865,
+                        "y": 108.97
+                    },
+                    "uuid": "7ff4bb7a-8c10-4323-a8fc-e6fde16ff658"
+                },
+                {
+                    "description": "Segment of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.163,
+                        "y": 108.815
+                    },
+                    "uuid": "e5f066fa-5a50-4670-9f47-8bb29776eab0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.415
+                    },
+                    "uuid": "07e7a447-3dbe-4f23-bb84-37e8ec183d13"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.91,
+                        "y": 106.415
+                    },
+                    "uuid": "e7b5e148-69d6-457e-8e0e-99ed790297a6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.565
+                    },
+                    "uuid": "d363f02c-a986-4748-9571-5e0f84512dc9"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.91,
+                        "y": 106.415
+                    },
+                    "uuid": "e7b5e148-69d6-457e-8e0e-99ed790297a6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 106.37
+                    },
+                    "uuid": "2209a127-c24e-4cd9-bd5e-575f5daf9454"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.91,
+                        "y": 106.415
+                    },
+                    "uuid": "e7b5e148-69d6-457e-8e0e-99ed790297a6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.665,
+                        "y": 106.37
+                    },
+                    "uuid": "708ba25e-0279-430c-8511-357a9429cf30"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.91,
+                        "y": 106.415
+                    },
+                    "uuid": "e7b5e148-69d6-457e-8e0e-99ed790297a6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.815,
+                        "y": 105.51
+                    },
+                    "uuid": "48d75ac6-90ab-433f-ae12-258ae666c495"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 105.415
+                    },
+                    "uuid": "5ee6e59e-43ec-4c89-89c3-cbd0a0ada006"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 105.415
+                    },
+                    "uuid": "5ee6e59e-43ec-4c89-89c3-cbd0a0ada006"
+                },
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.665,
+                        "y": 105.51
+                    },
+                    "uuid": "e609cae7-c274-48f9-9159-6d25c275bc80"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 106.37
+                    },
+                    "uuid": "2209a127-c24e-4cd9-bd5e-575f5daf9454"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.56,
+                        "y": 106.265
+                    },
+                    "uuid": "457e619e-2e49-4c6f-aef1-79068cc7392f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.56,
+                        "y": 106.265
+                    },
+                    "uuid": "457e619e-2e49-4c6f-aef1-79068cc7392f"
+                },
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.365,
+                        "y": 106.22
+                    },
+                    "uuid": "991635b5-d88b-4120-8415-ce8243d92e02"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.56,
+                        "y": 106.265
+                    },
+                    "uuid": "457e619e-2e49-4c6f-aef1-79068cc7392f"
+                },
+                {
+                    "description": "Arc of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.665,
+                        "y": 106.37
+                    },
+                    "uuid": "708ba25e-0279-430c-8511-357a9429cf30"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.415
+                    },
+                    "uuid": "07e7a447-3dbe-4f23-bb84-37e8ec183d13"
+                },
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.265
+                    },
+                    "uuid": "26a08e6e-d7c1-4ab2-9518-f398d869b9ac"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.265
+                    },
+                    "uuid": "26a08e6e-d7c1-4ab2-9518-f398d869b9ac"
+                },
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.565
+                    },
+                    "uuid": "d363f02c-a986-4748-9571-5e0f84512dc9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 106.37
+                    },
+                    "uuid": "2209a127-c24e-4cd9-bd5e-575f5daf9454"
+                },
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.265
+                    },
+                    "uuid": "26a08e6e-d7c1-4ab2-9518-f398d869b9ac"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.265
+                    },
+                    "uuid": "26a08e6e-d7c1-4ab2-9518-f398d869b9ac"
+                },
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.365,
+                        "y": 106.22
+                    },
+                    "uuid": "991635b5-d88b-4120-8415-ce8243d92e02"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.265
+                    },
+                    "uuid": "26a08e6e-d7c1-4ab2-9518-f398d869b9ac"
+                },
+                {
+                    "description": "Arc of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.665,
+                        "y": 106.37
+                    },
+                    "uuid": "708ba25e-0279-430c-8511-357a9429cf30"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C50 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.82,
+                        "y": 104.165
+                    },
+                    "uuid": "136e0a97-4f37-4f1b-b11f-7d83e203241d"
+                },
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.815,
+                        "y": 105.51
+                    },
+                    "uuid": "48d75ac6-90ab-433f-ae12-258ae666c495"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C50 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 104.865
+                    },
+                    "uuid": "2dde37b2-f024-4976-b98c-f2092bcd72da"
+                },
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.815,
+                        "y": 105.51
+                    },
+                    "uuid": "48d75ac6-90ab-433f-ae12-258ae666c495"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C50 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.82,
+                        "y": 104.165
+                    },
+                    "uuid": "136e0a97-4f37-4f1b-b11f-7d83e203241d"
+                },
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.665,
+                        "y": 104.07
+                    },
+                    "uuid": "ac158bec-a4fa-4bd8-acc4-77cbdfa71147"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C50 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.82,
+                        "y": 104.165
+                    },
+                    "uuid": "136e0a97-4f37-4f1b-b11f-7d83e203241d"
+                },
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.815,
+                        "y": 104.57
+                    },
+                    "uuid": "5de0b6b9-6218-47e4-802a-bbb4ac31bff0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C50 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 104.165
+                    },
+                    "uuid": "46df8af8-31b8-4763-bb4f-68149b58865e"
+                },
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.665,
+                        "y": 104.07
+                    },
+                    "uuid": "ac158bec-a4fa-4bd8-acc4-77cbdfa71147"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C50 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.97,
+                        "y": 104.165
+                    },
+                    "uuid": "46df8af8-31b8-4763-bb4f-68149b58865e"
+                },
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.815,
+                        "y": 104.57
+                    },
+                    "uuid": "5de0b6b9-6218-47e4-802a-bbb4ac31bff0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.51
+                    },
+                    "uuid": "347c30c1-1d6a-4973-a9b0-931d430bdb8b"
+                },
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.01
+                    },
+                    "uuid": "3d54a403-6692-4cb6-a0df-0746f68a244b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.01
+                    },
+                    "uuid": "3d54a403-6692-4cb6-a0df-0746f68a244b"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.393
+                    },
+                    "uuid": "71228242-71fc-435f-b193-56139a271ddc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.01
+                    },
+                    "uuid": "3d54a403-6692-4cb6-a0df-0746f68a244b"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 106.103
+                    },
+                    "uuid": "4852093a-88f0-40b4-ac7e-a56e7fe7fc3c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.01
+                    },
+                    "uuid": "3d54a403-6692-4cb6-a0df-0746f68a244b"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.82,
+                        "y": 105.565
+                    },
+                    "uuid": "6bd7b7aa-afbf-4fa3-a98b-3b5fe40bbe1e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.01
+                    },
+                    "uuid": "3d54a403-6692-4cb6-a0df-0746f68a244b"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.665,
+                        "y": 105.51
+                    },
+                    "uuid": "f5a295a8-f01e-4674-9641-8e580c5864bd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.01
+                    },
+                    "uuid": "3d54a403-6692-4cb6-a0df-0746f68a244b"
+                },
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 105.565
+                    },
+                    "uuid": "8d32e058-0eef-4ccc-b4c4-34c609b2044c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.51
+                    },
+                    "uuid": "347c30c1-1d6a-4973-a9b0-931d430bdb8b"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.393
+                    },
+                    "uuid": "71228242-71fc-435f-b193-56139a271ddc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.51
+                    },
+                    "uuid": "347c30c1-1d6a-4973-a9b0-931d430bdb8b"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 106.103
+                    },
+                    "uuid": "4852093a-88f0-40b4-ac7e-a56e7fe7fc3c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.51
+                    },
+                    "uuid": "347c30c1-1d6a-4973-a9b0-931d430bdb8b"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.82,
+                        "y": 105.565
+                    },
+                    "uuid": "6bd7b7aa-afbf-4fa3-a98b-3b5fe40bbe1e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.51
+                    },
+                    "uuid": "347c30c1-1d6a-4973-a9b0-931d430bdb8b"
+                },
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.51
+                    },
+                    "uuid": "41f28a03-ff4a-4223-84d5-3ddaa133c98d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.51
+                    },
+                    "uuid": "347c30c1-1d6a-4973-a9b0-931d430bdb8b"
+                },
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 105.565
+                    },
+                    "uuid": "8d32e058-0eef-4ccc-b4c4-34c609b2044c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.393
+                    },
+                    "uuid": "71228242-71fc-435f-b193-56139a271ddc"
+                },
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 103.815,
+                        "y": 105.01
+                    },
+                    "uuid": "e34e1823-99d4-4785-98be-e407d9988dcc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 103.965,
+                        "y": 105.51
+                    },
+                    "uuid": "522f115c-48ff-43f4-8c7f-21e19dff5fb2"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.393
+                    },
+                    "uuid": "71228242-71fc-435f-b193-56139a271ddc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Circle of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.065,
+                        "y": 105.29
+                    },
+                    "uuid": "37fe7923-25d7-40c9-9c12-ef6d861cfbb9"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.393
+                    },
+                    "uuid": "71228242-71fc-435f-b193-56139a271ddc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.51
+                    },
+                    "uuid": "41f28a03-ff4a-4223-84d5-3ddaa133c98d"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.393
+                    },
+                    "uuid": "71228242-71fc-435f-b193-56139a271ddc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.393
+                    },
+                    "uuid": "71228242-71fc-435f-b193-56139a271ddc"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.665,
+                        "y": 105.51
+                    },
+                    "uuid": "f5a295a8-f01e-4674-9641-8e580c5864bd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.393
+                    },
+                    "uuid": "71228242-71fc-435f-b193-56139a271ddc"
+                },
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 105.565
+                    },
+                    "uuid": "8d32e058-0eef-4ccc-b4c4-34c609b2044c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 106.103
+                    },
+                    "uuid": "4852093a-88f0-40b4-ac7e-a56e7fe7fc3c"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.82,
+                        "y": 105.565
+                    },
+                    "uuid": "6bd7b7aa-afbf-4fa3-a98b-3b5fe40bbe1e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.51
+                    },
+                    "uuid": "41f28a03-ff4a-4223-84d5-3ddaa133c98d"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 106.103
+                    },
+                    "uuid": "4852093a-88f0-40b4-ac7e-a56e7fe7fc3c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 106.103
+                    },
+                    "uuid": "4852093a-88f0-40b4-ac7e-a56e7fe7fc3c"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.665,
+                        "y": 105.51
+                    },
+                    "uuid": "f5a295a8-f01e-4674-9641-8e580c5864bd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 106.103
+                    },
+                    "uuid": "4852093a-88f0-40b4-ac7e-a56e7fe7fc3c"
+                },
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 105.565
+                    },
+                    "uuid": "8d32e058-0eef-4ccc-b4c4-34c609b2044c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 104.07
+                    },
+                    "uuid": "0a13f155-50ba-4ef7-9e02-a34a7ffc9b78"
+                },
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 104.57
+                    },
+                    "uuid": "9bba9c2a-f18d-4391-b6c5-fd7bfcf85aec"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 104.07
+                    },
+                    "uuid": "0a13f155-50ba-4ef7-9e02-a34a7ffc9b78"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.665,
+                        "y": 104.07
+                    },
+                    "uuid": "babcd23d-ee5f-4367-98b3-7319f91bc1a9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 104.07
+                    },
+                    "uuid": "2717a50d-6719-432e-ad0e-c909a6261da2"
+                },
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 104.57
+                    },
+                    "uuid": "9bba9c2a-f18d-4391-b6c5-fd7bfcf85aec"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 104.07
+                    },
+                    "uuid": "2717a50d-6719-432e-ad0e-c909a6261da2"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.665,
+                        "y": 104.07
+                    },
+                    "uuid": "babcd23d-ee5f-4367-98b3-7319f91bc1a9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 103.815,
+                        "y": 105.393
+                    },
+                    "uuid": "10179e3a-fb3e-40e1-b364-536a999a3d8b"
+                },
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 103.815,
+                        "y": 105.01
+                    },
+                    "uuid": "e34e1823-99d4-4785-98be-e407d9988dcc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 103.815,
+                        "y": 105.393
+                    },
+                    "uuid": "10179e3a-fb3e-40e1-b364-536a999a3d8b"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 103.965,
+                        "y": 105.51
+                    },
+                    "uuid": "522f115c-48ff-43f4-8c7f-21e19dff5fb2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.51
+                    },
+                    "uuid": "41f28a03-ff4a-4223-84d5-3ddaa133c98d"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.82,
+                        "y": 105.565
+                    },
+                    "uuid": "6bd7b7aa-afbf-4fa3-a98b-3b5fe40bbe1e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.82,
+                        "y": 105.565
+                    },
+                    "uuid": "6bd7b7aa-afbf-4fa3-a98b-3b5fe40bbe1e"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.665,
+                        "y": 105.51
+                    },
+                    "uuid": "f5a295a8-f01e-4674-9641-8e580c5864bd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.82,
+                        "y": 105.565
+                    },
+                    "uuid": "6bd7b7aa-afbf-4fa3-a98b-3b5fe40bbe1e"
+                },
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.66
+                    },
+                    "uuid": "df16acff-2943-4594-ada1-5863aea9352e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 106.265
+                    },
+                    "uuid": "7ae8d714-c6d1-4274-9621-f258fc6e4946"
+                },
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.47,
+                        "y": 106.415
+                    },
+                    "uuid": "961fc3e2-623c-4141-8dbf-edf3d75b1ea1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 106.265
+                    },
+                    "uuid": "7ae8d714-c6d1-4274-9621-f258fc6e4946"
+                },
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 106.565
+                    },
+                    "uuid": "e4b152c5-b13f-4793-8f9f-083d8b3a999f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.51
+                    },
+                    "uuid": "41f28a03-ff4a-4223-84d5-3ddaa133c98d"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.665,
+                        "y": 105.51
+                    },
+                    "uuid": "f5a295a8-f01e-4674-9641-8e580c5864bd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.51
+                    },
+                    "uuid": "41f28a03-ff4a-4223-84d5-3ddaa133c98d"
+                },
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 105.565
+                    },
+                    "uuid": "8d32e058-0eef-4ccc-b4c4-34c609b2044c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 105.565
+                    },
+                    "uuid": "8d32e058-0eef-4ccc-b4c4-34c609b2044c"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.665,
+                        "y": 105.51
+                    },
+                    "uuid": "f5a295a8-f01e-4674-9641-8e580c5864bd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 106.415
+                    },
+                    "uuid": "954dd943-2eb1-4a6e-bbb6-c53a46ffafe0"
+                },
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.47,
+                        "y": 106.415
+                    },
+                    "uuid": "961fc3e2-623c-4141-8dbf-edf3d75b1ea1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.415
+                    },
+                    "uuid": "07e7a447-3dbe-4f23-bb84-37e8ec183d13"
+                },
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 106.37
+                    },
+                    "uuid": "2209a127-c24e-4cd9-bd5e-575f5daf9454"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.415
+                    },
+                    "uuid": "07e7a447-3dbe-4f23-bb84-37e8ec183d13"
+                },
+                {
+                    "description": "Arc of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.665,
+                        "y": 106.37
+                    },
+                    "uuid": "708ba25e-0279-430c-8511-357a9429cf30"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 106.37
+                    },
+                    "uuid": "2209a127-c24e-4cd9-bd5e-575f5daf9454"
+                },
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.565
+                    },
+                    "uuid": "d363f02c-a986-4748-9571-5e0f84512dc9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.665,
+                        "y": 106.37
+                    },
+                    "uuid": "708ba25e-0279-430c-8511-357a9429cf30"
+                },
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.41,
+                        "y": 106.565
+                    },
+                    "uuid": "d363f02c-a986-4748-9571-5e0f84512dc9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 106.415
+                    },
+                    "uuid": "954dd943-2eb1-4a6e-bbb6-c53a46ffafe0"
+                },
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 106.565
+                    },
+                    "uuid": "e4b152c5-b13f-4793-8f9f-083d8b3a999f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.82,
+                        "y": 106.565
+                    },
+                    "uuid": "837600c4-b785-4087-ba52-0691023433fa"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 106.563
+                    },
+                    "uuid": "b2252847-84f8-4c61-9eb1-11f1cb42594b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.82,
+                        "y": 106.565
+                    },
+                    "uuid": "837600c4-b785-4087-ba52-0691023433fa"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 107.273
+                    },
+                    "uuid": "fcf3ff19-a879-4848-b3c3-203258b65446"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 106.563
+                    },
+                    "uuid": "b2252847-84f8-4c61-9eb1-11f1cb42594b"
+                },
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 106.565
+                    },
+                    "uuid": "e4b152c5-b13f-4793-8f9f-083d8b3a999f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 107.265
+                    },
+                    "uuid": "856ff73a-f0cf-4842-abd4-51f8b311e4b7"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 106.563
+                    },
+                    "uuid": "b2252847-84f8-4c61-9eb1-11f1cb42594b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 107.265
+                    },
+                    "uuid": "856ff73a-f0cf-4842-abd4-51f8b311e4b7"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 107.273
+                    },
+                    "uuid": "fcf3ff19-a879-4848-b3c3-203258b65446"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.66
+                    },
+                    "uuid": "df16acff-2943-4594-ada1-5863aea9352e"
+                },
+                {
+                    "description": "Circle of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.19,
+                        "y": 105.665
+                    },
+                    "uuid": "e86a96b3-a982-4145-861b-a15dd54d5856"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C54 on B.Silkscreen",
+                    "pos": {
+                        "x": 116.98,
+                        "y": 105.24
+                    },
+                    "uuid": "36fe099d-b43e-4816-8f58-3e8ebbea42ab"
+                },
+                {
+                    "description": "Segment of J5 on B.Silkscreen",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 105.3
+                    },
+                    "uuid": "9ee971ab-14a2-4220-a109-3d006dffe057"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C54 on B.Silkscreen",
+                    "pos": {
+                        "x": 116.98,
+                        "y": 105.24
+                    },
+                    "uuid": "36fe099d-b43e-4816-8f58-3e8ebbea42ab"
+                },
+                {
+                    "description": "Segment of J5 on B.Silkscreen",
+                    "pos": {
+                        "x": 117.1,
+                        "y": 105.2
+                    },
+                    "uuid": "a218ca91-1332-4169-adfa-c97165e8c9ea"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C54 on B.Silkscreen",
+                    "pos": {
+                        "x": 116.98,
+                        "y": 105.24
+                    },
+                    "uuid": "36fe099d-b43e-4816-8f58-3e8ebbea42ab"
+                },
+                {
+                    "description": "Segment of J5 on B.Silkscreen",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 108.2
+                    },
+                    "uuid": "5b1fb75d-3ebd-42e3-8f09-7178e1a63407"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of J5 on B.Silkscreen",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 108.2
+                    },
+                    "uuid": "5b1fb75d-3ebd-42e3-8f09-7178e1a63407"
+                },
+                {
+                    "description": "Segment of C54 on B.Silkscreen",
+                    "pos": {
+                        "x": 116.98,
+                        "y": 105.8
+                    },
+                    "uuid": "d099093c-8bea-436d-aef5-759b671a01e6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of J5 on B.Silkscreen",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 108.2
+                    },
+                    "uuid": "5b1fb75d-3ebd-42e3-8f09-7178e1a63407"
+                },
+                {
+                    "description": "Arc of C54 on B.Silkscreen",
+                    "pos": {
+                        "x": 116.67,
+                        "y": 106.6
+                    },
+                    "uuid": "a28ed0bb-43b8-4c99-a65e-a51035d08785"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C52 on B.Silkscreen",
+                    "pos": {
+                        "x": 116.81,
+                        "y": 108.465
+                    },
+                    "uuid": "4c512c84-ca55-44a8-8637-2269d460e293"
+                },
+                {
+                    "description": "Segment of J5 on B.Silkscreen",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 108.2
+                    },
+                    "uuid": "5b1fb75d-3ebd-42e3-8f09-7178e1a63407"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of J5 on B.Silkscreen",
+                    "pos": {
+                        "x": 117.26,
+                        "y": 108.2
+                    },
+                    "uuid": "1cadf107-dfab-410a-a03a-d19ec45c186d"
+                },
+                {
+                    "description": "Arc of C52 on B.Silkscreen",
+                    "pos": {
+                        "x": 116.81,
+                        "y": 108.465
+                    },
+                    "uuid": "4c512c84-ca55-44a8-8637-2269d460e293"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 106.37
+                    },
+                    "uuid": "2209a127-c24e-4cd9-bd5e-575f5daf9454"
+                },
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.56,
+                        "y": 107.265
+                    },
+                    "uuid": "54e1adce-c073-425a-bac6-8907226970bf"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.56,
+                        "y": 108.665
+                    },
+                    "uuid": "9cf5bd55-1da7-46de-8dcb-b2e4d47e0bc2"
+                },
+                {
+                    "description": "Segment of C53 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.52,
+                        "y": 108.465
+                    },
+                    "uuid": "e3636796-3c0b-4479-b0a9-6528229d8c96"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.41,
+                        "y": 108.665
+                    },
+                    "uuid": "39ae8be8-bc90-4e45-b358-277b8a65d355"
+                },
+                {
+                    "description": "Segment of C53 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.52,
+                        "y": 108.465
+                    },
+                    "uuid": "e3636796-3c0b-4479-b0a9-6528229d8c96"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C53 on B.Silkscreen",
+                    "pos": {
+                        "x": 108.17,
+                        "y": 108.315
+                    },
+                    "uuid": "0f727339-6d03-483a-bd4a-86ed7154990b"
+                },
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.56,
+                        "y": 108.665
+                    },
+                    "uuid": "9cf5bd55-1da7-46de-8dcb-b2e4d47e0bc2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C53 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.67,
+                        "y": 108.465
+                    },
+                    "uuid": "755e914f-701a-4b2b-93e8-1d63eb8fc526"
+                },
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.56,
+                        "y": 108.665
+                    },
+                    "uuid": "9cf5bd55-1da7-46de-8dcb-b2e4d47e0bc2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED8 on F.Silkscreen",
+                    "pos": {
+                        "x": 105.7,
+                        "y": 108.4
+                    },
+                    "uuid": "44e59daa-88a8-4ba2-9ef9-82b3b0eb8d2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED4 on F.Silkscreen",
+                    "pos": {
+                        "x": 120.9,
+                        "y": 105.0
+                    },
+                    "uuid": "0f2fdd5e-d0b6-4231-b556-0a6a39274fbe"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED7 on F.Silkscreen",
+                    "pos": {
+                        "x": 109.1,
+                        "y": 108.4
+                    },
+                    "uuid": "dc370b54-6284-468e-8640-cfd4f2ee5b7c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED2 on F.Silkscreen",
+                    "pos": {
+                        "x": 111.3,
+                        "y": 105.0
+                    },
+                    "uuid": "4a4dd694-7fdf-4b6f-88af-0e20bcbbfcf4"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED5 on F.Silkscreen",
+                    "pos": {
+                        "x": 118.7,
+                        "y": 108.4
+                    },
+                    "uuid": "36a65d20-f16f-4dd3-b4d1-3cff72d12042"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED6 on F.Silkscreen",
+                    "pos": {
+                        "x": 115.3,
+                        "y": 108.4
+                    },
+                    "uuid": "2bfcd83c-83b3-49cf-8807-7bb7f1672819"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED3 on F.Silkscreen",
+                    "pos": {
+                        "x": 117.5,
+                        "y": 105.0
+                    },
+                    "uuid": "7b60a89a-6d7f-4ada-ba38-f06b72776795"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED9 on F.Silkscreen",
+                    "pos": {
+                        "x": 110.2,
+                        "y": 107.2
+                    },
+                    "uuid": "602bc4d0-28d5-4339-8f89-0fd612809f9e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED1 on F.Silkscreen",
+                    "pos": {
+                        "x": 107.9,
+                        "y": 105.0
+                    },
+                    "uuid": "45d67803-4f2e-40b7-ad4a-475d1398418b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C51 on B.Silkscreen",
+                    "pos": {
+                        "x": 118.789999,
+                        "y": 102.965
+                    },
+                    "uuid": "be71bb1d-983d-4f61-88d9-caed46dbc46d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.47,
+                        "y": 105.415
+                    },
+                    "uuid": "a0ed40fd-fde0-429b-8da1-487758a01e6f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.97,
+                        "y": 105.565
+                    },
+                    "uuid": "8d32e058-0eef-4ccc-b4c4-34c609b2044c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.19,
+                        "y": 105.665
+                    },
+                    "uuid": "e86a96b3-a982-4145-861b-a15dd54d5856"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.19,
+                        "y": 107.165
+                    },
+                    "uuid": "c2d90407-039a-4640-a59c-6f93417d1941"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C54 on B.Silkscreen",
+                    "pos": {
+                        "x": 116.67,
+                        "y": 104.72
+                    },
+                    "uuid": "f387858a-85ef-4a7b-a8b9-22e42d751f1a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.265,
+                        "y": 106.59
+                    },
+                    "uuid": "e38b9213-cae3-42b9-86fe-9a45a315681e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.265,
+                        "y": 110.19
+                    },
+                    "uuid": "8572bea2-74db-4a69-bd2f-357681d3e17b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.66
+                    },
+                    "uuid": "df16acff-2943-4594-ada1-5863aea9352e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Arc of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.965,
+                        "y": 105.51
+                    },
+                    "uuid": "41f28a03-ff4a-4223-84d5-3ddaa133c98d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.565,
+                        "y": 104.29
+                    },
+                    "uuid": "602d05bf-4155-4695-88d8-4a47c574d653"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C50 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.19,
+                        "y": 104.265
+                    },
+                    "uuid": "7aac8855-9c68-4a23-a106-5c5bd7092cb1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C53 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.89,
+                        "y": 108.565
+                    },
+                    "uuid": "a1c77dbe-f8ae-4fbd-8da5-2fbc03e5f4a4"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.41,
+                        "y": 107.815
+                    },
+                    "uuid": "db690ad0-f629-4288-aafc-c91edc61f326"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.19,
+                        "y": 108.065
+                    },
+                    "uuid": "9a989d1f-7551-4df2-9c21-19ddbe0ddc40"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.433,
+                        "y": 108.565
+                    },
+                    "uuid": "a07d3248-8905-4a5f-b44b-433d5abe0c31"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 103.965,
+                        "y": 105.66
+                    },
+                    "uuid": "413c01d0-c4fb-407f-9526-89634dd9d5f6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.065,
+                        "y": 105.29
+                    },
+                    "uuid": "37fe7923-25d7-40c9-9c12-ef6d861cfbb9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C52 on B.Silkscreen",
+                    "pos": {
+                        "x": 116.59,
+                        "y": 109.065
+                    },
+                    "uuid": "a88fc0a5-b522-48f4-a011-2f21d8ec077a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.815,
+                        "y": 105.393
+                    },
+                    "uuid": "71228242-71fc-435f-b193-56139a271ddc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.565,
+                        "y": 105.833
+                    },
+                    "uuid": "4547f591-6069-4142-8aa7-6e3a0026fadf"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of R32 on B.Silkscreen",
+                    "pos": {
+                        "x": 111.565,
+                        "y": 107.732999
+                    },
+                    "uuid": "0fb98319-bd5f-45f8-a3ba-97de78e06b5a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.765,
+                        "y": 109.19
+                    },
+                    "uuid": "6f3360b1-c5c0-4f59-a3ba-c62a30a7788f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C55 on B.Silkscreen",
+                    "pos": {
+                        "x": 114.465,
+                        "y": 106.09
+                    },
+                    "uuid": "4d26e862-ffd6-459d-83a5-355441e0a9e8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint U20",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 106.8
+                    },
+                    "uuid": "042bffc6-4ae3-417e-a43d-d390ab9a4dd9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED8",
+                    "pos": {
+                        "x": 106.8,
+                        "y": 109.4
+                    },
+                    "uuid": "135036a2-2540-4bdb-9804-28bf31022cd0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED4",
+                    "pos": {
+                        "x": 119.8,
+                        "y": 104.0
+                    },
+                    "uuid": "1b354ea1-57ce-40d8-9ba3-921a40739930"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED7",
+                    "pos": {
+                        "x": 110.2,
+                        "y": 109.4
+                    },
+                    "uuid": "423eb91a-5965-41b3-928c-d048481c0185"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED2",
+                    "pos": {
+                        "x": 110.2,
+                        "y": 104.0
+                    },
+                    "uuid": "4d49990a-e04d-4044-8ba8-112a6f8faed4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED5",
+                    "pos": {
+                        "x": 119.8,
+                        "y": 109.4
+                    },
+                    "uuid": "cd69992b-218f-45af-b711-28b606b8976f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED6",
+                    "pos": {
+                        "x": 116.4,
+                        "y": 109.4
+                    },
+                    "uuid": "dcab734e-18e3-4ffd-86f5-1b465d0f88a9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED3",
+                    "pos": {
+                        "x": 116.4,
+                        "y": 104.0
+                    },
+                    "uuid": "e8e78933-7ca5-4c12-b1ec-1ff23f15cfe3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED9",
+                    "pos": {
+                        "x": 111.0,
+                        "y": 106.8
+                    },
+                    "uuid": "f3f845e7-3d10-453b-b789-89578012e416"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'brick'.",
+            "items": [
+                {
+                    "description": "Footprint ANT1",
+                    "pos": {
+                        "x": 100.0,
+                        "y": 100.0
+                    },
+                    "uuid": "f930d113-d56b-498f-99c8-eb4922ed5a47"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED1",
+                    "pos": {
+                        "x": 106.8,
+                        "y": 104.0
+                    },
+                    "uuid": "fc124f2a-7e4a-401b-a088-f74b57acf9dd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C51",
+                    "pos": {
+                        "x": 119.289999,
+                        "y": 103.215
+                    },
+                    "uuid": "10cd6b44-c5ed-4bb6-976c-a86d757e1027"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C43",
+                    "pos": {
+                        "x": 105.69,
+                        "y": 105.915
+                    },
+                    "uuid": "242ffd37-b5dc-46af-bf35-9140fce81640"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C41",
+                    "pos": {
+                        "x": 105.69,
+                        "y": 106.915
+                    },
+                    "uuid": "26713bfb-e7c9-4cec-a425-e7c58af6f350"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C54",
+                    "pos": {
+                        "x": 116.27,
+                        "y": 105.52
+                    },
+                    "uuid": "2e3554d0-7181-4322-acb9-06ccda25881e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C45",
+                    "pos": {
+                        "x": 107.015,
+                        "y": 107.09
+                    },
+                    "uuid": "3df13055-e842-453c-bb12-a143a1595c73"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C44",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 109.69
+                    },
+                    "uuid": "4f568aa4-b601-4c6e-99b9-245607cc5837"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": 120.4,
+                        "y": 106.7
+                    },
+                    "uuid": "541cec33-16d6-43f9-b40c-80431357a010"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C40",
+                    "pos": {
+                        "x": 105.315,
+                        "y": 104.79
+                    },
+                    "uuid": "5984f6a1-1dd2-4e8c-847f-695d9134a76e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C50",
+                    "pos": {
+                        "x": 106.69,
+                        "y": 104.515
+                    },
+                    "uuid": "6087c35d-e1e4-4cc9-b504-af0f12d2487d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C53",
+                    "pos": {
+                        "x": 108.39,
+                        "y": 108.815
+                    },
+                    "uuid": "654ba192-a9a8-418e-b943-02b7e314b9b9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C46",
+                    "pos": {
+                        "x": 106.69,
+                        "y": 108.315
+                    },
+                    "uuid": "72150348-6f5f-48e4-b527-cc5f489fbaaa"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint R31",
+                    "pos": {
+                        "x": 104.933,
+                        "y": 108.315
+                    },
+                    "uuid": "76857b2f-8e19-4afe-808a-20179bf52ee8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C42",
+                    "pos": {
+                        "x": 104.315,
+                        "y": 104.79
+                    },
+                    "uuid": "9d0a3e9e-21e6-4b81-8f3d-f09de1e9f3cb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C52",
+                    "pos": {
+                        "x": 116.09,
+                        "y": 108.815
+                    },
+                    "uuid": "a8436c6b-6ed7-4e57-b833-2e2cd1cd360e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint R30",
+                    "pos": {
+                        "x": 104.315,
+                        "y": 106.333
+                    },
+                    "uuid": "b93570b5-0177-44fd-8a5e-0ba78c194328"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint R32",
+                    "pos": {
+                        "x": 111.815,
+                        "y": 107.232999
+                    },
+                    "uuid": "d4c978d2-4197-4d4c-bb45-00132610777a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C47",
+                    "pos": {
+                        "x": 105.515,
+                        "y": 109.69
+                    },
+                    "uuid": "e5d44891-4069-4044-b660-d30c7bc9d631"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C55",
+                    "pos": {
+                        "x": 114.215,
+                        "y": 106.59
+                    },
+                    "uuid": "ecf373d0-3a46-42a7-bfd8-3b360e87325a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 124.4,
+                        "y": 100.0
+                    },
+                    "uuid": "38b4ab5d-48fd-4f9d-89d7-053b67809b76"
+                },
+                {
+                    "description": "Circle of J5 on B.Silkscreen",
+                    "pos": {
+                        "x": 124.08,
+                        "y": 108.99
+                    },
+                    "uuid": "1205b7be-dca5-430c-944c-82dd020ac4dc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        }
+    ]
+}

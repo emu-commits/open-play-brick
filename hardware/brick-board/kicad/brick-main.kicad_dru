@@ -1,0 +1,9 @@
+(version 1)
+# The USB-C socket's own pads are 0.1 mm apart (HRO's land pattern). JLCPCB
+# makes 0.09 mm gaps on outer layers.
+(rule "USB-C land pattern"
+  (constraint clearance (min 0.09mm))
+  (condition "A.memberOfFootprint('J1') && B.memberOfFootprint('J1')"))
+(rule "USB-C solder mask"
+  (constraint solder_mask_sliver (min 0mm))
+  (condition "A.memberOfFootprint('J1') || B.memberOfFootprint('J1')"))

@@ -1,0 +1,129 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-11-20T10:55:31+0000",
+    "included_severities": [
+        "error"
+    ],
+    "kicad_version": "9.0.9",
+    "schematic_parity": [],
+    "source": "brick-face.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [PIX3] of LED3 on F.Cu",
+                    "pos": {
+                        "x": 117.26,
+                        "y": 104.55
+                    },
+                    "uuid": "e0e8c94b-69f8-4916-b34d-5dceeb12956b"
+                },
+                {
+                    "description": "Pad 3 [PIX3] of LED4 on F.Cu",
+                    "pos": {
+                        "x": 118.94,
+                        "y": 103.45
+                    },
+                    "uuid": "8f8f7302-93fa-4839-b182-71826075c3ef"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [TX2F] of C45 on B.Cu",
+                    "pos": {
+                        "x": 107.015,
+                        "y": 106.67
+                    },
+                    "uuid": "a68bd6cb-621f-4fef-805c-148ca7ea6de1"
+                },
+                {
+                    "description": "Pad 1 [TX2F] of C44 on B.Cu",
+                    "pos": {
+                        "x": 106.515,
+                        "y": 110.11
+                    },
+                    "uuid": "46d7def5-048e-4c3b-9c2c-15f793021587"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 9 [TX2F] of J5 on B.Cu",
+                    "pos": {
+                        "x": 117.86,
+                        "y": 108.5
+                    },
+                    "uuid": "4c7ccc89-f011-462b-b2e0-1a0a9352e4da"
+                },
+                {
+                    "description": "Pad 1 [TX2F] of C45 on B.Cu",
+                    "pos": {
+                        "x": 107.015,
+                        "y": 106.67
+                    },
+                    "uuid": "a68bd6cb-621f-4fef-805c-148ca7ea6de1"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [TX1F] of C40 on B.Cu",
+                    "pos": {
+                        "x": 105.315,
+                        "y": 104.37
+                    },
+                    "uuid": "f2f990be-d0b3-4cf7-b046-a0e5e830a22d"
+                },
+                {
+                    "description": "Pad 1 [TX1F] of C41 on B.Cu",
+                    "pos": {
+                        "x": 106.11,
+                        "y": 106.915
+                    },
+                    "uuid": "3086c6df-63dd-4d9b-b579-5ef97333da55"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [TX1F] of C41 on B.Cu",
+                    "pos": {
+                        "x": 106.11,
+                        "y": 106.915
+                    },
+                    "uuid": "3086c6df-63dd-4d9b-b579-5ef97333da55"
+                },
+                {
+                    "description": "Pad 10 [TX1F] of J5 on B.Cu",
+                    "pos": {
+                        "x": 117.86,
+                        "y": 104.9
+                    },
+                    "uuid": "0b60fd28-0173-4159-9f0b-2b1cbc62d572"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": []
+}
