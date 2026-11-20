@@ -46,8 +46,8 @@ FACE_W, FACE_H = 24.4, 13.4
 FACE_X = 15.8                  # face board origin in main board coordinates
 ANT_KEEPOUT_X = 40.0           # main board: no copper beyond this x (module antenna)
 NOTCH = (17.4, 19.6, 1.6)      # main board edge notch for the battery wires: x0, x1, depth
-MAIN_LAYERS = int(os.environ.get("MAIN_LAYERS", "4"))   # 4 or 6 copper layers on the main board
-FANOUT = 0.6                   # main board: clear ring round U6 (PN5180) for its pads to escape
+MAIN_LAYERS = int(os.environ.get("MAIN_LAYERS", "6"))   # copper layers on the main board: 6 (4 left 33 open)
+FANOUT = 0.8                   # main board: clear ring round U6 (PN5180) for its pads to escape
 
 mm = pcbnew.FromMM
 
@@ -517,7 +517,7 @@ def build_main():
         add_via(b, {}, None, pcbnew.ToMM(pad.GetPosition().x) - OX, pcbnew.ToMM(pad.GetPosition().y) - OY,
                 0.45, 0.25, net_obj=pad.GetNet())
     fanout_module(b)
-    pl = autoplace.Placer(b, (OX, OY), (MAIN_W, MAIN_H))
+    pl = autoplace.Placer(b, (OX, OY), (MAIN_W, MAIN_H), margin=0.2)
     for f in b.GetFootprints():
         pl.block_footprint(f)
     pl.block_vias()
@@ -573,6 +573,13 @@ def build_main():
         zone(b, pour, pcbnew.In4_Cu, g, priority=0, name="GND_IN4")   # second solid plane
     keepout_all_layers(b, [(ANT_KEEPOUT_X, -0.5), (W + 0.5, -0.5), (W + 0.5, H + 0.5), (ANT_KEEPOUT_X, H + 0.5)],
                        ("tracks", "vias", "pour"), "ANTENNA_KEEPOUT")
+    # Edge strips: Freerouting keeps only its track clearance from the outline
+    # and ran tracks 0.16 mm from the edge (JLCPCB wants 0.2, KiCad 0.25).
+    e = 0.32
+    for i, r in enumerate([(-0.5, -0.5, ANT_KEEPOUT_X, e), (-0.5, H - e, ANT_KEEPOUT_X, H + 0.5), (-0.5, -0.5, e, H + 0.5),
+                           (nx0 - e, -0.5, nx1 + e, nd + e)]):
+        x0, y0, x1, y1 = r
+        keepout_all_layers(b, [(x0, y0), (x1, y0), (x1, y1), (x0, y1)], ("tracks", "vias"), "EDGE_%d" % i)
     silk_labels(b)
     return b
 
@@ -750,7 +757,7 @@ def netclass_of(board, name):
 
 
 def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.5, 0.3), clearance=0.15,
-                adopt=False, rounds=12):
+                adopt=False, rounds=12, rip_first=()):
     """Route every net. adopt: treat the unlocked tracks already on the board
     (an earlier Freerouting pass) as this router's own, so rip-up may remove
     and re-route them."""
@@ -789,6 +796,19 @@ def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.
                 rt.added.setdefault(t.GetNetCode(), []).append(t)
                 n += 1
         print("[%s] adopted %d existing tracks and vias" % (label, n))
+    if rip_first:
+        # Remove these nets' unlocked tracks before routing, to lay them again.
+        fixed = mk()
+        fixed.load_board(keep, fixed_only=True)
+        rt.occ_fixed = {l: fixed.occ[l].copy() for l in rt.all_layers}
+        codes = {}
+        for t in rt._tracks:
+            if not t.IsLocked() and t.GetNetname() in rip_first:
+                rt.added.setdefault(t.GetNetCode(), []).append(t)
+                codes[t.GetNetname()] = t.GetNetCode()
+        for nm, code in codes.items():
+            rt.rip(code)
+        print("[%s] ripped up %s" % (label, ", ".join(sorted(codes))))
     import time
     t0 = time.time()
     failed = []

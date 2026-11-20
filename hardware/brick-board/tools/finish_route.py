@@ -21,10 +21,13 @@ args = [a for a in sys.argv[1:] if not a.startswith("--")]
 path = args[0] if args else os.path.join(g.OUT, "brick-main.kicad_pcb")
 # --adopt lets rip-up remove Freerouting's tracks too; it can lose more than it gains
 adopt = "--adopt" in sys.argv
+# --rip=NET,NET: take up these nets' tracks first and route them again
+rip = [n for a in sys.argv if a.startswith("--rip=") for n in a[6:].split(",") if n]
 b = pcbnew.LoadBoard(path)
 inner = [pcbnew.In2_Cu, pcbnew.In3_Cu] if b.GetCopperLayerCount() == 6 else [pcbnew.In2_Cu]
 failed = g.route_board(b, (g.MAIN_W, g.MAIN_H), [pcbnew.F_Cu] + inner + [pcbnew.B_Cu], g.copper_layers(b), "GND",
-                       "brick-main", via=(0.45, 0.25), clearance=0.13, adopt=adopt, rounds=40 if adopt else 12)
+                       "brick-main", via=(0.45, 0.25), clearance=0.13, adopt=adopt, rounds=40 if adopt else 12,
+                       rip_first=rip)
 g.fill_zones(b)
 g.save_board(path, b)
 print("brick-main: %s" % ("all nets connected" if not failed else "still open: %s" % failed))

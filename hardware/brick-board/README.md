@@ -12,16 +12,34 @@ A 2 x 4 version would need the bare chip and a chip antenna. That is a separate 
 
 ## What is in it
 
-Two 4-layer boards, stacked and joined by a 1.27 mm 2 x 5 board-to-board header.
+Two boards, stacked and joined by a 1.27 mm 2 x 5 board-to-board header: a 6-layer main board and a 4-layer face board, both 0.8 mm thick.
 
 | Board | Size | Contents |
 |---|---|---|
-| main | 45.4 x 13.4 mm | ESP32-C6-MINI-1 (underside), USB-C with ESD protection, LiPo charger (TP4054, 50 mA), battery/USB power path, 3.3 V regulator (RT9080, 2 µA quiescent), fuel gauge (MAX17048), NFC reader (PN5180) with its 27.12 MHz crystal, amplifier (MAX98357A), I2S microphone (ICS-43434), accelerometer (LIS2DH12), battery and speaker connectors |
-| face | 24.4 x 13.4 mm | Printed 6-turn NFC loop with its EMC filter and matching network, eight WS2812B-2020 pixels, colour sensor (TCS34725) and its white lamp |
+| main (6 layers) | 45.4 x 13.4 mm | ESP32-C6-MINI-1 (underside), USB-C with ESD protection, LiPo charger (TP4054, 50 mA), battery/USB power path, 3.3 V regulator (RT9080, 2 µA quiescent), battery voltage divider, NFC reader (PN5180) with its 27.12 MHz crystal, amplifier (MAX98357A), accelerometer (LIS2DH12), pixel supply switch and data level shifter, battery and speaker sockets |
+| face (4 layers) | 24.4 x 13.4 mm | Printed 6-turn NFC loop with its matching network, eight WS2812B-2020 pixels, colour sensor (TCS34725) and its white lamp |
 
 The face board sits on top so the NFC loop is as close as possible to the tag on top of the brick. Its pixels and colour sensor sit inside the loop. For that reason the face board has **no copper pours**: a solid area of copper inside the loop would act as a shorted turn and weaken the field. Its inner layers carry only a few tracks.
 
 The GPIO numbers match the rev B module build, so the same firmware image runs on both. `gen_board.py` fails if they drift from `firmware/core/pins.h`.
+
+### Cut from rev B to fit
+
+A 2 x 6 brick's main board was about 79% covered by parts and the clearances round them, too dense to route. Three things went to make room:
+
+- **No microphone.** The clap detector hears silence and never fires. GPIO4, its data line, now reads the battery instead.
+- **No fuel gauge.** A 1 MΩ / 1 MΩ divider (about 2 µA) feeds the battery voltage to GPIO4 (ADC1 channel 4). The firmware still probes for the MAX17048, finds nothing and carries on. Reading the divider needs a small firmware change that has not been made yet.
+- **Smaller sockets.** Battery and speaker both plug into JST-SH 1.0 mm 2-pin sockets (2.9 mm tall). The JST-PH battery socket, with the room its plug needed, took 124 mm² of the top side. The 1.25 mm speaker socket it replaces was 3.53 mm tall, more than the 3.3 mm gap above the speaker.
+
+One part was added: U10, a single-gate buffer (SN74LV1T34) powered from the pixel supply. The pixels run from VSYS, up to about 4.7 V on USB, where a WS2812 needs 0.7 x VDD (about 3.3 V) on its data input. A 3.3 V GPIO is marginal there.
+
+## What to buy besides the boards
+
+No soldering: everything plugs in.
+
+- **Battery:** a 3.7 V single-cell LiPo with a protection circuit, at most 24 mm long, 13 mm wide and 4.5 mm thick (the bay is 24 x 13.8 mm; the module above it leaves 4.9 mm). A "401220" cell (4 x 12 x 20 mm, about 60 to 80 mAh) fits, with a **JST-SH 1.0 mm 2-pin** plug. LiPo plug polarity is not standardised: before plugging in, check that the red wire lands on pin 2, marked `+` on the board.
+- **Speaker:** 8 Ω, 0.5 to 1 W, at most 15 x 13 x 4 mm (a "1510" or "1511" size, or 13 mm round), with a **JST-SH 1.0 mm 2-pin** plug.
+- The two printed case parts.
 
 ## Stack inside the brick
 
@@ -32,6 +50,7 @@ Heights from the bottom of the brick, in mm (from `case/brick_case.scad`):
 | 0.0 | 1.8 | tubes (room for the studs of the brick below) |
 | 1.8 | 2.6 | floor (printed base part) |
 | 2.6 | 6.6 | speaker at the USB end, battery beside it |
+| 7.0 | 9.9 | speaker socket and plug, under the main board above the speaker |
 | 9.9 | 10.7 | main board on rails; the ESP32 module hangs below it |
 | 10.7 | 16.5 | board-to-board header |
 | 16.5 | 17.3 | face board |
@@ -48,6 +67,12 @@ tools/autoplace.py     greedy placer for the small parts
 tools/router.py        small maze router (see below)
 tools/nfc_antenna.py   loop inductance and PN5180 matching network
 tools/gen_sch.py       draws docs/schematic.pdf
+tools/gen_fab.py       writes the JLCPCB order files to ../fab/ (refuses a board that fails DRC)
+tools/jlc_stock.py     checks every part number against JLCPCB's live stock
+tools/kicad.sh         runs any of these in a KiCad 9 container (Docker, no install needed)
+tools/kicad-gui.sh     opens a board in KiCad 9's PCB editor from the same container
+tools/route_main.sh    routes the main board: Freerouting 1.9, then finish_route.py
+tools/render.sh        SVG of a board's layers to ../render/
 kicad/                 the generated boards, rules and DRC reports
 case/brick_case.scad   printed shell and base
 lib/lcsc.pretty/       footprints, from the LCSC/EasyEDA library
@@ -55,18 +80,26 @@ lib/lcsc.pretty/       footprints, from the LCSC/EasyEDA library
 
 ## Regenerating
 
-Needs KiCad 9 (its Python `pcbnew` module), numpy and scipy, and reportlab for the schematic.
+Needs KiCad 9 (its Python `pcbnew` module), numpy and scipy, reportlab for the schematic, and Freerouting for the main board. The simplest way is Docker: `tools/kicad.sh` builds a KiCad 9 image with the Python packages (`tools/docker/Dockerfile`) and runs a command in it. For Freerouting, unpack the `freerouting-2.5.0-linux-x64.zip` release (it bundles Java 25) and point `FREEROUTING_HOME` at it; the default is `~/.local/opt/freerouting/linux/freerouting-2.5.0-linux-x64`.
+
+```sh
+cd tools
+./kicad.sh python3 gen_board.py place     # any command below runs the same way
+./route_main.sh                           # main board: Freerouting 1.9 + finishing pass
+```
 
 ```sh
 cd tools
 python3 gen_board.py place        # place parts, write ../kicad/*.kicad_pcb (unrouted)
 python3 gen_board.py placecheck   # placement DRC: overlaps, clearances
 python3 gen_board.py route face   # route the face board with the built-in router
-python3 gen_board.py freeroute    # route the main board with Freerouting (needs Java 25+)
+./route_main.sh                   # route the main board (on the host: needs java and xvfb-run)
 python3 gen_board.py check        # full DRC and connectivity
 python3 gen_sch.py                # ../docs/schematic.pdf
 python3 nfc_antenna.py            # print the antenna and matching design
 python3 nfc_antenna.py --check    # check the solver against NXP's worked example
+python3 gen_fab.py                # Gerbers, drill, BOM and placement files for JLCPCB
+python3 jlc_stock.py              # stock check (plain Python, no KiCad needed)
 ```
 
 `place` rewrites both boards, so route the face board again after it.
@@ -78,9 +111,15 @@ openscad -D 'part="shell"' -o shell.stl case/brick_case.scad
 openscad -D 'part="base"'  -o base.stl  case/brick_case.scad
 ```
 
-### Why a home-made router
+### Routing the main board
 
-The boards are generated from code, and Freerouting 2.2 needs Java 25, which the environment these files were first made in did not have. A grid maze router (A* on a 0.05 mm grid, with rip-up and retry) handles the face board in seconds. KiCad's own DRC checks the result either way.
+The face board is routed by `tools/router.py`, a small grid maze router (A* on a 0.05 mm grid, with rip-up and retry); it finishes in under a minute. The main board takes three steps:
+
+1. `gen_board.py place` also gives each signal pad on the module's two long sides a via under the module (`fanout_module`). The module is 13.2 mm wide on a 13.4 mm board, so those pads can only escape inward, and no autorouter here would place vias under a part by itself.
+2. `tools/route_main.sh` exports a DSN and runs Freerouting **1.9** on it (headless under `xvfb-run`). Freerouting 2.5 oscillated between 55 and 130 open connections on this board; 1.9 converges. `CONTINUE=1 tools/route_main.sh` routes on from existing tracks.
+3. `tools/finish_route.py` (run by `route_main.sh`) connects what Freerouting leaves with `router.py`, starting from the copper already there.
+
+`PYTHONHASHSEED` is pinned (0) by `tools/kicad.sh`, because `router.py`'s rip-up order depends on set ordering.
 
 ## NFC antenna
 
@@ -90,23 +129,42 @@ These are first-board values from a calculation. NXP's procedure measures the re
 
 ## Routing status
 
-- **Face board: routed.** KiCad's DRC reports no errors and no missing connections (`python3 gen_board.py route face`, then `check`).
-- **Main board: placed, not routed.** Placement passes DRC. Routing does not finish:
+- **Face board (4 layers): routed.** No DRC errors, no missing connections. Its order files are in `fab/brick-face/`.
+- **Main board (6 layers): placed, 17 connections still open, so it cannot be ordered yet.** No DRC errors otherwise. `gen_fab.py` refuses to write its files until the open list is empty.
 
-  | Attempt | Connections left open |
-  |---|---|
-  | built-in router (`route main`) | 18 nets |
-  | Freerouting, 40 passes (`freeroute main`) | 41 connections, about 31 of them signals |
-  | Freerouting with 0.1 mm tracks and gaps, 0.45 mm vias | about 45 |
+  Most of what is left is the PN5180's NFC network on the top side, between the chip and the face-board header: TX1F, TX2F, RXN, RXP_C, RXN_C and VMID. The rest are short hops: NFC_NSS, NFC_BUSY, SPI_SCK and SPI_MISO from the chip's host-side pins, LAMP_EN and I2C_SDA at the header, one 3V3 and three GND joins. `python3 gen_board.py check` lists them with coordinates.
 
-  Two different routers failing in the same way, and finer rules barely helping, point to the placement. The placer puts each support part as close to its chip as it fits, which suits decoupling but leaves no channels between groups of parts on a 45 x 13 mm board. The next step is to re-place the main board with routing channels in mind (by hand, or by giving the placer channel keep-outs), or to move to a 6-layer board.
+  The quickest way to finish is by hand, in KiCad's interactive router: `tools/kicad-gui.sh` opens the board, and push-and-shove routing usually settles a dozen short connections like these in well under an hour. Re-running `place` discards hand routing, so do it last, or nudge parts in `PLACEMENT` and `AUTO_MAIN` first.
 
-  One placement problem is already fixed: support parts packed against the PN5180's 0.5 mm-pitch pads had walled several of its pins into pockets that no route could leave. The placer now keeps a 0.6 mm ring clear round that chip.
+  How the main board got here: the first draft was about 79% covered and both autorouters left 40 or more connections open. Cutting the microphone and fuel gauge and shrinking the sockets, power tracks 0.2 mm wide (0.3 mm could not reach the 0.5 mm-pitch pads), generated fan-out vias for the module, a via field beside it (the PN5180 moved 3 mm towards the USB end to make room), 6 layers, and a finishing pass with `router.py` brought it down step by step: 45, 33, 29, 19, 13 to 17 open.
+
+## Ordering from JLCPCB
+
+`tools/gen_fab.py` writes everything to `fab/<board>/`. It refuses a board that fails DRC or has open connections. Order the two boards as two separate designs, each with assembly:
+
+1. **PCB.** Upload `brick-main-gerbers.zip` (then `brick-face-gerbers.zip` as a second design). Settings: layers as detected (main 6, face 4), **thickness 0.8 mm**, any colour, surface finish ENIG or HASL lead-free. On the 6-layer main board, epoxy-filled and capped vias are JLCPCB's default and free, which suits the vias in the module's and chips' ground pads.
+2. **Panelise.** Both boards are smaller than the 70 x 70 mm that JLCPCB's Standard assembly needs, so choose "Panel by JLCPCB" with edge rails. A 2 x 3 or similar panel of the main board, and a 2 x 4 of the face board, gives a handful of each.
+3. **Assembly.** Standard PCBA, **both sides**. Upload `-bom.csv` and `-cpl.csv`. On the part-check page every line should match; JP1 (the boot jumper) and ANT1 (the printed loop) are not in the parts list on purpose.
+4. **Check the placement preview** part by part, especially U1, U6, U7, U9, U10, the LEDs and J2/J3, and the pin-1 dot of every IC. Bottom-side rotations are the usual source of mistakes. Fix any turned part by adding its footprint to `ROT_FIX` in `gen_fab.py` and regenerating.
+5. Run `python3 tools/jlc_stock.py` on the day of the order. When this was written, every part was in stock, but the TCS34725 colour sensor had only 37 left.
+
+Expect 25 or so "extended" parts on each order, each with a small loading fee.
+
+## Assembly
+
+No soldering.
+
+1. Plug the face board's socket onto the main board's header, face board on top, matching the outlines.
+2. Plug the speaker into J3 on the underside and the battery into J2 on the top. Before the battery goes in, check its polarity: red to the pin marked `+`.
+3. Lay the speaker (facing up) and the battery in their bays on the printed base, battery wires up through the notch in the main board's edge.
+4. Push the board stack up into the shell from below, USB-C into its opening, until the main board clicks over its rails. Snap the base in.
+
+The first time, flash the firmware over USB-C from the [build page](https://emu-commits.github.io/open-play-brick/build.html). If the ESP32 does not enter download mode by itself, hold tweezers across JP1 while plugging in the USB cable.
 
 ## Not done yet
 
-- **Fabrication outputs.** `design.py` mentions `gen_fab.py`, which should write the Gerbers, drill files, parts list and placement file in JLCPCB's format. It does not exist yet.
-- **Stock check.** The JLCPCB part numbers have not been checked for stock. The PN5180 and the colour sensor are the ones to check first.
-- **Review.** The NFC section (crystal, matching network, loop) and the module's antenna keep-out need review by someone with RF layout experience.
-- **Bench test of the antenna** (roadmap step 2), before ordering.
+- **The firmware does not read the battery yet.** It needs to read GPIO4 as an ADC (VBAT = 2 x the reading) instead of the fuel gauge.
+- **Nothing has been built.** The NFC antenna in particular is a calculation: expect to change the matching capacitors C40 to C47 on the first boards (`tools/nfc_antenna.py`). The roadmap's bench test of a small antenna (step 2) is still the cheaper first step.
+- **Review.** The NFC section (crystal, matching network, loop) and the module's antenna keep-out need review by someone with RF layout experience. The 2.4 GHz antenna sits close to the face board and the battery, so expect less Wi-Fi and Bluetooth range than a bare module.
+- **Small battery.** The 2 x 6 bay takes a cell of about 60 to 80 mAh.
 - **Fit check of the case** with real boards, battery and speaker.

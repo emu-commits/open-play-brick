@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-11-20T11:46:11+0000",
+    "date": "2026-11-20T18:35:21+0000",
     "included_severities": [
         "error",
         "warning"
@@ -19,7 +19,7 @@
                         "x": 100.76,
                         "y": 106.7
                     },
-                    "uuid": "a3b4db72-493c-4aaf-bd68-27831d48892f"
+                    "uuid": "b8032dfd-0645-4505-a8c7-2f98e661ad72"
                 },
                 {
                     "description": "Pad 2 [ANT_A] of R30 on B.Cu",
@@ -27,7 +27,7 @@
                         "x": 104.383,
                         "y": 106.695
                     },
-                    "uuid": "f6c52f9c-93b5-43e3-b909-99752307f0c1"
+                    "uuid": "b8165260-5e0f-470d-a15a-2d6337d402f5"
                 }
             ],
             "severity": "error",
@@ -42,7 +42,7 @@
                         "x": 104.582999,
                         "y": 110.295
                     },
-                    "uuid": "9ece7c33-92e5-4607-aedd-8f12620a7488"
+                    "uuid": "46e9ca06-4077-48d8-a6f4-c0be40c102e0"
                 },
                 {
                     "description": "Pad 2 [ANT_B] of ANT1 on F.Cu",
@@ -50,7 +50,7 @@
                         "x": 104.6,
                         "y": 109.05
                     },
-                    "uuid": "f35d9af6-2b4e-4e91-9563-b55a0ad19f56"
+                    "uuid": "c1bdf122-7fbf-445b-8f38-d0d2db031050"
                 }
             ],
             "severity": "error",
@@ -65,7 +65,7 @@
                         "x": 104.695,
                         "y": 103.75
                     },
-                    "uuid": "a733439b-6d2a-4cc0-9ae3-1b54f447805b"
+                    "uuid": "08f7943b-a95b-4c1a-acf6-78cf1e310029"
                 },
                 {
                     "description": "Pad 2 [GND] of C42 on B.Cu",
@@ -73,7 +73,7 @@
                         "x": 104.45,
                         "y": 105.595
                     },
-                    "uuid": "149039f3-d47e-4422-b19b-39b53e8e175b"
+                    "uuid": "37da8c6a-0e75-48c7-8f4f-518c4668e696"
                 }
             ],
             "severity": "error",
@@ -88,7 +88,7 @@
                         "x": 105.94,
                         "y": 109.95
                     },
-                    "uuid": "90ee1284-cf50-45b5-bf75-5bd7903a076a"
+                    "uuid": "75a01b93-ee4e-4d0e-bb84-f75d916b62cd"
                 },
                 {
                     "description": "Pad 2 [GND] of C46 on B.Cu",
@@ -96,7 +96,7 @@
                         "x": 107.49,
                         "y": 110.295
                     },
-                    "uuid": "77015757-8a8c-48fe-823e-0c407305a8d9"
+                    "uuid": "db61d932-f1d3-4205-9b41-820413499f71"
                 }
             ],
             "severity": "error",
@@ -111,7 +111,7 @@
                         "x": 107.29,
                         "y": 106.695
                     },
-                    "uuid": "979c3d67-d7c0-4ea1-9035-9ec2c911d62e"
+                    "uuid": "d0127d23-811f-4456-8dc0-0167025aaf18"
                 },
                 {
                     "description": "Pad 2 [GND] of C53 on F.Cu",
@@ -119,7 +119,7 @@
                         "x": 106.85,
                         "y": 107.495
                     },
-                    "uuid": "0dc6654e-85fa-4be2-94cf-e7ede34e59a3"
+                    "uuid": "070c237e-dab2-42a2-a967-a25df4a918ed"
                 }
             ],
             "severity": "error",
@@ -134,7 +134,7 @@
                         "x": 107.29,
                         "y": 106.695
                     },
-                    "uuid": "979c3d67-d7c0-4ea1-9035-9ec2c911d62e"
+                    "uuid": "d0127d23-811f-4456-8dc0-0167025aaf18"
                 },
                 {
                     "description": "Pad 1 [GND] of LED9 on F.Cu",
@@ -142,7 +142,7 @@
                         "x": 110.2,
                         "y": 106.8
                     },
-                    "uuid": "f201ef13-bc1f-478f-bff3-322b67533e66"
+                    "uuid": "5d55b733-7e75-4444-8d47-32a041ba84fa"
                 }
             ],
             "severity": "error",
@@ -157,7 +157,7 @@
                         "x": 107.29,
                         "y": 106.695
                     },
-                    "uuid": "979c3d67-d7c0-4ea1-9035-9ec2c911d62e"
+                    "uuid": "d0127d23-811f-4456-8dc0-0167025aaf18"
                 },
                 {
                     "description": "Pad 2 [GND] of C42 on B.Cu",
@@ -165,7 +165,7 @@
                         "x": 104.45,
                         "y": 105.595
                     },
-                    "uuid": "149039f3-d47e-4422-b19b-39b53e8e175b"
+                    "uuid": "37da8c6a-0e75-48c7-8f4f-518c4668e696"
                 }
             ],
             "severity": "error",
@@ -180,7 +180,7 @@
                         "x": 107.29,
                         "y": 109.095
                     },
-                    "uuid": "51eb65c0-4a19-4a39-a904-49e1ae9997e0"
+                    "uuid": "21a47f1d-ef67-4626-bced-d001b1fbfe45"
                 },
                 {
                     "description": "Pad 2 [GND] of C46 on B.Cu",
@@ -188,7 +188,7 @@
                         "x": 107.49,
                         "y": 110.295
                     },
-                    "uuid": "77015757-8a8c-48fe-823e-0c407305a8d9"
+                    "uuid": "db61d932-f1d3-4205-9b41-820413499f71"
                 }
             ],
             "severity": "error",
@@ -203,7 +203,7 @@
                         "x": 107.29,
                         "y": 109.095
                     },
-                    "uuid": "51eb65c0-4a19-4a39-a904-49e1ae9997e0"
+                    "uuid": "21a47f1d-ef67-4626-bced-d001b1fbfe45"
                 },
                 {
                     "description": "Pad 2 [GND] of C53 on F.Cu",
@@ -211,7 +211,7 @@
                         "x": 106.85,
                         "y": 107.495
                     },
-                    "uuid": "0dc6654e-85fa-4be2-94cf-e7ede34e59a3"
+                    "uuid": "070c237e-dab2-42a2-a967-a25df4a918ed"
                 }
             ],
             "severity": "error",
@@ -226,7 +226,7 @@
                         "x": 107.49,
                         "y": 110.295
                     },
-                    "uuid": "77015757-8a8c-48fe-823e-0c407305a8d9"
+                    "uuid": "db61d932-f1d3-4205-9b41-820413499f71"
                 },
                 {
                     "description": "Pad 2 [GND] of LED7 on F.Cu",
@@ -234,7 +234,7 @@
                         "x": 109.34,
                         "y": 109.95
                     },
-                    "uuid": "d79ca990-792f-49bd-b74d-3cc62fe0f9e1"
+                    "uuid": "2795415f-f4c9-472c-9861-c12400bcae53"
                 }
             ],
             "severity": "error",
@@ -249,7 +249,7 @@
                         "x": 107.66,
                         "y": 103.45
                     },
-                    "uuid": "2cc96aed-131b-47dd-a991-0234f9cad10f"
+                    "uuid": "b278411a-ac51-420d-8f38-b97646e807f1"
                 },
                 {
                     "description": "Pad 2 [GND] of C50 on F.Cu",
@@ -257,7 +257,7 @@
                         "x": 104.695,
                         "y": 103.75
                     },
-                    "uuid": "a733439b-6d2a-4cc0-9ae3-1b54f447805b"
+                    "uuid": "08f7943b-a95b-4c1a-acf6-78cf1e310029"
                 }
             ],
             "severity": "error",
@@ -272,7 +272,7 @@
                         "x": 111.06,
                         "y": 103.45
                     },
-                    "uuid": "45d7f8be-8086-4b05-a0da-949282645d8d"
+                    "uuid": "2e412f88-4f65-4db2-8b6f-a48810edc60d"
                 },
                 {
                     "description": "Pad 2 [GND] of LED1 on F.Cu",
@@ -280,7 +280,7 @@
                         "x": 107.66,
                         "y": 103.45
                     },
-                    "uuid": "2cc96aed-131b-47dd-a991-0234f9cad10f"
+                    "uuid": "b278411a-ac51-420d-8f38-b97646e807f1"
                 }
             ],
             "severity": "error",
@@ -295,7 +295,7 @@
                         "x": 114.25,
                         "y": 107.45
                     },
-                    "uuid": "6106fb1a-c702-4b76-85a5-a64f759d0933"
+                    "uuid": "8f720e19-8bb6-46f5-a41d-ed9c90266a2a"
                 },
                 {
                     "description": "Pad 2 [GND] of LED6 on F.Cu",
@@ -303,7 +303,7 @@
                         "x": 115.54,
                         "y": 109.95
                     },
-                    "uuid": "eadf745d-aac2-4239-b620-0f1e9cfadfce"
+                    "uuid": "a5156c43-3497-46d9-9da5-ce128c00b3be"
                 }
             ],
             "severity": "error",
@@ -318,7 +318,7 @@
                         "x": 114.295,
                         "y": 106.99
                     },
-                    "uuid": "100c1e18-d995-4a13-8c63-84d19f88ccd9"
+                    "uuid": "b7210d9b-b5b8-4630-90c3-477ba09a42b7"
                 },
                 {
                     "description": "Pad 3 [GND] of U20 on F.Cu",
@@ -326,7 +326,7 @@
                         "x": 114.25,
                         "y": 107.45
                     },
-                    "uuid": "6106fb1a-c702-4b76-85a5-a64f759d0933"
+                    "uuid": "8f720e19-8bb6-46f5-a41d-ed9c90266a2a"
                 }
             ],
             "severity": "error",
@@ -341,7 +341,7 @@
                         "x": 114.295,
                         "y": 106.99
                     },
-                    "uuid": "100c1e18-d995-4a13-8c63-84d19f88ccd9"
+                    "uuid": "b7210d9b-b5b8-4630-90c3-477ba09a42b7"
                 },
                 {
                     "description": "Pad 1 [GND] of LED9 on F.Cu",
@@ -349,7 +349,7 @@
                         "x": 110.2,
                         "y": 106.8
                     },
-                    "uuid": "f201ef13-bc1f-478f-bff3-322b67533e66"
+                    "uuid": "5d55b733-7e75-4444-8d47-32a041ba84fa"
                 }
             ],
             "severity": "error",
@@ -364,7 +364,7 @@
                         "x": 115.85,
                         "y": 103.6
                     },
-                    "uuid": "f226dbf4-8e4d-4abc-8a8a-830c2de62910"
+                    "uuid": "46ebf919-62c2-437f-8a45-57953a9b90b1"
                 },
                 {
                     "description": "Pad 2 [GND] of LED3 on F.Cu",
@@ -372,7 +372,7 @@
                         "x": 117.26,
                         "y": 103.45
                     },
-                    "uuid": "b300f316-b81c-42b0-ad88-0a74b6763a3f"
+                    "uuid": "7b52dff1-2523-488f-bd51-cb725d90f764"
                 }
             ],
             "severity": "error",
@@ -387,7 +387,7 @@
                         "x": 117.26,
                         "y": 103.45
                     },
-                    "uuid": "b300f316-b81c-42b0-ad88-0a74b6763a3f"
+                    "uuid": "7b52dff1-2523-488f-bd51-cb725d90f764"
                 },
                 {
                     "description": "Pad 8 [GND] of J5 on B.Cu",
@@ -395,7 +395,7 @@
                         "x": 119.13,
                         "y": 104.9
                     },
-                    "uuid": "10b5534e-137d-406d-8851-2aa9eae0820c"
+                    "uuid": "3831916b-651d-4608-a0cf-cb5efa81a14b"
                 }
             ],
             "severity": "error",
@@ -410,7 +410,7 @@
                         "x": 117.295,
                         "y": 106.55
                     },
-                    "uuid": "8aa85eca-bbcb-44b1-83d7-7e921016958b"
+                    "uuid": "40b59cc9-9d4a-4f38-a224-29bd6db2ae20"
                 },
                 {
                     "description": "Pad 2 [GND] of C55 on B.Cu",
@@ -418,7 +418,7 @@
                         "x": 114.295,
                         "y": 106.99
                     },
-                    "uuid": "100c1e18-d995-4a13-8c63-84d19f88ccd9"
+                    "uuid": "b7210d9b-b5b8-4630-90c3-477ba09a42b7"
                 }
             ],
             "severity": "error",
@@ -433,7 +433,7 @@
                         "x": 118.895,
                         "y": 106.79
                     },
-                    "uuid": "abc51cf4-64a2-4029-acb1-58764187c5ef"
+                    "uuid": "52f9e168-29f3-4b2c-ad4f-747691af6836"
                 },
                 {
                     "description": "Pad 2 [GND] of C52 on F.Cu",
@@ -441,7 +441,7 @@
                         "x": 117.295,
                         "y": 106.55
                     },
-                    "uuid": "8aa85eca-bbcb-44b1-83d7-7e921016958b"
+                    "uuid": "40b59cc9-9d4a-4f38-a224-29bd6db2ae20"
                 }
             ],
             "severity": "error",
@@ -456,7 +456,7 @@
                         "x": 118.895,
                         "y": 106.79
                     },
-                    "uuid": "abc51cf4-64a2-4029-acb1-58764187c5ef"
+                    "uuid": "52f9e168-29f3-4b2c-ad4f-747691af6836"
                 },
                 {
                     "description": "Pad 8 [GND] of J5 on B.Cu",
@@ -464,7 +464,7 @@
                         "x": 119.13,
                         "y": 104.9
                     },
-                    "uuid": "10b5534e-137d-406d-8851-2aa9eae0820c"
+                    "uuid": "3831916b-651d-4608-a0cf-cb5efa81a14b"
                 }
             ],
             "severity": "error",
@@ -479,7 +479,7 @@
                         "x": 118.94,
                         "y": 109.95
                     },
-                    "uuid": "11a263f2-0f88-441a-b668-e2af9e9800ed"
+                    "uuid": "56a219fa-ae56-4437-9fbd-920d62bbbf0f"
                 },
                 {
                     "description": "Pad 7 [GND] of J5 on B.Cu",
@@ -487,7 +487,7 @@
                         "x": 119.13,
                         "y": 108.5
                     },
-                    "uuid": "5299098b-52d7-49c4-9fa0-62c589367709"
+                    "uuid": "d55e463f-f51b-443d-a0ce-d69ec6bdb6dc"
                 }
             ],
             "severity": "error",
@@ -502,7 +502,7 @@
                         "x": 119.13,
                         "y": 108.5
                     },
-                    "uuid": "5299098b-52d7-49c4-9fa0-62c589367709"
+                    "uuid": "d55e463f-f51b-443d-a0ce-d69ec6bdb6dc"
                 },
                 {
                     "description": "Pad 2 [GND] of C51 on F.Cu",
@@ -510,7 +510,7 @@
                         "x": 118.895,
                         "y": 106.79
                     },
-                    "uuid": "abc51cf4-64a2-4029-acb1-58764187c5ef"
+                    "uuid": "52f9e168-29f3-4b2c-ad4f-747691af6836"
                 }
             ],
             "severity": "error",
@@ -525,7 +525,7 @@
                         "x": 120.66,
                         "y": 103.45
                     },
-                    "uuid": "e971eb6e-a336-4031-b99f-3ea1f424a5bd"
+                    "uuid": "50bb971d-151d-4c07-bace-fa4417994cbd"
                 },
                 {
                     "description": "Pad 8 [GND] of J5 on B.Cu",
@@ -533,7 +533,7 @@
                         "x": 119.13,
                         "y": 104.9
                     },
-                    "uuid": "10b5534e-137d-406d-8851-2aa9eae0820c"
+                    "uuid": "3831916b-651d-4608-a0cf-cb5efa81a14b"
                 }
             ],
             "severity": "error",
@@ -548,7 +548,7 @@
                         "x": 105.94,
                         "y": 103.45
                     },
-                    "uuid": "78600728-64fa-47bc-b82e-5a5ae4453233"
+                    "uuid": "539ec938-c97a-4eb8-b748-7582d6127bb9"
                 },
                 {
                     "description": "Pad 1 [LED_DIN] of J5 on B.Cu",
@@ -556,7 +556,7 @@
                         "x": 122.94,
                         "y": 108.5
                     },
-                    "uuid": "4eeb089d-9646-48d6-816e-9621cec19e1c"
+                    "uuid": "5f6ebe87-4c7d-4ea3-8d83-31ccded5689e"
                 }
             ],
             "severity": "error",
@@ -571,7 +571,7 @@
                         "x": 105.94,
                         "y": 104.55
                     },
-                    "uuid": "f912903e-5771-45c7-be23-13b7c13369c5"
+                    "uuid": "d5b61ee3-d333-4dbc-9a05-5b23b8e612af"
                 },
                 {
                     "description": "Pad 1 [VLED] of C50 on F.Cu",
@@ -579,7 +579,7 @@
                         "x": 104.695,
                         "y": 104.59
                     },
-                    "uuid": "750e40f6-db31-453d-b6cc-42ff8a9cd7c9"
+                    "uuid": "3daa8e8b-3e0e-4895-b377-ebbee32c9bba"
                 }
             ],
             "severity": "error",
@@ -594,7 +594,7 @@
                         "x": 107.66,
                         "y": 108.85
                     },
-                    "uuid": "f3f54202-2b1a-42eb-be67-7bd00920db54"
+                    "uuid": "813f3ff6-0cb9-408e-975c-a16557e2fb22"
                 },
                 {
                     "description": "Pad 4 [VLED] of LED7 on F.Cu",
@@ -602,7 +602,7 @@
                         "x": 111.06,
                         "y": 108.85
                     },
-                    "uuid": "92c8feb7-4039-4ebc-8336-671c73bec25b"
+                    "uuid": "3c66d16f-4698-4ecb-9823-711ccf49e590"
                 }
             ],
             "severity": "error",
@@ -617,7 +617,7 @@
                         "x": 107.69,
                         "y": 107.495
                     },
-                    "uuid": "c6f657e6-a13e-4c40-8e18-07ef55124c46"
+                    "uuid": "3637f51e-67ec-457a-83b6-c2ee4ee4ff6d"
                 },
                 {
                     "description": "Pad 4 [VLED] of LED8 on F.Cu",
@@ -625,7 +625,7 @@
                         "x": 107.66,
                         "y": 108.85
                     },
-                    "uuid": "f3f54202-2b1a-42eb-be67-7bd00920db54"
+                    "uuid": "813f3ff6-0cb9-408e-975c-a16557e2fb22"
                 }
             ],
             "severity": "error",
@@ -640,7 +640,7 @@
                         "x": 109.34,
                         "y": 104.55
                     },
-                    "uuid": "e3f31a41-3527-47fd-bda1-fdbd1dd50d6a"
+                    "uuid": "36db9096-8d2d-4b05-a00c-baac4603963a"
                 },
                 {
                     "description": "Pad 1 [VLED] of C53 on F.Cu",
@@ -648,7 +648,7 @@
                         "x": 107.69,
                         "y": 107.495
                     },
-                    "uuid": "c6f657e6-a13e-4c40-8e18-07ef55124c46"
+                    "uuid": "3637f51e-67ec-457a-83b6-c2ee4ee4ff6d"
                 }
             ],
             "severity": "error",
@@ -663,7 +663,7 @@
                         "x": 109.34,
                         "y": 104.55
                     },
-                    "uuid": "e3f31a41-3527-47fd-bda1-fdbd1dd50d6a"
+                    "uuid": "36db9096-8d2d-4b05-a00c-baac4603963a"
                 },
                 {
                     "description": "Pad 4 [VLED] of LED1 on F.Cu",
@@ -671,7 +671,7 @@
                         "x": 105.94,
                         "y": 104.55
                     },
-                    "uuid": "f912903e-5771-45c7-be23-13b7c13369c5"
+                    "uuid": "d5b61ee3-d333-4dbc-9a05-5b23b8e612af"
                 }
             ],
             "severity": "error",
@@ -686,7 +686,7 @@
                         "x": 115.85,
                         "y": 105.0
                     },
-                    "uuid": "c2de8440-46c7-425d-886c-e6e9ebde18d6"
+                    "uuid": "eb5baf14-286c-4f84-9c9f-74cb0eea332d"
                 },
                 {
                     "description": "Pad 4 [VLED] of LED3 on F.Cu",
@@ -694,7 +694,7 @@
                         "x": 115.54,
                         "y": 104.55
                     },
-                    "uuid": "0fd7ea9f-d27e-4d54-8cd5-8ba0038751cf"
+                    "uuid": "d33b06c8-8d1d-4c9e-b810-034d20083494"
                 }
             ],
             "severity": "error",
@@ -709,7 +709,7 @@
                         "x": 115.85,
                         "y": 105.0
                     },
-                    "uuid": "c2de8440-46c7-425d-886c-e6e9ebde18d6"
+                    "uuid": "eb5baf14-286c-4f84-9c9f-74cb0eea332d"
                 },
                 {
                     "description": "Pad 1 [VLED] of C52 on F.Cu",
@@ -717,7 +717,7 @@
                         "x": 117.295,
                         "y": 107.39
                     },
-                    "uuid": "e640cf5e-b589-49e1-855c-fd8040c10028"
+                    "uuid": "c2146216-cafc-4b51-913c-a47af43388b4"
                 }
             ],
             "severity": "error",
@@ -732,7 +732,7 @@
                         "x": 115.85,
                         "y": 105.0
                     },
-                    "uuid": "c2de8440-46c7-425d-886c-e6e9ebde18d6"
+                    "uuid": "eb5baf14-286c-4f84-9c9f-74cb0eea332d"
                 },
                 {
                     "description": "Pad 4 [VLED] of LED7 on F.Cu",
@@ -740,7 +740,7 @@
                         "x": 111.06,
                         "y": 108.85
                     },
-                    "uuid": "92c8feb7-4039-4ebc-8336-671c73bec25b"
+                    "uuid": "3c66d16f-4698-4ecb-9823-711ccf49e590"
                 }
             ],
             "severity": "error",
@@ -755,7 +755,7 @@
                         "x": 117.26,
                         "y": 108.85
                     },
-                    "uuid": "a565d081-fa38-46e5-aafd-2998f90c7e46"
+                    "uuid": "5fa9d24e-3913-419c-8d04-cc00186ead56"
                 },
                 {
                     "description": "Pad 1 [VLED] of C52 on F.Cu",
@@ -763,7 +763,7 @@
                         "x": 117.295,
                         "y": 107.39
                     },
-                    "uuid": "e640cf5e-b589-49e1-855c-fd8040c10028"
+                    "uuid": "c2146216-cafc-4b51-913c-a47af43388b4"
                 }
             ],
             "severity": "error",
@@ -778,7 +778,7 @@
                         "x": 117.295,
                         "y": 107.39
                     },
-                    "uuid": "e640cf5e-b589-49e1-855c-fd8040c10028"
+                    "uuid": "c2146216-cafc-4b51-913c-a47af43388b4"
                 },
                 {
                     "description": "Pad 1 [VLED] of C51 on F.Cu",
@@ -786,7 +786,7 @@
                         "x": 118.895,
                         "y": 105.95
                     },
-                    "uuid": "c7303044-6d17-4762-be3f-9fa018703472"
+                    "uuid": "2e9bbe9d-4036-4c0c-bb3e-7772f7dd8f12"
                 }
             ],
             "severity": "error",
@@ -801,7 +801,7 @@
                         "x": 118.94,
                         "y": 104.55
                     },
-                    "uuid": "45675f7e-b000-4c45-b547-3103b66ff415"
+                    "uuid": "896d34d9-a46b-4885-945f-35eb9d45d05f"
                 },
                 {
                     "description": "Pad 1 [VLED] of C51 on F.Cu",
@@ -809,7 +809,7 @@
                         "x": 118.895,
                         "y": 105.95
                     },
-                    "uuid": "c7303044-6d17-4762-be3f-9fa018703472"
+                    "uuid": "2e9bbe9d-4036-4c0c-bb3e-7772f7dd8f12"
                 }
             ],
             "severity": "error",
@@ -824,7 +824,7 @@
                         "x": 120.4,
                         "y": 104.9
                     },
-                    "uuid": "78cb091f-ce69-439d-8521-0deba5dd2d7e"
+                    "uuid": "2886f9ae-c9a7-436d-af0f-5f0a3ff4d39d"
                 },
                 {
                     "description": "Pad 4 [VLED] of LED4 on F.Cu",
@@ -832,7 +832,7 @@
                         "x": 118.94,
                         "y": 104.55
                     },
-                    "uuid": "45675f7e-b000-4c45-b547-3103b66ff415"
+                    "uuid": "896d34d9-a46b-4885-945f-35eb9d45d05f"
                 }
             ],
             "severity": "error",
@@ -847,7 +847,7 @@
                         "x": 120.66,
                         "y": 108.85
                     },
-                    "uuid": "9c5cdfe9-3c13-4a7e-881d-a6203890a76d"
+                    "uuid": "46ec63a2-894b-43dc-9f00-5d701035613b"
                 },
                 {
                     "description": "Pad 1 [VLED] of C51 on F.Cu",
@@ -855,7 +855,7 @@
                         "x": 118.895,
                         "y": 105.95
                     },
-                    "uuid": "c7303044-6d17-4762-be3f-9fa018703472"
+                    "uuid": "2e9bbe9d-4036-4c0c-bb3e-7772f7dd8f12"
                 }
             ],
             "severity": "error",
@@ -870,7 +870,7 @@
                         "x": 107.66,
                         "y": 104.55
                     },
-                    "uuid": "aead41b9-87ca-476a-8fe1-5d9abc55fbf3"
+                    "uuid": "5a3e794e-bca0-4454-b04b-ceebf1624286"
                 },
                 {
                     "description": "Pad 3 [PIX1] of LED2 on F.Cu",
@@ -878,7 +878,7 @@
                         "x": 109.34,
                         "y": 103.45
                     },
-                    "uuid": "5be064d0-e8e4-4331-aaa4-11fcb39f60e4"
+                    "uuid": "1328a190-bf74-4b16-a1b1-24fbb8a0b74a"
                 }
             ],
             "severity": "error",
@@ -893,7 +893,7 @@
                         "x": 111.06,
                         "y": 104.55
                     },
-                    "uuid": "4aee2b8f-e271-4c33-af9d-48ee3ccd1145"
+                    "uuid": "95dd4c1d-347d-4653-9a13-dcd8f312122f"
                 },
                 {
                     "description": "Pad 3 [PIX2] of LED3 on F.Cu",
@@ -901,7 +901,7 @@
                         "x": 115.54,
                         "y": 103.45
                     },
-                    "uuid": "bb3c0307-e9af-4985-8ddb-69e100947618"
+                    "uuid": "af925d35-cc4b-4520-9c52-4d4f94bff0ae"
                 }
             ],
             "severity": "error",
@@ -916,7 +916,7 @@
                         "x": 117.26,
                         "y": 104.55
                     },
-                    "uuid": "a13d16be-be84-4f26-b2ff-052dd2ed71a9"
+                    "uuid": "6c896087-e7d9-4e44-b64e-82c05c640c04"
                 },
                 {
                     "description": "Pad 3 [PIX3] of LED4 on F.Cu",
@@ -924,7 +924,7 @@
                         "x": 118.94,
                         "y": 103.45
                     },
-                    "uuid": "4ccbf219-21ce-430b-b41f-00984ad9e185"
+                    "uuid": "29da3f3d-e3bf-4bfa-b901-a02b89d54325"
                 }
             ],
             "severity": "error",
@@ -939,7 +939,7 @@
                         "x": 120.66,
                         "y": 104.55
                     },
-                    "uuid": "b160a53e-6a92-44b1-b6a6-9a5939e4d224"
+                    "uuid": "bf59cfb3-1cb8-4229-a485-3c88c46ceb96"
                 },
                 {
                     "description": "Pad 3 [PIX4] of LED5 on F.Cu",
@@ -947,7 +947,7 @@
                         "x": 120.66,
                         "y": 109.95
                     },
-                    "uuid": "64946b22-3fda-4b0d-b9f7-bac8212375ab"
+                    "uuid": "ff35418c-9c44-4a28-adff-2f3ebc775f92"
                 }
             ],
             "severity": "error",
@@ -962,7 +962,7 @@
                         "x": 117.26,
                         "y": 109.95
                     },
-                    "uuid": "3a2565df-9d3d-431a-b664-68531e1c0121"
+                    "uuid": "6ae57568-3d8e-42ee-a345-5ed0b4bf5dc9"
                 },
                 {
                     "description": "Pad 1 [PIX5] of LED5 on F.Cu",
@@ -970,7 +970,7 @@
                         "x": 118.94,
                         "y": 108.85
                     },
-                    "uuid": "44ffc4cc-d594-4496-b82d-562b94098ec4"
+                    "uuid": "30f47285-53ab-444a-806d-b1debe1fd2c9"
                 }
             ],
             "severity": "error",
@@ -985,7 +985,7 @@
                         "x": 111.06,
                         "y": 109.95
                     },
-                    "uuid": "8878560d-7f32-4da8-9bf7-eb38a514f595"
+                    "uuid": "71cefbe0-98a3-4ddc-846e-a1395221a1a5"
                 },
                 {
                     "description": "Pad 1 [PIX6] of LED6 on F.Cu",
@@ -993,7 +993,7 @@
                         "x": 115.54,
                         "y": 108.85
                     },
-                    "uuid": "cf8a65ea-f30b-46dd-9da5-e8f95fcf891d"
+                    "uuid": "32f4511a-f23f-4543-8ffb-e6daa4be771f"
                 }
             ],
             "severity": "error",
@@ -1008,7 +1008,7 @@
                         "x": 107.66,
                         "y": 109.95
                     },
-                    "uuid": "426880fd-6369-43f7-9cef-9663a666c5a9"
+                    "uuid": "abd0093a-0bdf-4967-9935-774c4d3bf1f2"
                 },
                 {
                     "description": "Pad 1 [PIX7] of LED7 on F.Cu",
@@ -1016,7 +1016,7 @@
                         "x": 109.34,
                         "y": 108.85
                     },
-                    "uuid": "bec37b96-2c66-496e-a822-d6245a75432e"
+                    "uuid": "26ee0588-80b2-42b3-ba58-0367cd302bc2"
                 }
             ],
             "severity": "error",
@@ -1031,7 +1031,7 @@
                         "x": 114.295,
                         "y": 106.15
                     },
-                    "uuid": "6ccc7076-ff4a-41e8-b0b0-4fbade90fd34"
+                    "uuid": "ec265086-4d41-49e3-9e20-e3802fce226f"
                 },
                 {
                     "description": "Pad 1 [3V3] of U20 on F.Cu",
@@ -1039,7 +1039,7 @@
                         "x": 114.25,
                         "y": 106.15
                     },
-                    "uuid": "f23cbc8f-8e51-44bb-9c13-4967142f2f10"
+                    "uuid": "82690d8b-4817-46cd-b967-c0811126a769"
                 }
             ],
             "severity": "error",
@@ -1054,7 +1054,7 @@
                         "x": 120.4,
                         "y": 108.5
                     },
-                    "uuid": "d084893f-2f77-493c-b142-eb86ed6ae781"
+                    "uuid": "290265aa-bdb1-4b16-b7e2-8aaecb146d88"
                 },
                 {
                     "description": "Pad 1 [3V3] of C55 on B.Cu",
@@ -1062,7 +1062,7 @@
                         "x": 114.295,
                         "y": 106.15
                     },
-                    "uuid": "6ccc7076-ff4a-41e8-b0b0-4fbade90fd34"
+                    "uuid": "ec265086-4d41-49e3-9e20-e3802fce226f"
                 }
             ],
             "severity": "error",
@@ -1077,7 +1077,7 @@
                         "x": 114.25,
                         "y": 106.8
                     },
-                    "uuid": "6eb4f2d1-e88c-463d-b215-f4e20add28f2"
+                    "uuid": "5685b40a-330f-4210-95d9-6819e415d400"
                 },
                 {
                     "description": "Pad 4 [I2C_SCL] of J5 on B.Cu",
@@ -1085,7 +1085,7 @@
                         "x": 121.67,
                         "y": 104.9
                     },
-                    "uuid": "82d05424-c1b5-4b9b-a044-669623396049"
+                    "uuid": "7df4aae0-7bb7-4fd4-bb00-13756d086e64"
                 }
             ],
             "severity": "error",
@@ -1100,7 +1100,7 @@
                         "x": 115.75,
                         "y": 106.15
                     },
-                    "uuid": "06e777b5-2819-4ead-a810-5413beae68e9"
+                    "uuid": "4948c812-1162-4063-be11-71709d371a61"
                 },
                 {
                     "description": "Pad 3 [I2C_SDA] of J5 on B.Cu",
@@ -1108,7 +1108,7 @@
                         "x": 121.67,
                         "y": 108.5
                     },
-                    "uuid": "3504e879-1210-4ff3-a23f-2813804620fb"
+                    "uuid": "9cd6d75b-2e8b-4a7f-bcb0-4ae78da791d9"
                 }
             ],
             "severity": "error",
@@ -1123,7 +1123,7 @@
                         "x": 111.783,
                         "y": 106.795
                     },
-                    "uuid": "af0512df-6048-4f37-831b-1a9370042889"
+                    "uuid": "c96d5d4c-8702-450a-9d2a-75d5e0b50ddd"
                 },
                 {
                     "description": "Pad 2 [LAMP_A] of LED9 on F.Cu",
@@ -1131,7 +1131,7 @@
                         "x": 111.8,
                         "y": 106.8
                     },
-                    "uuid": "6e115df9-9f58-4c34-8d00-8d0610ca0d61"
+                    "uuid": "b8673990-33ef-4938-b803-5718dcde0fbe"
                 }
             ],
             "severity": "error",
@@ -1146,7 +1146,7 @@
                         "x": 112.643,
                         "y": 106.795
                     },
-                    "uuid": "16756df6-7d3f-40d3-873a-db5d7891a079"
+                    "uuid": "3f669ff4-d032-473b-9844-bb526f90536c"
                 },
                 {
                     "description": "Pad 2 [LAMP_EN] of J5 on B.Cu",
@@ -1154,7 +1154,7 @@
                         "x": 122.94,
                         "y": 104.9
                     },
-                    "uuid": "5f1b9d8e-974f-43ef-bd2d-58f87b0cfd87"
+                    "uuid": "e172bb5b-2fee-4962-84db-7c8c5af9b695"
                 }
             ],
             "severity": "error",
@@ -1169,7 +1169,7 @@
                         "x": 109.29,
                         "y": 109.095
                     },
-                    "uuid": "ee9c82b1-b2f5-459a-883c-6ca673828ae6"
+                    "uuid": "2729aa36-79d7-405f-8a4c-88651916e708"
                 },
                 {
                     "description": "Pad 1 [TX2F] of C44 on B.Cu",
@@ -1177,7 +1177,7 @@
                         "x": 109.49,
                         "y": 110.295
                     },
-                    "uuid": "6bf1ad15-d086-44dc-9487-da05249401e8"
+                    "uuid": "47e69d6b-3f87-4646-b24e-93bc68964dac"
                 }
             ],
             "severity": "error",
@@ -1192,7 +1192,7 @@
                         "x": 109.49,
                         "y": 110.295
                     },
-                    "uuid": "6bf1ad15-d086-44dc-9487-da05249401e8"
+                    "uuid": "47e69d6b-3f87-4646-b24e-93bc68964dac"
                 },
                 {
                     "description": "Pad 9 [TX2F] of J5 on B.Cu",
@@ -1200,7 +1200,7 @@
                         "x": 117.86,
                         "y": 108.5
                     },
-                    "uuid": "50acacc0-08f3-4a3e-b765-98861c540247"
+                    "uuid": "c444f7ae-b54c-45e4-ab24-2a31ff496219"
                 }
             ],
             "severity": "error",
@@ -1215,7 +1215,7 @@
                         "x": 107.29,
                         "y": 105.595
                     },
-                    "uuid": "a0d0386c-8b2e-4ceb-9d8b-7459d62ec43c"
+                    "uuid": "c4da283f-a5e0-4a7f-9e05-65b1bd6ced40"
                 },
                 {
                     "description": "Pad 1 [TX1F] of C40 on B.Cu",
@@ -1223,7 +1223,7 @@
                         "x": 104.45,
                         "y": 107.995
                     },
-                    "uuid": "bd945dcc-ec66-43ed-bba0-9524f8b614ea"
+                    "uuid": "99c956df-d289-43a5-9c1e-ce6fe8ad4b45"
                 }
             ],
             "severity": "error",
@@ -1238,7 +1238,7 @@
                         "x": 117.86,
                         "y": 104.9
                     },
-                    "uuid": "4553db7f-1f9c-4869-a47d-f9ae8c81edc4"
+                    "uuid": "a8b185f1-fddf-4e9b-8855-8cdfb72eb239"
                 },
                 {
                     "description": "Pad 1 [TX1F] of C41 on B.Cu",
@@ -1246,7 +1246,7 @@
                         "x": 107.29,
                         "y": 105.595
                     },
-                    "uuid": "a0d0386c-8b2e-4ceb-9d8b-7459d62ec43c"
+                    "uuid": "c4da283f-a5e0-4a7f-9e05-65b1bd6ced40"
                 }
             ],
             "severity": "error",
@@ -1261,7 +1261,7 @@
                         "x": 105.243,
                         "y": 106.695
                     },
-                    "uuid": "2e2bce1b-745f-414a-8972-cb535ab20b8f"
+                    "uuid": "c2d175a1-ccd4-4ec8-b5f7-328e800575ef"
                 },
                 {
                     "description": "Pad 2 [MA1] of C40 on B.Cu",
@@ -1269,7 +1269,7 @@
                         "x": 105.29,
                         "y": 107.995
                     },
-                    "uuid": "84b789f3-7993-4b7e-884b-5358cffab884"
+                    "uuid": "004ea3cc-aaa6-410c-8c79-5f47c9ff195d"
                 }
             ],
             "severity": "error",
@@ -1284,7 +1284,7 @@
                         "x": 105.29,
                         "y": 105.595
                     },
-                    "uuid": "9e8b481f-af1a-41f3-94a6-230890566761"
+                    "uuid": "e2766102-e2f7-410b-bc2d-a60b03250a23"
                 },
                 {
                     "description": "Pad 1 [MA1] of R30 on B.Cu",
@@ -1292,7 +1292,7 @@
                         "x": 105.243,
                         "y": 106.695
                     },
-                    "uuid": "2e2bce1b-745f-414a-8972-cb535ab20b8f"
+                    "uuid": "c2d175a1-ccd4-4ec8-b5f7-328e800575ef"
                 }
             ],
             "severity": "error",
@@ -1307,7 +1307,7 @@
                         "x": 106.45,
                         "y": 105.595
                     },
-                    "uuid": "8cbe436a-1dbe-496e-b58a-82467156eceb"
+                    "uuid": "23f61d3d-51da-49b4-8e12-d48809a47277"
                 },
                 {
                     "description": "Pad 1 [MA1] of C42 on B.Cu",
@@ -1315,7 +1315,7 @@
                         "x": 105.29,
                         "y": 105.595
                     },
-                    "uuid": "9e8b481f-af1a-41f3-94a6-230890566761"
+                    "uuid": "e2766102-e2f7-410b-bc2d-a60b03250a23"
                 }
             ],
             "severity": "error",
@@ -1330,7 +1330,7 @@
                         "x": 106.45,
                         "y": 106.695
                     },
-                    "uuid": "b04be049-4be2-4708-ba5e-30808d806fd8"
+                    "uuid": "5899244c-11c1-4af7-9e68-d15b76d87544"
                 },
                 {
                     "description": "Pad 2 [MA1] of C41 on B.Cu",
@@ -1338,7 +1338,7 @@
                         "x": 106.45,
                         "y": 105.595
                     },
-                    "uuid": "8cbe436a-1dbe-496e-b58a-82467156eceb"
+                    "uuid": "23f61d3d-51da-49b4-8e12-d48809a47277"
                 }
             ],
             "severity": "error",
@@ -1353,7 +1353,7 @@
                         "x": 105.442999,
                         "y": 110.295
                     },
-                    "uuid": "9df4962c-1bcd-4c70-ac68-49c11180bbf5"
+                    "uuid": "c161cf25-2df2-4ffa-b4e3-e915bf9b6603"
                 },
                 {
                     "description": "Pad 1 [MB1] of C46 on B.Cu",
@@ -1361,7 +1361,7 @@
                         "x": 106.65,
                         "y": 110.295
                     },
-                    "uuid": "38e24185-76d6-4bc5-8753-5af2e744bf4e"
+                    "uuid": "0fa43876-e8f2-413e-ba5a-42b6a8cbe35d"
                 }
             ],
             "severity": "error",
@@ -1376,7 +1376,7 @@
                         "x": 106.65,
                         "y": 110.295
                     },
-                    "uuid": "38e24185-76d6-4bc5-8753-5af2e744bf4e"
+                    "uuid": "0fa43876-e8f2-413e-ba5a-42b6a8cbe35d"
                 },
                 {
                     "description": "Pad 1 [MB1] of C47 on B.Cu",
@@ -1384,7 +1384,7 @@
                         "x": 106.45,
                         "y": 109.095
                     },
-                    "uuid": "7780bb7a-4d40-427d-bf49-6c78dc692792"
+                    "uuid": "e7ae6de2-820b-49f1-9fbb-0f7ab60694cd"
                 }
             ],
             "severity": "error",
@@ -1399,7 +1399,7 @@
                         "x": 108.45,
                         "y": 109.095
                     },
-                    "uuid": "d0a0027f-bf02-4f7c-a5b4-0b0a4477e160"
+                    "uuid": "c52202cd-47c1-4a44-8c38-8bb7ad42c698"
                 },
                 {
                     "description": "Pad 1 [MB1] of C47 on B.Cu",
@@ -1407,7 +1407,7 @@
                         "x": 106.45,
                         "y": 109.095
                     },
-                    "uuid": "7780bb7a-4d40-427d-bf49-6c78dc692792"
+                    "uuid": "e7ae6de2-820b-49f1-9fbb-0f7ab60694cd"
                 }
             ],
             "severity": "error",
@@ -1422,7 +1422,7 @@
                         "x": 108.65,
                         "y": 110.295
                     },
-                    "uuid": "dac0095d-bfda-434c-9b02-3f0850b0b2b5"
+                    "uuid": "ca22bd89-e328-4581-a28e-53b77fa43e4f"
                 },
                 {
                     "description": "Pad 2 [MB1] of C45 on B.Cu",
@@ -1430,7 +1430,7 @@
                         "x": 108.45,
                         "y": 109.095
                     },
-                    "uuid": "d0a0027f-bf02-4f7c-a5b4-0b0a4477e160"
+                    "uuid": "c52202cd-47c1-4a44-8c38-8bb7ad42c698"
                 }
             ],
             "severity": "error",
@@ -1438,1260 +1438,6 @@
         }
     ],
     "violations": [
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of C50 on F.Silkscreen",
-                    "pos": {
-                        "x": 105.195,
-                        "y": 104.39
-                    },
-                    "uuid": "1e2983da-ecde-4d1b-8b92-db95eb61c4ca"
-                },
-                {
-                    "description": "Polygon of LED1 on F.Silkscreen",
-                    "pos": {
-                        "x": 104.783088,
-                        "y": 104.534949
-                    },
-                    "uuid": "20350b2a-db96-4f86-92d2-a00b245692c1"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Polygon of LED1 on F.Silkscreen",
-                    "pos": {
-                        "x": 104.783088,
-                        "y": 104.534949
-                    },
-                    "uuid": "20350b2a-db96-4f86-92d2-a00b245692c1"
-                },
-                {
-                    "description": "Circle of C50 on F.Silkscreen",
-                    "pos": {
-                        "x": 104.945,
-                        "y": 104.67
-                    },
-                    "uuid": "c4fd7209-de77-4331-a5cd-09d593633305"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of C50 on F.Silkscreen",
-                    "pos": {
-                        "x": 105.195,
-                        "y": 104.39
-                    },
-                    "uuid": "1e2983da-ecde-4d1b-8b92-db95eb61c4ca"
-                },
-                {
-                    "description": "Polygon of LED1 on F.Silkscreen",
-                    "pos": {
-                        "x": 105.133049,
-                        "y": 104.284937
-                    },
-                    "uuid": "84766db5-4d7f-4918-bba5-f4771707a279"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Polygon of LED1 on F.Silkscreen",
-                    "pos": {
-                        "x": 105.133049,
-                        "y": 104.284937
-                    },
-                    "uuid": "84766db5-4d7f-4918-bba5-f4771707a279"
-                },
-                {
-                    "description": "Arc of C50 on F.Silkscreen",
-                    "pos": {
-                        "x": 105.045,
-                        "y": 104.89
-                    },
-                    "uuid": "9e827fb8-79ef-493c-9ca2-e85a510e54ae"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of C43 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.65,
-                        "y": 106.195
-                    },
-                    "uuid": "a5e9c28b-4c05-479c-8a42-70a2769c7648"
-                },
-                {
-                    "description": "Segment of C41 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.15,
-                        "y": 106.095
-                    },
-                    "uuid": "df2d2997-d257-4501-ada7-696175b4e617"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of C43 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.65,
-                        "y": 106.195
-                    },
-                    "uuid": "a5e9c28b-4c05-479c-8a42-70a2769c7648"
-                },
-                {
-                    "description": "Arc of C41 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.15,
-                        "y": 105.945
-                    },
-                    "uuid": "b3e496a8-221a-4d66-abc6-cbeaa90d7652"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Arc of C43 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.15,
-                        "y": 106.345
-                    },
-                    "uuid": "721e4854-94d8-4da4-b0f2-039cbb7f0c23"
-                },
-                {
-                    "description": "Segment of C41 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.15,
-                        "y": 106.095
-                    },
-                    "uuid": "df2d2997-d257-4501-ada7-696175b4e617"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Arc of C43 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.15,
-                        "y": 106.345
-                    },
-                    "uuid": "721e4854-94d8-4da4-b0f2-039cbb7f0c23"
-                },
-                {
-                    "description": "Arc of C41 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.15,
-                        "y": 105.945
-                    },
-                    "uuid": "b3e496a8-221a-4d66-abc6-cbeaa90d7652"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of C41 on B.Silkscreen",
-                    "pos": {
-                        "x": 107.09,
-                        "y": 106.095
-                    },
-                    "uuid": "5ec7264a-c8b3-406f-bcec-b6de043ccb4e"
-                },
-                {
-                    "description": "Segment of C43 on B.Silkscreen",
-                    "pos": {
-                        "x": 107.59,
-                        "y": 106.195
-                    },
-                    "uuid": "6ef778c7-6b3e-4920-bdbd-6e7871e4ffd7"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Arc of C41 on B.Silkscreen",
-                    "pos": {
-                        "x": 107.59,
-                        "y": 105.945
-                    },
-                    "uuid": "64eb79c4-3f00-46d9-af23-0de2c848e16c"
-                },
-                {
-                    "description": "Segment of C43 on B.Silkscreen",
-                    "pos": {
-                        "x": 107.59,
-                        "y": 106.195
-                    },
-                    "uuid": "6ef778c7-6b3e-4920-bdbd-6e7871e4ffd7"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of C41 on B.Silkscreen",
-                    "pos": {
-                        "x": 107.09,
-                        "y": 106.095
-                    },
-                    "uuid": "5ec7264a-c8b3-406f-bcec-b6de043ccb4e"
-                },
-                {
-                    "description": "Arc of C43 on B.Silkscreen",
-                    "pos": {
-                        "x": 107.59,
-                        "y": 106.345
-                    },
-                    "uuid": "80f808f4-411b-489b-a252-f46e2d797c1a"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Arc of C41 on B.Silkscreen",
-                    "pos": {
-                        "x": 107.59,
-                        "y": 105.945
-                    },
-                    "uuid": "64eb79c4-3f00-46d9-af23-0de2c848e16c"
-                },
-                {
-                    "description": "Arc of C43 on B.Silkscreen",
-                    "pos": {
-                        "x": 107.59,
-                        "y": 106.345
-                    },
-                    "uuid": "80f808f4-411b-489b-a252-f46e2d797c1a"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of R30 on B.Silkscreen",
-                    "pos": {
-                        "x": 105.753,
-                        "y": 106.195
-                    },
-                    "uuid": "d86ae006-a9eb-4de9-94c8-958bc93ff493"
-                },
-                {
-                    "description": "Arc of C42 on B.Silkscreen",
-                    "pos": {
-                        "x": 105.59,
-                        "y": 105.945
-                    },
-                    "uuid": "e132084e-e64e-4951-814b-ad25cfc59895"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of R30 on B.Silkscreen",
-                    "pos": {
-                        "x": 105.753,
-                        "y": 107.195
-                    },
-                    "uuid": "9f9c9707-2111-4858-b1cb-d974a77d7371"
-                },
-                {
-                    "description": "Arc of C42 on B.Silkscreen",
-                    "pos": {
-                        "x": 105.59,
-                        "y": 105.945
-                    },
-                    "uuid": "e132084e-e64e-4951-814b-ad25cfc59895"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of C42 on B.Silkscreen",
-                    "pos": {
-                        "x": 105.09,
-                        "y": 106.095
-                    },
-                    "uuid": "ca4bd03d-89b3-474b-bd49-792c08c8c4b6"
-                },
-                {
-                    "description": "Segment of R30 on B.Silkscreen",
-                    "pos": {
-                        "x": 105.753,
-                        "y": 106.195
-                    },
-                    "uuid": "d86ae006-a9eb-4de9-94c8-958bc93ff493"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of R30 on B.Silkscreen",
-                    "pos": {
-                        "x": 103.873,
-                        "y": 106.195
-                    },
-                    "uuid": "405c6f6d-324c-4c5b-b520-7941e20ac64a"
-                },
-                {
-                    "description": "Segment of C42 on B.Silkscreen",
-                    "pos": {
-                        "x": 104.15,
-                        "y": 106.095
-                    },
-                    "uuid": "8423a2d5-fe9e-4bed-968d-ea54ffed2483"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen overlap",
-            "items": [
-                {
-                    "description": "Segment of R30 on B.Silkscreen",
-                    "pos": {
-                        "x": 103.873,
-                        "y": 106.195
-                    },
-                    "uuid": "405c6f6d-324c-4c5b-b520-7941e20ac64a"
-                },
-                {
-                    "description": "Arc of C42 on B.Silkscreen",
-                    "pos": {
-                        "x": 104.15,
-                        "y": 105.945
-                    },
-                    "uuid": "c7a79d2f-0e04-4b69-9dea-41bb4f7f0bdc"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of LED9 on F.Silkscreen",
-                    "pos": {
-                        "x": 110.2,
-                        "y": 107.2
-                    },
-                    "uuid": "4d74317a-3c2e-4622-89de-286c0666d637"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C51 on F.Silkscreen",
-                    "pos": {
-                        "x": 118.645,
-                        "y": 105.87
-                    },
-                    "uuid": "784243bc-f481-4b7a-8ca1-a783330f89a1"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of LED4 on F.Silkscreen",
-                    "pos": {
-                        "x": 120.9,
-                        "y": 105.0
-                    },
-                    "uuid": "ef42c1d3-a91e-44af-8ca3-e548164f44dc"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of LED8 on F.Silkscreen",
-                    "pos": {
-                        "x": 105.7,
-                        "y": 108.4
-                    },
-                    "uuid": "19a97a68-403e-443a-9a9a-a0548787d0ef"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C53 on F.Silkscreen",
-                    "pos": {
-                        "x": 107.77,
-                        "y": 107.245
-                    },
-                    "uuid": "46f0b816-8a1e-4e0c-88a4-23d966bef232"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C52 on F.Silkscreen",
-                    "pos": {
-                        "x": 117.545,
-                        "y": 107.47
-                    },
-                    "uuid": "facce1df-dce6-485d-8ac3-21fbddbd13b8"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of LED1 on F.Silkscreen",
-                    "pos": {
-                        "x": 107.9,
-                        "y": 105.0
-                    },
-                    "uuid": "7805579b-ca5b-4c7b-818a-78053cfc9902"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Polygon of LED1 on F.Silkscreen",
-                    "pos": {
-                        "x": 104.783088,
-                        "y": 104.534949
-                    },
-                    "uuid": "20350b2a-db96-4f86-92d2-a00b245692c1"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of LED7 on F.Silkscreen",
-                    "pos": {
-                        "x": 109.1,
-                        "y": 108.4
-                    },
-                    "uuid": "a507b956-800c-4556-a360-529bee127794"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C50 on F.Silkscreen",
-                    "pos": {
-                        "x": 104.945,
-                        "y": 104.67
-                    },
-                    "uuid": "c4fd7209-de77-4331-a5cd-09d593633305"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of LED5 on F.Silkscreen",
-                    "pos": {
-                        "x": 118.7,
-                        "y": 108.4
-                    },
-                    "uuid": "8f411513-f4a5-4e2e-8593-5166293415eb"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of LED3 on F.Silkscreen",
-                    "pos": {
-                        "x": 117.5,
-                        "y": 105.0
-                    },
-                    "uuid": "bb67c398-af34-4104-9b4f-216cd7a23e9d"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of LED6 on F.Silkscreen",
-                    "pos": {
-                        "x": 115.3,
-                        "y": 108.4
-                    },
-                    "uuid": "8fed0bdc-10cb-4ad2-ba2c-228a6d7d5a5c"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of LED2 on F.Silkscreen",
-                    "pos": {
-                        "x": 111.3,
-                        "y": 105.0
-                    },
-                    "uuid": "20191c5d-4f05-405e-8059-eb23ef406e2f"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C43 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.37,
-                        "y": 106.445
-                    },
-                    "uuid": "6c8c3f2e-2c67-4a83-be51-fc2a8caed998"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C40 on B.Silkscreen",
-                    "pos": {
-                        "x": 104.37,
-                        "y": 107.745
-                    },
-                    "uuid": "e138c249-3227-468d-997e-5bc98b304406"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C45 on B.Silkscreen",
-                    "pos": {
-                        "x": 109.37,
-                        "y": 109.345
-                    },
-                    "uuid": "ea9d0afc-59f3-4f59-a0bb-d8d990d09085"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of R32 on B.Silkscreen",
-                    "pos": {
-                        "x": 112.713,
-                        "y": 107.045
-                    },
-                    "uuid": "f9e00efb-6d81-45d1-8c0b-7efeae6ad055"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C55 on B.Silkscreen",
-                    "pos": {
-                        "x": 114.545,
-                        "y": 106.07
-                    },
-                    "uuid": "35e3b225-96dc-40fd-b88a-a849125b0f0f"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C44 on B.Silkscreen",
-                    "pos": {
-                        "x": 109.57,
-                        "y": 110.545
-                    },
-                    "uuid": "f121602b-9bb8-4698-aa6b-9125c9b82f7c"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C41 on B.Silkscreen",
-                    "pos": {
-                        "x": 107.37,
-                        "y": 105.845
-                    },
-                    "uuid": "d6def77c-d413-4c15-8dfa-d870d87f6a85"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C42 on B.Silkscreen",
-                    "pos": {
-                        "x": 105.37,
-                        "y": 105.845
-                    },
-                    "uuid": "eae910ac-3edd-487f-804d-027c72044882"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C54 on B.Silkscreen",
-                    "pos": {
-                        "x": 115.45,
-                        "y": 105.1
-                    },
-                    "uuid": "d0abceb1-d8b3-4b92-ae50-072a1777f705"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of R30 on B.Silkscreen",
-                    "pos": {
-                        "x": 105.313,
-                        "y": 106.945
-                    },
-                    "uuid": "7d75df0b-a4b1-445d-a474-a2374552f333"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of R31 on B.Silkscreen",
-                    "pos": {
-                        "x": 105.512999,
-                        "y": 110.545
-                    },
-                    "uuid": "1edabfa6-2fc4-436d-80eb-dec7dda2d971"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C46 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.57,
-                        "y": 110.045
-                    },
-                    "uuid": "f4696010-ed97-404c-893b-10c1737a2d7a"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Circle of C47 on B.Silkscreen",
-                    "pos": {
-                        "x": 106.37,
-                        "y": 108.845
-                    },
-                    "uuid": "0480f3fa-6ecf-49f2-b63d-adbd82199278"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'brick'.",
-            "items": [
-                {
-                    "description": "Footprint ANT1",
-                    "pos": {
-                        "x": 100.0,
-                        "y": 100.0
-                    },
-                    "uuid": "02b79ca9-86f0-448c-a67f-2c9264261cfc"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint LED9",
-                    "pos": {
-                        "x": 111.0,
-                        "y": 106.8
-                    },
-                    "uuid": "1136c62d-02bf-4cd3-9570-b764b5307975"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C51",
-                    "pos": {
-                        "x": 118.895,
-                        "y": 106.37
-                    },
-                    "uuid": "1193e6ad-ce98-4e4a-88e7-30ec2fc46cbc"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint LED4",
-                    "pos": {
-                        "x": 119.8,
-                        "y": 104.0
-                    },
-                    "uuid": "1b2e1e07-f7d8-453b-a896-e09850a1b315"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint LED8",
-                    "pos": {
-                        "x": 106.8,
-                        "y": 109.4
-                    },
-                    "uuid": "3a21a95e-e690-4914-97a2-0ad6e4de81c8"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C53",
-                    "pos": {
-                        "x": 107.27,
-                        "y": 107.495
-                    },
-                    "uuid": "42271f08-cd60-423d-a6a5-24a0e1773353"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C52",
-                    "pos": {
-                        "x": 117.295,
-                        "y": 106.97
-                    },
-                    "uuid": "76827b37-d9db-47e9-8c81-dcafe90a6a55"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint LED1",
-                    "pos": {
-                        "x": 106.8,
-                        "y": 104.0
-                    },
-                    "uuid": "95361171-7bee-43d7-bee9-40b84fcc92f9"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint LED7",
-                    "pos": {
-                        "x": 110.2,
-                        "y": 109.4
-                    },
-                    "uuid": "98ed3b24-a79d-4579-9a0f-a7b73dd42483"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C50",
-                    "pos": {
-                        "x": 104.695,
-                        "y": 104.17
-                    },
-                    "uuid": "99ee94e6-dd5b-483e-bed7-e24e5a9d3d35"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint U20",
-                    "pos": {
-                        "x": 115.0,
-                        "y": 106.8
-                    },
-                    "uuid": "af6ec2f3-faea-4954-acd1-e1f9951f2e2d"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint LED5",
-                    "pos": {
-                        "x": 119.8,
-                        "y": 109.4
-                    },
-                    "uuid": "b8305aa4-c65b-4175-b60d-91ff3ded0ef5"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint LED3",
-                    "pos": {
-                        "x": 116.4,
-                        "y": 104.0
-                    },
-                    "uuid": "d7b32dda-d5a2-4d9a-bd0a-5b8d852b3bef"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint LED6",
-                    "pos": {
-                        "x": 116.4,
-                        "y": 109.4
-                    },
-                    "uuid": "e510d1ab-a138-4456-add9-8a2594cba834"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint LED2",
-                    "pos": {
-                        "x": 110.2,
-                        "y": 104.0
-                    },
-                    "uuid": "f730253b-c897-4424-a757-b2a562176458"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 120.4,
-                        "y": 106.7
-                    },
-                    "uuid": "105b937e-2b8d-4b6f-b1aa-541efabdd22e"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C43",
-                    "pos": {
-                        "x": 106.87,
-                        "y": 106.695
-                    },
-                    "uuid": "191cddd9-b268-4360-a6fa-253326778a6e"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C40",
-                    "pos": {
-                        "x": 104.87,
-                        "y": 107.995
-                    },
-                    "uuid": "24085985-c662-4cbe-bbff-c6b7bb58635f"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C45",
-                    "pos": {
-                        "x": 108.87,
-                        "y": 109.095
-                    },
-                    "uuid": "32d831ef-a73d-491e-a8b2-4cbd5fc46c22"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint R32",
-                    "pos": {
-                        "x": 112.213,
-                        "y": 106.795
-                    },
-                    "uuid": "44a234a9-6e33-487b-ba55-d38facf8c90d"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C55",
-                    "pos": {
-                        "x": 114.295,
-                        "y": 106.57
-                    },
-                    "uuid": "5862402a-3758-4ee6-a687-8623f4259b8e"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C44",
-                    "pos": {
-                        "x": 109.07,
-                        "y": 110.295
-                    },
-                    "uuid": "594bd6c1-6c87-4033-ab05-dee44e713104"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C41",
-                    "pos": {
-                        "x": 106.87,
-                        "y": 105.595
-                    },
-                    "uuid": "7dd7fb3c-5da8-4936-a09c-1c6b9cbd4e59"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C42",
-                    "pos": {
-                        "x": 104.87,
-                        "y": 105.595
-                    },
-                    "uuid": "b096ec32-5004-4411-9098-caf1aaf1be8a"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C54",
-                    "pos": {
-                        "x": 115.85,
-                        "y": 104.3
-                    },
-                    "uuid": "b1cba93f-b11d-4173-b544-787c0cf20ae8"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint R30",
-                    "pos": {
-                        "x": 104.813,
-                        "y": 106.695
-                    },
-                    "uuid": "cc6ce621-dc4b-4cb4-a2e3-18b26324dde1"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint R31",
-                    "pos": {
-                        "x": 105.012999,
-                        "y": 110.295
-                    },
-                    "uuid": "dad69c6f-e225-4235-9c58-d093edf9a57d"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C46",
-                    "pos": {
-                        "x": 107.07,
-                        "y": 110.295
-                    },
-                    "uuid": "dc264c92-fa73-4e88-a430-c58865f281e6"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "The current configuration does not include the footprint library 'lcsc'.",
-            "items": [
-                {
-                    "description": "Footprint C47",
-                    "pos": {
-                        "x": 106.87,
-                        "y": 109.095
-                    },
-                    "uuid": "ef782446-5ae9-41af-b531-373ab1f3b2d0"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_issues"
-        },
-        {
-            "description": "Silkscreen clipped by board edge",
-            "items": [
-                {
-                    "description": "Segment on Edge.Cuts",
-                    "pos": {
-                        "x": 124.4,
-                        "y": 100.0
-                    },
-                    "uuid": "305a7d4a-08f1-4732-8f43-e6d535fd82fb"
-                },
-                {
-                    "description": "Circle of J5 on B.Silkscreen",
-                    "pos": {
-                        "x": 124.08,
-                        "y": 108.99
-                    },
-                    "uuid": "d0fe771a-d70f-4a9b-b50d-2692d25b8e77"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
         {
             "description": "Via is not connected or connected on only one layer",
             "items": [
@@ -2701,7 +1447,7 @@
                         "x": 100.76,
                         "y": 106.7
                     },
-                    "uuid": "ae494e02-6df4-474b-b44f-f8fcef4d6105"
+                    "uuid": "64bf7f56-d187-4b29-8c23-99b8746f67a3"
                 }
             ],
             "severity": "warning",
@@ -2716,11 +1462,1265 @@
                         "x": 104.6,
                         "y": 109.05
                     },
-                    "uuid": "c2a774f2-3329-4b1f-b2ad-aca2e9fccb90"
+                    "uuid": "510188aa-7026-402c-a705-99d3d252dde2"
                 }
             ],
             "severity": "warning",
             "type": "via_dangling"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 124.4,
+                        "y": 100.0
+                    },
+                    "uuid": "162760b6-ca43-4ab8-b7d8-17e5aa7361af"
+                },
+                {
+                    "description": "Circle of J5 on B.Silkscreen",
+                    "pos": {
+                        "x": 124.08,
+                        "y": 108.99
+                    },
+                    "uuid": "fb513c36-c33c-4e82-bfd4-dac464c24214"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'brick'.",
+            "items": [
+                {
+                    "description": "Footprint ANT1",
+                    "pos": {
+                        "x": 100.0,
+                        "y": 100.0
+                    },
+                    "uuid": "01dcd0a3-bdb7-4b7b-81ed-42ba0ca4b185"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C51",
+                    "pos": {
+                        "x": 118.895,
+                        "y": 106.37
+                    },
+                    "uuid": "04a68f02-2dfb-4ecf-8a83-33e094fc4932"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint U20",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 106.8
+                    },
+                    "uuid": "24b2814e-9bee-4905-8fcc-8b5ad445877f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED4",
+                    "pos": {
+                        "x": 119.8,
+                        "y": 104.0
+                    },
+                    "uuid": "2fb770bf-f9ff-44c3-bb0e-762b73de59df"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED7",
+                    "pos": {
+                        "x": 110.2,
+                        "y": 109.4
+                    },
+                    "uuid": "4813242d-fd40-4faa-a6a4-0eb4b9c77c3c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C53",
+                    "pos": {
+                        "x": 107.27,
+                        "y": 107.495
+                    },
+                    "uuid": "4a8c7008-8a5c-42c8-bf7a-818b22c491ea"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED8",
+                    "pos": {
+                        "x": 106.8,
+                        "y": 109.4
+                    },
+                    "uuid": "4b12ea2d-2e19-4371-a0c6-f113e29d6980"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED3",
+                    "pos": {
+                        "x": 116.4,
+                        "y": 104.0
+                    },
+                    "uuid": "6c7d3a98-24d0-4c0e-a41c-b07b69da025a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED6",
+                    "pos": {
+                        "x": 116.4,
+                        "y": 109.4
+                    },
+                    "uuid": "6e8f4e32-c89d-4582-895f-fea70d3ee1c3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED2",
+                    "pos": {
+                        "x": 110.2,
+                        "y": 104.0
+                    },
+                    "uuid": "75b8c547-c44f-4262-aca5-2033ef54da93"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C52",
+                    "pos": {
+                        "x": 117.295,
+                        "y": 106.97
+                    },
+                    "uuid": "80cacd41-3320-4acc-9589-875e0274a6bd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED9",
+                    "pos": {
+                        "x": 111.0,
+                        "y": 106.8
+                    },
+                    "uuid": "8e068823-52d3-4887-8ee5-4d62b1617153"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED1",
+                    "pos": {
+                        "x": 106.8,
+                        "y": 104.0
+                    },
+                    "uuid": "aef3cfb9-dc81-4cab-aa8a-045a242f1d1c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C50",
+                    "pos": {
+                        "x": 104.695,
+                        "y": 104.17
+                    },
+                    "uuid": "bbf4db81-89fa-4af1-a41b-54b337d83351"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint LED5",
+                    "pos": {
+                        "x": 119.8,
+                        "y": 109.4
+                    },
+                    "uuid": "e08ab097-32d4-4a73-96e8-f2fb737f928a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C44",
+                    "pos": {
+                        "x": 109.07,
+                        "y": 110.295
+                    },
+                    "uuid": "069060ef-941f-46f8-b478-af569ef64ddb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": 120.4,
+                        "y": 106.7
+                    },
+                    "uuid": "1d9e31a2-f852-4248-8dc9-27804af3b400"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C42",
+                    "pos": {
+                        "x": 104.87,
+                        "y": 105.595
+                    },
+                    "uuid": "2ab77028-f5a7-42f8-892b-88ad14d04853"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C47",
+                    "pos": {
+                        "x": 106.87,
+                        "y": 109.095
+                    },
+                    "uuid": "2fd5533e-7aa5-49b2-9d91-76611006e93e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C46",
+                    "pos": {
+                        "x": 107.07,
+                        "y": 110.295
+                    },
+                    "uuid": "362507ec-fe66-438b-aeb2-fd11b010a4b5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C40",
+                    "pos": {
+                        "x": 104.87,
+                        "y": 107.995
+                    },
+                    "uuid": "559d2263-e849-43fc-9c18-0e66e50200b4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint R32",
+                    "pos": {
+                        "x": 112.213,
+                        "y": 106.795
+                    },
+                    "uuid": "66d22921-0161-4a1b-9b5d-823146e972a5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint R30",
+                    "pos": {
+                        "x": 104.813,
+                        "y": 106.695
+                    },
+                    "uuid": "8d87de04-38d7-48a8-8f16-afae3c827c03"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint R31",
+                    "pos": {
+                        "x": 105.012999,
+                        "y": 110.295
+                    },
+                    "uuid": "8ddc72a4-7592-4861-9eaa-3e2c71b94491"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C54",
+                    "pos": {
+                        "x": 115.85,
+                        "y": 104.3
+                    },
+                    "uuid": "e012a279-b933-4467-b2ba-1ea7f9dcf948"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C55",
+                    "pos": {
+                        "x": 114.295,
+                        "y": 106.57
+                    },
+                    "uuid": "e98905a8-3009-471f-ad67-c89739ae3ad1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C41",
+                    "pos": {
+                        "x": 106.87,
+                        "y": 105.595
+                    },
+                    "uuid": "ebfd1f40-64b6-4bbc-a3e8-73685fe960bb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C45",
+                    "pos": {
+                        "x": 108.87,
+                        "y": 109.095
+                    },
+                    "uuid": "ec1924a5-dce9-4bc5-aea4-f9b98723d503"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'lcsc'.",
+            "items": [
+                {
+                    "description": "Footprint C43",
+                    "pos": {
+                        "x": 106.87,
+                        "y": 106.695
+                    },
+                    "uuid": "efe01dab-9471-4bb8-b5b7-7f40d5340d7c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C51 on F.Silkscreen",
+                    "pos": {
+                        "x": 118.645,
+                        "y": 105.87
+                    },
+                    "uuid": "2c9f3c25-5109-483a-8741-be4dd759adca"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED4 on F.Silkscreen",
+                    "pos": {
+                        "x": 120.9,
+                        "y": 105.0
+                    },
+                    "uuid": "6c25d4d9-3545-4f67-bb83-3e03caf9e163"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED7 on F.Silkscreen",
+                    "pos": {
+                        "x": 109.1,
+                        "y": 108.4
+                    },
+                    "uuid": "9f6056b2-7111-4f8c-9872-570202e46e0b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C53 on F.Silkscreen",
+                    "pos": {
+                        "x": 107.77,
+                        "y": 107.245
+                    },
+                    "uuid": "48ce4dd3-9641-4179-a617-b1a8854d4a79"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED8 on F.Silkscreen",
+                    "pos": {
+                        "x": 105.7,
+                        "y": 108.4
+                    },
+                    "uuid": "a481caef-1e0a-4324-a1f7-65a3764be11e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED3 on F.Silkscreen",
+                    "pos": {
+                        "x": 117.5,
+                        "y": 105.0
+                    },
+                    "uuid": "25ab1e4a-c610-4892-9447-bc10a9e1648a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED6 on F.Silkscreen",
+                    "pos": {
+                        "x": 115.3,
+                        "y": 108.4
+                    },
+                    "uuid": "8751f706-000a-4a8c-a6ed-2a1d3b49c7ce"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED2 on F.Silkscreen",
+                    "pos": {
+                        "x": 111.3,
+                        "y": 105.0
+                    },
+                    "uuid": "83d81c07-2594-4316-9d2b-3c2482b2387b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C52 on F.Silkscreen",
+                    "pos": {
+                        "x": 117.545,
+                        "y": 107.47
+                    },
+                    "uuid": "292e5275-8685-4e50-b4c9-3e1d8ae3da17"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED9 on F.Silkscreen",
+                    "pos": {
+                        "x": 110.2,
+                        "y": 107.2
+                    },
+                    "uuid": "04598516-be2e-4b8d-a735-5d91165bf170"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED1 on F.Silkscreen",
+                    "pos": {
+                        "x": 107.9,
+                        "y": 105.0
+                    },
+                    "uuid": "0035d744-2d8c-4f2f-a555-d94cf8ea4b07"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Polygon of LED1 on F.Silkscreen",
+                    "pos": {
+                        "x": 104.783088,
+                        "y": 104.534949
+                    },
+                    "uuid": "fe352544-d022-4729-aa75-7b57c86659e0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C50 on F.Silkscreen",
+                    "pos": {
+                        "x": 104.945,
+                        "y": 104.67
+                    },
+                    "uuid": "907a3249-b8d3-4719-9fcd-2a9586e4a6ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of LED5 on F.Silkscreen",
+                    "pos": {
+                        "x": 118.7,
+                        "y": 108.4
+                    },
+                    "uuid": "38f6c361-9877-4a29-bcab-bc2caad1c188"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C44 on B.Silkscreen",
+                    "pos": {
+                        "x": 109.57,
+                        "y": 110.545
+                    },
+                    "uuid": "818b4f28-6b65-47a5-8adc-bb3f2c61cec2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.37,
+                        "y": 105.845
+                    },
+                    "uuid": "91316b29-bf07-47eb-8248-11a64d61ccf1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C47 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.37,
+                        "y": 108.845
+                    },
+                    "uuid": "504a4289-392b-4ba3-823d-feeac8bd2f86"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C46 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.57,
+                        "y": 110.045
+                    },
+                    "uuid": "d3576f79-b0f9-4c94-9c7a-bd717b12fe2f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C40 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.37,
+                        "y": 107.745
+                    },
+                    "uuid": "eabbbabc-530f-4fe7-b5e9-ca1c2cec0787"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of R32 on B.Silkscreen",
+                    "pos": {
+                        "x": 112.713,
+                        "y": 107.045
+                    },
+                    "uuid": "511b5620-9eea-46b9-a3d8-ad7fc6a0f9b1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.313,
+                        "y": 106.945
+                    },
+                    "uuid": "ac360b1e-99d3-4628-99e9-078660ae8188"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of R31 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.512999,
+                        "y": 110.545
+                    },
+                    "uuid": "11325466-d897-4ef9-ab8d-e96b0364ebfb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C54 on B.Silkscreen",
+                    "pos": {
+                        "x": 115.45,
+                        "y": 105.1
+                    },
+                    "uuid": "663e2116-7c34-4e36-aa60-f0fe3e4f4619"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C55 on B.Silkscreen",
+                    "pos": {
+                        "x": 114.545,
+                        "y": 106.07
+                    },
+                    "uuid": "2cc8d2b0-11e7-4e1b-9264-c0086cd5d58d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.37,
+                        "y": 105.845
+                    },
+                    "uuid": "731d256d-0792-4ee4-8259-817c495c753a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C45 on B.Silkscreen",
+                    "pos": {
+                        "x": 109.37,
+                        "y": 109.345
+                    },
+                    "uuid": "2b8d623a-0b0e-4f24-8e52-b2efd6c85db3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.37,
+                        "y": 106.445
+                    },
+                    "uuid": "faa038b6-09b9-4004-bacf-1e586f7e1493"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C50 on F.Silkscreen",
+                    "pos": {
+                        "x": 105.195,
+                        "y": 104.39
+                    },
+                    "uuid": "49232f09-dea4-4b7a-a721-624ca847c371"
+                },
+                {
+                    "description": "Polygon of LED1 on F.Silkscreen",
+                    "pos": {
+                        "x": 104.783088,
+                        "y": 104.534949
+                    },
+                    "uuid": "fe352544-d022-4729-aa75-7b57c86659e0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Circle of C50 on F.Silkscreen",
+                    "pos": {
+                        "x": 104.945,
+                        "y": 104.67
+                    },
+                    "uuid": "907a3249-b8d3-4719-9fcd-2a9586e4a6ae"
+                },
+                {
+                    "description": "Polygon of LED1 on F.Silkscreen",
+                    "pos": {
+                        "x": 104.783088,
+                        "y": 104.534949
+                    },
+                    "uuid": "fe352544-d022-4729-aa75-7b57c86659e0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C50 on F.Silkscreen",
+                    "pos": {
+                        "x": 105.195,
+                        "y": 104.39
+                    },
+                    "uuid": "49232f09-dea4-4b7a-a721-624ca847c371"
+                },
+                {
+                    "description": "Polygon of LED1 on F.Silkscreen",
+                    "pos": {
+                        "x": 105.133049,
+                        "y": 104.284937
+                    },
+                    "uuid": "d2742de3-54f4-47e2-b2ba-04de6ae03d36"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C50 on F.Silkscreen",
+                    "pos": {
+                        "x": 105.045,
+                        "y": 104.89
+                    },
+                    "uuid": "7fcd51db-6929-4127-afb7-69305646f2e3"
+                },
+                {
+                    "description": "Polygon of LED1 on F.Silkscreen",
+                    "pos": {
+                        "x": 105.133049,
+                        "y": 104.284937
+                    },
+                    "uuid": "d2742de3-54f4-47e2-b2ba-04de6ae03d36"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 103.873,
+                        "y": 106.195
+                    },
+                    "uuid": "7f7e2a41-1d65-4dbc-aa09-ec00f3f0e1d2"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.15,
+                        "y": 105.945
+                    },
+                    "uuid": "a0f2b295-2cba-4c1d-af46-c96e276907be"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 104.15,
+                        "y": 106.095
+                    },
+                    "uuid": "11c14498-c914-4c30-8ba9-a9cd8bfbc959"
+                },
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 103.873,
+                        "y": 106.195
+                    },
+                    "uuid": "7f7e2a41-1d65-4dbc-aa09-ec00f3f0e1d2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.753,
+                        "y": 106.195
+                    },
+                    "uuid": "2f7a0cc8-cfda-4891-bfbb-4153b11fbb7c"
+                },
+                {
+                    "description": "Segment of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.09,
+                        "y": 106.095
+                    },
+                    "uuid": "db806c95-dc06-4b11-8f76-f784c37ba312"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.753,
+                        "y": 106.195
+                    },
+                    "uuid": "2f7a0cc8-cfda-4891-bfbb-4153b11fbb7c"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.59,
+                        "y": 105.945
+                    },
+                    "uuid": "ed1bbba6-6615-48c9-b9c9-07b3ed43a387"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of R30 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.753,
+                        "y": 107.195
+                    },
+                    "uuid": "92f6aaeb-b053-4600-b7f3-40d0b6ecdc93"
+                },
+                {
+                    "description": "Arc of C42 on B.Silkscreen",
+                    "pos": {
+                        "x": 105.59,
+                        "y": 105.945
+                    },
+                    "uuid": "ed1bbba6-6615-48c9-b9c9-07b3ed43a387"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.65,
+                        "y": 106.195
+                    },
+                    "uuid": "7481caea-64b6-487f-a580-9aad909f1c34"
+                },
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.15,
+                        "y": 106.095
+                    },
+                    "uuid": "faaf6f65-81af-4d56-8d9d-14cf7fcbf9ed"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.15,
+                        "y": 106.345
+                    },
+                    "uuid": "f966f544-dc59-48f4-b3d5-0c2f4568407c"
+                },
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.15,
+                        "y": 106.095
+                    },
+                    "uuid": "faaf6f65-81af-4d56-8d9d-14cf7fcbf9ed"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.65,
+                        "y": 106.195
+                    },
+                    "uuid": "7481caea-64b6-487f-a580-9aad909f1c34"
+                },
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.15,
+                        "y": 105.945
+                    },
+                    "uuid": "90a25cdf-effa-41c3-aa2d-feb855cdbe6e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.15,
+                        "y": 105.945
+                    },
+                    "uuid": "90a25cdf-effa-41c3-aa2d-feb855cdbe6e"
+                },
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 106.15,
+                        "y": 106.345
+                    },
+                    "uuid": "f966f544-dc59-48f4-b3d5-0c2f4568407c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.59,
+                        "y": 106.195
+                    },
+                    "uuid": "9a967882-210d-47e4-8c00-6fea8c48fdd4"
+                },
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.09,
+                        "y": 106.095
+                    },
+                    "uuid": "bf26cf6d-e42e-4089-bae4-1159c5d2be95"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.59,
+                        "y": 106.345
+                    },
+                    "uuid": "1023a08d-e3a3-49f9-8dcd-20992e06f094"
+                },
+                {
+                    "description": "Segment of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.09,
+                        "y": 106.095
+                    },
+                    "uuid": "bf26cf6d-e42e-4089-bae4-1159c5d2be95"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.59,
+                        "y": 105.945
+                    },
+                    "uuid": "27dbaa17-a7fa-41ab-8721-555f7f04b516"
+                },
+                {
+                    "description": "Segment of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.59,
+                        "y": 106.195
+                    },
+                    "uuid": "9a967882-210d-47e4-8c00-6fea8c48fdd4"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap",
+            "items": [
+                {
+                    "description": "Arc of C43 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.59,
+                        "y": 106.345
+                    },
+                    "uuid": "1023a08d-e3a3-49f9-8dcd-20992e06f094"
+                },
+                {
+                    "description": "Arc of C41 on B.Silkscreen",
+                    "pos": {
+                        "x": 107.59,
+                        "y": 105.945
+                    },
+                    "uuid": "27dbaa17-a7fa-41ab-8721-555f7f04b516"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
         }
     ]
 }
