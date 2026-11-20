@@ -23,10 +23,14 @@ assembled), pins {pad: net}.
 # firmware image runs on both. Checked against firmware/core/pins.h.
 GPIO = {
     "NFC_NSS": 0, "IMU_INT1": 1, "NFC_BUSY": 2, "NFC_RST": 3,
-    "I2S_DIN": 4, "I2S_BCLK": 5, "I2S_LRCLK": 6, "I2S_DOUT": 7,
+    "I2S_BCLK": 5, "I2S_LRCLK": 6, "I2S_DOUT": 7,
     "USB_DN": 12, "USB_DP": 13, "LED_DATA": 14, "LAMP_EN": 16, "PERIPH_EN": 17,
     "I2C_SCL": 18, "I2C_SDA": 19, "SPI_SCK": 21, "SPI_MOSI": 22, "SPI_MISO": 23,
 }
+# GPIO4 was the microphone's data line (I2S_DIN) on rev B. Rev C has no
+# microphone; GPIO4 (ADC1 channel 4) reads the battery through a divider
+# instead, net VBAT_SENSE. The firmware needs a small change to use it.
+#
 # QT_PWR (GPIO20) switched the Feather's sensor connector. The brick board
 # powers its sensors from 3V3 all the time, so GPIO20 is left unconnected; the
 # firmware still drives it, harmlessly.
@@ -74,7 +78,7 @@ for p in ("32", "33", "34", "35"):
     mod[p] = "NC_M" + p
 net_of_gpio = {v: k for k, v in GPIO.items()}
 for g, pad in MODULE_PAD.items():
-    mod[pad] = net_of_gpio.get(g, {8: "IO8", 9: "IO9", 15: "NC_IO15", 20: "NC_IO20"}.get(g))
+    mod[pad] = net_of_gpio.get(g, {4: "VBAT_SENSE", 8: "IO8", 9: "IO9", 15: "NC_IO15", 20: "NC_IO20"}.get(g))
 part("U1", M, "bottom", "WIFIM-SMD_61P-L16.6-W13.2-P0.80-ESP32-C6-MINI-1-N4", "ESP32-C6-MINI-1-N4", "C5736265", mod)
 C("C1", M, "top", "22uF 6.3V", C22U, "3V3", "GND", "module supply", fp="C0603")
 C("C2", M, "top", "100nF", C100N, "3V3", "GND", "module supply")
@@ -107,12 +111,13 @@ C("C6", M, "bottom", "10uF", C10U, "VSYS", "GND", fp="C0603")
 part("U4", M, "bottom", "TSOT-23-5_L2.9-W1.6-P0.95-LS2.8-BL", "RT9080-33GJ5", "C841192",
      {1: "VSYS", 2: "GND", 3: "VSYS", 4: "NC_U4", 5: "3V3"}, "3.3 V regulator, 2 uA quiescent")
 C("C8", M, "bottom", "10uF", C10U, "3V3", "GND", fp="C0603")
-part("J2", M, "top", "CONN-SMD_P2.00_S2B-PH-SM4-TB-LF-SN", "BATTERY JST-PH", "C295747",
-     {1: "GND", 2: "VBAT", 3: "GND", 4: "GND"}, "pin 1 -, pin 2 +, as Adafruit")
-part("U5", M, "bottom", "TDFN-8_L2.0-W2.0-P0.50-BL-EP1.2", "MAX17048G+T10", "C2682616",
-     {1: "GND", 2: "VBAT", 3: "VBAT", 4: "GND", 5: "NC_ALRT", 6: "GND", 7: "I2C_SCL", 8: "I2C_SDA", 9: "GND"},
-     "fuel gauge")
-C("C9", M, "bottom", "100nF", C100N, "VBAT", "GND")
+part("J2", M, "top", "CONN-SMD_2P-P1.00_SM02B-SRSS-TB-LF-SN", "BATTERY JST-SH 1.0mm", "C160402",
+     {1: "GND", 2: "VBAT", 3: "GND", 4: "GND"}, "pin 1 -, pin 2 +. Check the battery's polarity before plugging in")
+# Battery voltage to GPIO4 (ADC). 1M + 1M draws about 2 uA from the battery;
+# the capacitor holds the node while the ADC samples it.
+R("R18", M, "bottom", "1M", "C26083", "VBAT", "VBAT_SENSE", "battery sense divider")
+R("R19", M, "bottom", "1M", "C26083", "VBAT_SENSE", "GND", "battery sense divider")
+C("C31", M, "bottom", "100nF", C100N, "VBAT_SENSE", "GND")
 R("R8", M, "bottom", "4.7k", R4K7, "3V3", "I2C_SDA", "I2C pull-up")
 R("R9", M, "bottom", "4.7k", R4K7, "3V3", "I2C_SCL", "I2C pull-up")
 
@@ -155,12 +160,8 @@ part("U7", M, "bottom", "TQFN-16_L3.0-W3.0-P0.50-BL-EP1.5", "MAX98357AETE+T", "C
       16: "I2S_BCLK", 17: "GND"}, "class-D amplifier, 9 dB")
 C("C26", M, "bottom", "10uF", C10U, "VSYS", "GND", fp="C0603")
 C("C27", M, "bottom", "100nF", C100N, "VSYS", "GND")
-part("J3", M, "bottom", "CONN-SMD_A1251WR-S-2P", "SPEAKER 1.25mm", "C225111",
-     {1: "SPK_P", 2: "SPK_N", 3: "GND", 4: "GND"}, "Molex PicoBlade compatible")
-part("U8", M, "bottom", "MIC-SMD_6P-L3.5-W2.7-P0.90-BL", "ICS-43434", "C5656610",
-     {1: "I2S_LRCLK", 2: "GND", 3: "GND", 4: "I2S_BCLK", 5: "3V3", 6: "I2S_DIN"},
-     "I2S microphone, left slot. Bottom port: needs the hole in the board")
-C("C28", M, "bottom", "100nF", C100N, "3V3", "GND")
+part("J3", M, "bottom", "CONN-SMD_2P-P1.00_SM02B-SRSS-TB-LF-SN", "SPEAKER JST-SH 1.0mm", "C160402",
+     {1: "SPK_P", 2: "SPK_N", 3: "NC_J3A", 4: "NC_J3B"}, "2.9 mm tall: fits the 3.3 mm over the speaker")
 
 # --- Accelerometer -------------------------------------------------------------
 part("U9", M, "bottom", "LGA-12_L2.0-W2.0-P0.50-BL", "LIS2DH12TR", "C110926",
@@ -168,13 +169,20 @@ part("U9", M, "bottom", "LGA-12_L2.0-W2.0-P0.50-BL", "LIS2DH12TR", "C110926",
       9: "3V3", 10: "3V3", 11: "NC_INT2", 12: "IMU_INT1"}, "address 0x18 (SA0 low)")
 C("C29", M, "bottom", "100nF", C100N, "3V3", "GND")
 
-# --- Pixel supply and level shifter, lamp switch ------------------------------
+# --- Pixel supply and level shifter --------------------------------------------
 part("Q2", M, "bottom", "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR", "AO3401A", "C15127", {1: "LED_G", 2: "VSYS", 3: "VLED"},
      "pixel supply switch")
 R("R15", M, "bottom", "100k", R100K, "VSYS", "LED_G")
 part("Q3", M, "bottom", "SOT-23-3_L2.9-W1.3-P1.90-LS2.4-BR", "2N7002", "C8545", {1: "PERIPH_EN", 2: "GND", 3: "LED_G"})
 R("R16", M, "bottom", "100k", R100K, "PERIPH_EN", "GND", "pixels and amplifier off until the firmware runs")
-R("R17", M, "bottom", "33", R33, "LED_DATA", "LED_DIN", "pixel data series resistor")
+# The pixels run from VSYS (up to about 4.7 V on USB), where a WS2812's input
+# threshold is 0.7 x VDD, about 3.3 V: a 3.3 V GPIO is marginal. U10 is powered
+# from the pixel rail and has TTL-level inputs that tolerate 5.5 V with its
+# supply off, so it lifts the data to the pixels' own supply.
+part("U10", M, "bottom", "SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL", "SN74LV1T34DBVR", "C100024",
+     {1: "NC_U10", 2: "LED_DATA", 3: "GND", 4: "LED_BUF", 5: "VLED"}, "pixel data level shifter")
+C("C30", M, "bottom", "100nF", C100N, "VLED", "GND")
+R("R17", M, "bottom", "33", R33, "LED_BUF", "LED_DIN", "pixel data series resistor")
 
 part("J4", M, "top", "HDR-SMD_10P-P1.27-V-M-R2-C5-LS5.5_1", "2x5 1.27mm male", "C27985146", HEADER,
      "to the face board")

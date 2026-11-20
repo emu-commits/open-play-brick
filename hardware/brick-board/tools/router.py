@@ -140,8 +140,16 @@ class Router:
         r = int(math.ceil(d / 2 / self.p))
         m[max(i - r, 0):i + r + 1, max(j - r, 0):j + r + 1] = True
 
-    def load_board(self, keepouts=()):
+    def load_board(self, keepouts=(), fixed_only=False):
+        """Paint the board. fixed_only leaves out unlocked tracks (used to
+        tell an earlier router's tracks, which may be ripped up, from fixed
+        copper)."""
         b = self.b
+        # KiCad 9.0.9's bindings sometimes return a bare SwigPyObject from
+        # GetFootprints()/GetTracks() after many edits, so read them once
+        # here and keep our own lists from then on.
+        self._pads = [p for f in b.GetFootprints() for p in f.Pads()]
+        self._tracks = list(b.GetTracks())
         for (x0, y0, x1, y1) in keepouts:
             m = (self.cx >= self.ox + x0) & (self.cx <= self.ox + x1) & (self.cy >= self.oy + y0) & (self.cy <= self.oy + y1)
             for l in self.all_layers:
@@ -177,7 +185,9 @@ class Router:
             for g in f.GraphicalItems():
                 if g.GetLayer() in self.all_layers:
                     self.paint(g, g.GetLayer(), -1)
-        for t in b.GetTracks():
+        for t in self._tracks:
+            if fixed_only and not t.IsLocked():
+                continue
             code = t.GetNetCode()
             if t.GetClass() == "PCB_VIA":
                 for l in self.all_layers:
@@ -361,6 +371,7 @@ class Router:
                 t.SetNet(netinfo)
                 self.b.Add(t)
                 items.append(t)
+                self._tracks.append(t)
                 self.paint_segment(layer, a, b, width, code)
             if r_idx < len(runs) - 1:
                 c = pts[-1]
@@ -371,31 +382,34 @@ class Router:
                 v.SetNet(netinfo)
                 self.b.Add(v)
                 items.append(v)
+                self._tracks.append(v)
                 for l in self.all_layers:
                     self.paint_disc(l, c, self.via_d, code)
                 self.mark_via(code, c, 0.2)
 
     def rip(self, code):
-        for it in self.added.pop(code, []):
+        gone = self.added.pop(code, [])
+        ids = set(id(it) for it in gone)
+        for it in gone:
             self.b.Remove(it)
+        self._graveyard = getattr(self, "_graveyard", []) + gone   # keep the wrappers alive
+        self._tracks = [t for t in self._tracks if id(t) not in ids]
         self.vmask.pop(code, None)
-        for f in self.b.GetFootprints():
-            for pad in f.Pads():
-                if pad.GetNetCode() == code and pad.GetAttribute() == pcbnew.PAD_ATTRIB_PTH:
-                    self.mark_via(code, (to_mm(pad.GetPosition().x), to_mm(pad.GetPosition().y)), to_mm(pad.GetDrillSize().x))
-        for t in self.b.GetTracks():
+        for pad in self._pads:
+            if pad.GetNetCode() == code and pad.GetAttribute() == pcbnew.PAD_ATTRIB_PTH:
+                self.mark_via(code, (to_mm(pad.GetPosition().x), to_mm(pad.GetPosition().y)), to_mm(pad.GetDrillSize().x))
+        for t in self._tracks:
             if t.GetNetCode() == code and t.GetClass() == "PCB_VIA":
                 self.mark_via(code, (to_mm(t.GetPosition().x), to_mm(t.GetPosition().y)), 0.2)
         for l in self.all_layers:
             self.occ[l][self.occ[l] == code] = 0
         # repaint the net's fixed copper (pads, pre-routed items)
-        for f in self.b.GetFootprints():
-            for pad in f.Pads():
-                if pad.GetNetCode() == code:
-                    for l in self.all_layers:
-                        if pad.IsOnLayer(l):
-                            self.paint(pad, l, code)
-        for t in self.b.GetTracks():
+        for pad in self._pads:
+            if pad.GetNetCode() == code:
+                for l in self.all_layers:
+                    if pad.IsOnLayer(l):
+                        self.paint(pad, l, code)
+        for t in self._tracks:
             if t.GetNetCode() == code:
                 if t.GetClass() == "PCB_VIA":
                     for l in self.all_layers:
@@ -416,8 +430,7 @@ class Router:
         return m
 
     def net_pads(self, code):
-        return [p for f in self.b.GetFootprints() for p in f.Pads()
-                if p.GetNetCode() == code and p.GetAttribute() != pcbnew.PAD_ATTRIB_NPTH]
+        return [p for p in self._pads if p.GetNetCode() == code and p.GetAttribute() != pcbnew.PAD_ATTRIB_NPTH]
 
     def islands(self, code):
         """Label the net's copper: returns (labels per layer, root of each label)."""
@@ -520,6 +533,41 @@ class Router:
                     found.add(int(v))
         return found
 
+    def stitch_grid(self, code, step=1.2, margin=0.6, keep=()):
+        """Ground vias on a grid wherever one fits on every layer, so the
+        pours on the outer layers join the inner planes everywhere."""
+        r = self.via_d / 2 + self.clear
+        made = 0
+        y = margin
+        while y <= self.h - margin:
+            x = margin
+            while x <= self.w - margin:
+                if not any(x0 <= x <= x1 and y0 <= y <= y1 for x0, y0, x1, y1 in keep):
+                    c = (self.ox + x, self.oy + y)
+                    i0, j0 = self.cell(*c)
+                    k = int(math.ceil(r / self.p))
+                    sl = (slice(max(i0 - k, 0), i0 + k + 1), slice(max(j0 - k, 0), j0 + k + 1))
+                    ok = not self.no_via[sl].any()
+                    if ok:
+                        for l in self.all_layers:
+                            win = self.occ[l][sl]
+                            if ((win != 0) & (win != code)).any() or self.no_track[l][sl].any():
+                                ok = False
+                                break
+                    if ok:
+                        v = pcbnew.PCB_VIA(self.b)
+                        v.SetPosition(pcbnew.VECTOR2I(int(round(c[0] * MM)), int(round(c[1] * MM))))
+                        v.SetWidth(int(round(self.via_d * MM)))
+                        v.SetDrill(int(round(self.via_drill * MM)))
+                        v.SetNet(self.b.FindNet(code))
+                        self.b.Add(v)
+                        for l in self.all_layers:
+                            self.paint_disc(l, c, self.via_d, code)
+                        made += 1
+                x += step
+            y += step
+        return made
+
     def stitch_to_plane(self, code, width=0.25, max_mm=2.0):
         """Give every SMD pad of the plane net a short track and a via."""
         made = 0
@@ -558,6 +606,7 @@ class Router:
             v.SetDrill(int(round(self.via_drill * MM)))
             v.SetNet(self.b.FindNet(code))
             self.b.Add(v)
+            self._stitched = getattr(self, "_stitched", []) + [v]
             self.added.setdefault(code, []).append(v)
             for l in self.all_layers:
                 self.paint_disc(l, self.pt(li, lj), self.via_d, code)

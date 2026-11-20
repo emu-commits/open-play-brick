@@ -34,7 +34,10 @@ import nfc_antenna  # noqa: E402
 LIB = os.path.join(ROOT, "lib", "lcsc.pretty")
 KICAD_FP = "/usr/share/kicad/footprints"
 OUT = os.path.join(ROOT, "kicad")
-FREEROUTING = os.environ.get("FREEROUTING_JAR", "/opt/freerouting/freerouting-2.2.4-executable.jar")
+# Freerouting: a jar run with JAVA, or (FREEROUTING) the launcher from a
+# freerouting-*-linux-x64 release, which bundles its own Java. tools/kicad.sh
+# mounts that release at /opt/freerouting and sets FREEROUTING.
+FREEROUTING = os.environ.get("FREEROUTING") or os.environ.get("FREEROUTING_JAR", "/opt/freerouting/freerouting-2.2.4-executable.jar")
 JAVA = os.environ.get("JAVA", "/usr/lib/jvm/java-25-openjdk-amd64/bin/java")
 
 OX, OY = 100.0, 100.0          # KiCad page offset of each board's origin
@@ -42,7 +45,8 @@ MAIN_W, MAIN_H = 45.4, 13.4
 FACE_W, FACE_H = 24.4, 13.4
 FACE_X = 15.8                  # face board origin in main board coordinates
 ANT_KEEPOUT_X = 40.0           # main board: no copper beyond this x (module antenna)
-NOTCH = (23.0, 25.2, 1.6)      # main board edge notch for the battery wires: x0, x1, depth
+NOTCH = (17.4, 19.6, 1.6)      # main board edge notch for the battery wires: x0, x1, depth
+MAIN_LAYERS = int(os.environ.get("MAIN_LAYERS", "4"))   # 4 or 6 copper layers on the main board
 FANOUT = 0.6                   # main board: clear ring round U6 (PN5180) for its pads to escape
 
 mm = pcbnew.FromMM
@@ -58,9 +62,12 @@ def P(x, y):
 PLACEMENT = {
     # ---- main board: parts placed by hand, (x, y, rotation, side) ------------
     "J1": (3.9, 6.7, 270, "T"),   # USB-C, mouth flush with the outside of the end wall
-    "J2": (12.4, 4.6, 90, "T"),   # battery; plug enters from +x, under the face board
-    "J3": (14.7, 6.7, 90, "B"),   # speaker; plug enters from -x, over the speaker bay
-    "U6": (26.4, 7.0, 0, "T"),    # PN5180; TX pins at the top right corner
+    # JST-SH sockets: the plug goes in on the side of the two large mounting
+    # pads (footprint +y), so at 90 degrees on top it enters from +x.
+    "J2": (10.6, 3.4, 90, "T"),   # battery; plug enters from +x, wires drop through NOTCH
+    "J3": (10.6, 6.7, 90, "B"),   # speaker; plug enters from -x, wires drop to the speaker bay
+    "U6": (23.4, 7.0, 0, "T"),    # PN5180; TX pins at the top right corner. Kept 1.8 mm clear of the
+                                  # module so the module's side column has a via field (VIA_FIELD)
     "J4": (36.2, 6.7, 0, "T"),    # to the face board
     "U1": (34.4, 6.7, 90, "B"),   # module; body x 28.8..45.4, antenna at +x
     # ---- face, top ----------------------------------------------------------
@@ -83,9 +90,9 @@ T, B = "T", "B"
 AUTO_MAIN = [
     # larger parts first, so the small ones fill in around them
     ("L1", "U6", "21", T), ("L2", "U6", "18", T), ("Y1", "U6", "36", T),
-    ("U8", "U1", "9", B + T), ("U9", "U1", "13", B + T), ("U7", "J3", "1", B + T),
+    ("U9", "U1", "13", B + T), ("U7", "J3", "1", B),
     ("U2", "J1", "A6", B + T), ("D1", "J1", "A4B9", T + B),
-    ("U3", "J2", "2", T + B), ("Q1", "J2", "2", T + B), ("U4", "Q1", "2", T + B), ("U5", "J2", "2", B + T),
+    ("U3", "J2", "2", T + B), ("Q1", "J2", "2", T + B), ("U4", "Q1", "2", T + B),
     ("Q2", "J4", "6", B + T), ("Q3", "Q2", "1", B + T),
     # NFC frontend passives, top
     ("C16", "U6", "22", T), ("C17", "U6", "22", T), ("C15", "U6", "26", T), ("C14", "U6", "25", T),
@@ -99,11 +106,13 @@ AUTO_MAIN = [
     # power passives
     ("R4", "J1", "A5", B + T), ("R5", "J1", "B5", B + T),
     ("C4", "U3", "4", T + B), ("R7", "U3", "5", T + B), ("C5", "U3", "3", T + B), ("R6", "Q1", "1", T + B),
-    ("C6", "U4", "1", T + B), ("C8", "U4", "5", T + B), ("C9", "U5", "3", B + T),
+    ("C6", "U4", "1", T + B), ("C8", "U4", "5", T + B),
+    ("R18", "U1", "9", B + T), ("R19", "R18", "2", B + T), ("C31", "R18", "2", B + T),
     # audio, sensors, switches
-    ("C26", "U7", "7", B + T), ("C27", "U7", "8", B + T), ("C28", "U8", "5", B + T), ("C29", "U9", "9", B + T),
-    ("R8", "U5", "8", B + T), ("R9", "U5", "7", B + T),
-    ("R15", "Q2", "1", B + T), ("R16", "Q3", "1", B + T), ("R17", "J4", "9", B + T),
+    ("C26", "U7", "7", B + T), ("C27", "U7", "8", B + T), ("C29", "U9", "9", B + T),
+    ("R8", "J4", "7", B + T), ("R9", "J4", "8", B + T),
+    ("R15", "Q2", "1", B + T), ("R16", "Q3", "1", B + T), ("U10", "J4", "9", B + T), ("C30", "U10", "5", B + T),
+    ("R17", "U10", "4", B + T),
 ]
 # Face board: matching network beside the loop terminals on the bottom;
 # pixel decoupling on top beside each pixel's supply pin, so it needs no via.
@@ -118,10 +127,11 @@ AUTO_FACE = [
 
 # Areas the placer must leave empty (board mm, x0, y0, x1, y1, side).
 KEEPOUT_MAIN = [
-    (16.8, 1.3, 23.2, 7.9, "T"),     # the battery plug, under the face board
-    (6.4, 4.1, 11.4, 9.3, "B"),      # the speaker plug, over the speaker bay
+    (13.2, 1.0, 19.8, 5.8, "T"),     # the battery plug and its wires, partly under the face board
+    (3.4, 4.6, 8.0, 8.8, "B"),       # the speaker plug, over the speaker bay
     (ANT_KEEPOUT_X - 0.2, 0, MAIN_W, MAIN_H, "both"),   # module antenna
     (NOTCH[0] - 0.3, 0, NOTCH[1] + 0.3, NOTCH[2] + 0.3, "both"),   # battery wire notch
+    (27.0, 0.3, 28.7, 13.1, "both"),  # VIA_FIELD: the module's side column escapes here, on both sides
 ]
 
 # ---------------------------------------------------------------------------
@@ -202,7 +212,7 @@ def zone(board, pts, layer, netinfo=None, keepout=None, priority=0, name=None):
 def keepout_all_layers(board, pts, what, name):
     z = pcbnew.ZONE(board)
     ls = pcbnew.LSET()
-    for l in (pcbnew.F_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew.B_Cu):
+    for l in copper_layers(board):
         ls.AddLayer(l)
     z.SetLayerSet(ls)
     o = z.Outline()
@@ -221,7 +231,7 @@ def keepout_all_layers(board, pts, what, name):
 
 def setup_rules(board):
     ds = board.GetDesignSettings()
-    ds.m_TrackMinWidth = mm(0.127)
+    ds.m_TrackMinWidth = mm(0.1)        # JLCPCB multilayer minimum is 0.09 mm; Freerouting necks to ~0.11 at the USB-C pads
     ds.m_ViasMinSize = mm(0.45)
     ds.m_ViasMinDrill = mm(0.25)
     ds.m_MinThroughDrill = mm(0.25)
@@ -235,13 +245,16 @@ def setup_rules(board):
     nc.SetViaDrill(mm(0.3))
     power = pcbnew.NETCLASS("Power")
     power.SetClearance(mm(0.127))
-    power.SetTrackWidth(mm(0.3))
+    # 0.2 mm: wide enough for the 0.5 A peaks here, narrow enough to reach the
+    # 0.25 mm pads of the 0.5 mm-pitch chips (Freerouting will not neck down a
+    # power track, and at 0.3 mm left every supply pin of U6, U7 and U9 open).
+    power.SetTrackWidth(mm(0.2))
     power.SetViaDiameter(mm(0.6))
     power.SetViaDrill(mm(0.3))
     ds.m_NetSettings.SetNetclass("Power", power)
     rf = pcbnew.NETCLASS("NFC")
     rf.SetClearance(mm(0.127))
-    rf.SetTrackWidth(mm(0.3))
+    rf.SetTrackWidth(mm(0.25))
     rf.SetViaDiameter(mm(0.6))
     rf.SetViaDrill(mm(0.3))
     ds.m_NetSettings.SetNetclass("NFC", rf)
@@ -400,18 +413,93 @@ def check_gpio_against_firmware():
 # Boards
 # ---------------------------------------------------------------------------
 
-def new_board():
+def copper_layers(board):
+    n = board.GetCopperLayerCount()
+    return [pcbnew.F_Cu] + [getattr(pcbnew, "In%d_Cu" % i) for i in range(1, n - 1)] + [pcbnew.B_Cu]
+
+
+def new_board(layers=4):
     b = pcbnew.CreateEmptyBoard()
-    b.SetCopperLayerCount(4)
+    b.SetCopperLayerCount(layers)
     ds = b.GetDesignSettings()
     ds.SetBoardThickness(mm(0.8))
+    ds.SetAuxOrigin(P(0, 0))       # Gerbers, drill and placement files measured from the board corner
     setup_rules(b)
     return b
 
 
+def fanout_module(b, via=(0.45, 0.25), width=0.2, clearance=0.15):
+    """A via under the module for each signal pad on its two long sides,
+    joined by a short stub on the bottom layer. The module is 13.2 mm wide on
+    a 13.4 mm board, so those pads sit 0.4 mm from the edge and can only
+    escape inward, and Freerouting will not place vias under a part by
+    itself: left to it, nearly every one of them stayed open."""
+    u1 = b.FindFootprintByReference("U1")
+    cx, cy = pcbnew.ToMM(u1.GetPosition().x) - OX, pcbnew.ToMM(u1.GetPosition().y) - OY
+    obstacles = []      # (x, y, half-w, half-h, net) of every pad on any layer
+    for f in b.GetFootprints():
+        for p in f.Pads():
+            bb = p.GetBoundingBox()
+            obstacles.append(((pcbnew.ToMM(bb.GetLeft() + bb.GetRight()) / 2) - OX,
+                              (pcbnew.ToMM(bb.GetTop() + bb.GetBottom()) / 2) - OY,
+                              pcbnew.ToMM(bb.GetWidth()) / 2, pcbnew.ToMM(bb.GetHeight()) / 2, p.GetNetname()))
+    for t in b.GetTracks():
+        if t.GetClass() == "PCB_VIA":
+            r = pcbnew.ToMM(t.GetWidth(pcbnew.F_Cu)) / 2
+            obstacles.append((pcbnew.ToMM(t.GetPosition().x) - OX, pcbnew.ToMM(t.GetPosition().y) - OY, r, r, t.GetNetname()))
+    vr = via[0] / 2
+
+    def free(x, y, netname):
+        for ox, oy, hw, hh, n in obstacles:
+            if n == netname:
+                continue
+            dx = max(abs(x - ox) - hw, 0)
+            dy = max(abs(y - oy) - hh, 0)
+            if math.hypot(dx, dy) < vr + clearance:
+                return False
+        return True
+
+    made = 0
+    for p in sorted(u1.Pads(), key=lambda p: p.GetNumber()):
+        n = p.GetNetname()
+        if not n or n == "GND" or n.startswith("NC_") or p.GetNumber() == "":
+            continue
+        px, py = pcbnew.ToMM(p.GetPosition().x) - OX, pcbnew.ToMM(p.GetPosition().y) - OY
+        bb = p.GetBoundingBox()
+        w, h = pcbnew.ToMM(bb.GetWidth()), pcbnew.ToMM(bb.GetHeight())
+        if w > h:
+            # The side column faces the rest of the board: its vias go outward,
+            # into VIA_FIELD beside the module. (Inward, they made a wall
+            # between the NFC reader and the face header.)
+            ux, uy, half = (-1 if cx > px else 1), 0, w / 2
+        else:
+            ux, uy, half = 0, (1 if cy > py else -1), h / 2
+        for d, side in [(d, sd) for d in (0.55, 0.85, 1.15, 1.45, 1.75) for sd in (0, 0.45, -0.45)]:
+            # inward by d, and sideways by sd when the straight spot is taken
+            vx = px + ux * (half + d - 0.25) + uy * side
+            vy = py + uy * (half + d - 0.25) + ux * side
+            if free(vx, vy, n):
+                break
+        else:
+            print("  fanout: no room for a via at U1.%s (%s)" % (p.GetNumber(), n))
+            continue
+        t = pcbnew.PCB_TRACK(b)
+        t.SetStart(P(px, py))
+        t.SetEnd(P(vx, vy))
+        t.SetWidth(mm(width))
+        t.SetLayer(pcbnew.B_Cu)
+        t.SetNet(p.GetNet())
+        t.SetLocked(True)
+        b.Add(t)
+        add_via(b, {}, None, vx, vy, via[0], via[1], net_obj=p.GetNet())
+        obstacles.append((vx, vy, vr, vr, n))
+        made += 1
+    print("  fanout: %d module pads given a via" % made)
+
+
 def build_main():
     import autoplace
-    b = new_board()
+    b = new_board(MAIN_LAYERS)
     nets = {}
     by_ref = {p["ref"]: p for p in design.parts("main")}
     for ref in PLACEMENT:
@@ -428,6 +516,7 @@ def build_main():
     for pad in [p for p in u1.Pads() if p.GetNumber() == "" and pcbnew.ToMM(p.GetSize().x) > 1.0]:
         add_via(b, {}, None, pcbnew.ToMM(pad.GetPosition().x) - OX, pcbnew.ToMM(pad.GetPosition().y) - OY,
                 0.45, 0.25, net_obj=pad.GetNet())
+    fanout_module(b)
     pl = autoplace.Placer(b, (OX, OY), (MAIN_W, MAIN_H))
     for f in b.GetFootprints():
         pl.block_footprint(f)
@@ -457,8 +546,8 @@ def build_main():
             raise SystemExit("no room for %s near %s.%s" % (ref, aref, apad))
         PLACEMENT[ref] = (res[1], res[2], res[3], res[0])
         print("  placed %-4s %s (%.1f, %.1f) rot %d  anchor %s.%s" % (ref, res[0], res[1], res[2], res[3], aref, apad))
-        if ref in ("U7", "U5"):
-            ep_vias(ref, {"U7": "17", "U5": "9"}[ref], [(0, 0)])
+        if ref == "U7":
+            ep_vias(ref, "17", [(0, 0)])
             pl.block_vias()
     missing = set(by_ref) - set(PLACEMENT)
     if missing:
@@ -479,8 +568,12 @@ def build_main():
     # 3V3/VSYS on inner layer 2 would split it; leave In2 for signals with a
     # GND flood behind them.
     zone(b, pour, pcbnew.In2_Cu, g, priority=0, name="GND_IN2")
+    if MAIN_LAYERS == 6:
+        zone(b, pour, pcbnew.In3_Cu, g, priority=0, name="GND_IN3")
+        zone(b, pour, pcbnew.In4_Cu, g, priority=0, name="GND_IN4")   # second solid plane
     keepout_all_layers(b, [(ANT_KEEPOUT_X, -0.5), (W + 0.5, -0.5), (W + 0.5, H + 0.5), (ANT_KEEPOUT_X, H + 0.5)],
                        ("tracks", "vias", "pour"), "ANTENNA_KEEPOUT")
+    silk_labels(b)
     return b
 
 
@@ -544,10 +637,25 @@ DRU = """(version 1)
 """
 
 
+def save_board(path, b):
+    """SaveBoard, then mark starved thermals as warnings in the project file
+    (SaveBoard rewrites it with KiCad's defaults). A small pad on a pour that
+    keeps one spoke where two do not fit is still connected."""
+    import json
+    pcbnew.SaveBoard(path, b)
+    pro = path[:-len(".kicad_pcb")] + ".kicad_pro"
+    try:
+        d = json.load(open(pro))
+    except (OSError, ValueError):
+        return
+    d.setdefault("board", {}).setdefault("design_settings", {}).setdefault("rule_severities", {})["starved_thermal"] = "warning"
+    json.dump(d, open(pro, "w"), indent=2)
+
+
 def save(b, name):
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, name + ".kicad_pcb")
-    pcbnew.SaveBoard(path, b)
+    save_board(path, b)
     with open(os.path.join(OUT, name + ".kicad_dru"), "w") as fh:
         fh.write(DRU)
     pro = os.path.join(OUT, name + ".kicad_pro")
@@ -641,10 +749,15 @@ def netclass_of(board, name):
     return "Default"
 
 
-def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.5, 0.3), clearance=0.15):
+def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.5, 0.3), clearance=0.15,
+                adopt=False, rounds=12):
+    """Route every net. adopt: treat the unlocked tracks already on the board
+    (an earlier Freerouting pass) as this router's own, so rip-up may remove
+    and re-route them."""
     import router as R
-    rt = R.Router(board, (OX, OY), size, route_layers, via_layers, plane_net=plane_net,
-                  via=via, clearance=clearance, log=lambda m: print("[%s]%s" % (label, m)))
+    mk = lambda: R.Router(board, (OX, OY), size, route_layers, via_layers, plane_net=plane_net,
+                          via=via, clearance=clearance, log=lambda m: print("[%s]%s" % (label, m)))
+    rt = mk()
     keep = []
     if label == "brick-main":
         keep.append((NOTCH[0] - 0.3, -1, NOTCH[1] + 0.3, NOTCH[2] + 0.3))
@@ -666,6 +779,16 @@ def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.
         lead = [n for n in ("GND", "VLED", "3V3") if n in todo]
         todo = lead + [n for n in todo if n not in lead]
     rt.freeze()
+    if adopt:
+        fixed = mk()
+        fixed.load_board(keep, fixed_only=True)
+        rt.occ_fixed = {l: fixed.occ[l].copy() for l in rt.all_layers}
+        n = 0
+        for t in rt._tracks:
+            if not t.IsLocked() and t.GetNetCode() > 0:
+                rt.added.setdefault(t.GetNetCode(), []).append(t)
+                n += 1
+        print("[%s] adopted %d existing tracks and vias" % (label, n))
     import time
     t0 = time.time()
     failed = []
@@ -677,7 +800,7 @@ def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.
     # Rip up and reroute: for each failed net, remove only the nets lying on
     # the path it would take, route it, then route those nets again.
     code_name = {v: k for k, v in names.items()}
-    for rnd in range(12):
+    for rnd in range(rounds):
         if not failed:
             break
         n = failed.pop(0)
@@ -701,6 +824,19 @@ def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.
     if plane_net and plane_net in names:
         made = rt.stitch_to_plane(names[plane_net])
         print("[%s] %d ground vias" % (label, made))
+        if label == "brick-main":
+            # stitch_to_plane does not see rule areas: drop vias it put in the
+            # antenna keep-out (those pads reach ground through the pour anyway)
+            gone = 0
+            for t in list(rt._tracks) + [v for v in getattr(rt, "_stitched", [])]:
+                xs = [pcbnew.ToMM(t.GetPosition().x)] if t.GetClass() == "PCB_VIA" else \
+                     [pcbnew.ToMM(t.GetStart().x), pcbnew.ToMM(t.GetEnd().x)]
+                if t.GetNetname() == plane_net and max(xs) - OX > ANT_KEEPOUT_X - 0.3:
+                    board.Remove(t)
+                    gone += 1
+            print("[%s] removed %d ground stubs and vias from the antenna keep-out" % (label, gone))
+            made = rt.stitch_grid(names[plane_net], keep=[(ANT_KEEPOUT_X - 0.5, -1, MAIN_W + 1, MAIN_H + 1)])
+            print("[%s] %d ground stitching vias" % (label, made))
     return failed
 
 
@@ -724,44 +860,115 @@ def cmd_route():
         failed = route_board(b, size, layers, [pcbnew.F_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew.B_Cu], plane, name,
                              via=via, clearance=clr)
         fill_zones(b)
-        pcbnew.SaveBoard(path, b)
+        save_board(path, b)
         results[name] = failed
         print("%s: %s" % (name, "all nets routed" if not failed else "UNROUTED: %s" % failed))
     if any(results.values()):
         sys.exit(1)
 
 
-def freeroute(name, passes=40):
-    """Route one board with Freerouting. Only the inner ground plane goes out
-    in the DSN, marked as a power layer so no signal is routed through it; the
-    flood pours on the other layers are filled afterwards, round the tracks."""
+def export_dsn(name):
+    """Write ../kicad/.freerouting/<name>.dsn for Freerouting. Only the inner
+    ground plane goes out, marked as a power layer so no signal is routed
+    through it; the flood pours on the other layers are filled afterwards,
+    round the tracks."""
     path = os.path.join(OUT, name + ".kicad_pcb")
     work = os.path.join(OUT, ".freerouting")
     os.makedirs(work, exist_ok=True)
     dsn, ses = os.path.join(work, name + ".dsn"), os.path.join(work, name + ".ses")
     b = pcbnew.LoadBoard(path)
-    if any(t.GetClass() != "PCB_VIA" or not t.IsLocked() for t in b.GetTracks()):
-        raise SystemExit("%s already has tracks: run place first" % name)
+    if any(not t.IsLocked() for t in b.GetTracks()) and os.environ.get("CONTINUE") != "1":
+        raise SystemExit("%s already has tracks: run place first (or CONTINUE=1 to route on from them)" % name)
     for z in list(b.Zones()):
-        if not z.GetIsRuleArea() and not z.IsOnLayer(pcbnew.In1_Cu):
+        planes = (pcbnew.In1_Cu, pcbnew.In4_Cu) if b.GetCopperLayerCount() == 6 else (pcbnew.In1_Cu,)
+        if not z.GetIsRuleArea() and not any(z.GetLayer() == l for l in planes):
             b.Remove(z)
     if not pcbnew.ExportSpecctraDSN(b, dsn):
         raise SystemExit("DSN export failed")
     s = open(dsn).read()
-    s = s.replace("(layer In1.Cu\n      (type signal)", "(layer In1.Cu\n      (type power)", 1)
+    for lname in ("In1.Cu", "In4.Cu") if b.GetCopperLayerCount() == 6 else ("In1.Cu",):
+        s = s.replace("(layer %s\n      (type signal)" % lname, "(layer %s\n      (type power)" % lname, 1)
     open(dsn, "w").write(s)
     if os.path.exists(ses):
         os.remove(ses)
-    subprocess.run([JAVA, "-Djava.awt.headless=true", "-jar", FREEROUTING, "-de", dsn, "-do", ses,
-                    "-mp", str(passes), "--gui.enabled=false"], check=False)
+    return dsn, ses
+
+
+def freeroute(name, passes=40):
+    """Route one board with Freerouting 2.x in this process's environment
+    (tools/route_main.sh runs Freerouting 1.9 on the host instead)."""
+    dsn, ses = export_dsn(name)
+    cmd = [JAVA, "-Djava.awt.headless=true", "-jar", FREEROUTING] if FREEROUTING.endswith(".jar") else [FREEROUTING]
+    env = dict(os.environ, JAVA_TOOL_OPTIONS="-Djava.awt.headless=true")
+    subprocess.run(cmd + ["-de", dsn, "-do", ses, "-mp", str(passes), "--gui.enabled=false"], check=False, env=env)
     if not os.path.exists(ses):
         raise SystemExit("Freerouting wrote no session file")
+    # Import in a fresh process: a second LoadBoard in this one can come back
+    # as a bare SwigPyObject in KiCad 9.0.9.
+    subprocess.run([sys.executable, os.path.abspath(__file__), "sesimport", name], check=True)
+
+
+def cmd_sesimport():
+    name = sys.argv[2]
+    path = os.path.join(OUT, name + ".kicad_pcb")
+    ses = os.path.join(OUT, ".freerouting", name + ".ses")
     b = pcbnew.LoadBoard(path)
     if not pcbnew.ImportSpecctraSES(b, ses):
         raise SystemExit("SES import failed")
     fill_zones(b)
-    pcbnew.SaveBoard(path, b)
-    print("%s: routed with Freerouting" % name)
+    save_board(path, b)
+    print("%s: imported the Freerouting session, zones filled" % name)
+
+
+def silk_labels(b):
+    """Silkscreen the few markings an assembler needs: battery polarity at J2,
+    the speaker socket, and the board name. Idempotent: replaces earlier ones."""
+    for d in list(b.GetDrawings()):
+        if d.GetClass() == "PCB_TEXT" and d.GetText().startswith(("+", "-", "SPK", "OPEN PLAY", "BAT")):
+            b.Remove(d)
+    is_main = b.FindFootprintByReference("U1") is not None
+
+    def text(t, x, y, layer, size=0.7, rot=0):
+        o = pcbnew.PCB_TEXT(b)
+        o.SetText(t)
+        o.SetPosition(P(x, y))
+        o.SetLayer(layer)
+        o.SetTextSize(pcbnew.VECTOR2I(mm(size), mm(size)))
+        o.SetTextThickness(mm(0.12))
+        o.SetTextAngleDegrees(rot)
+        if layer == pcbnew.B_SilkS:
+            o.SetMirrored(True)
+        b.Add(o)
+
+    def pad_xy(ref, num):
+        p = b.FindFootprintByReference(ref).FindPadByNumber(num)
+        return pcbnew.ToMM(p.GetPosition().x) - OX, pcbnew.ToMM(p.GetPosition().y) - OY
+
+    if is_main:
+        # J2 pads 1 (-) and 2 (+) sit one above the other at 90 degrees; label
+        # them on the side away from the plug.
+        for num, sign in (("1", "-"), ("2", "+")):
+            x, y = pad_xy("J2", num)
+            text(sign, x - 1.25, y, pcbnew.F_SilkS, 0.9)
+        x, y = pad_xy("J2", "1")
+        text("BAT", x - 1.3, min(pad_xy("J2", "1")[1], pad_xy("J2", "2")[1]) - 1.1, pcbnew.F_SilkS, 0.6)
+        x, y = pad_xy("J3", "1")
+        text("SPK", x + 1.6, y + 1.9, pcbnew.B_SilkS, 0.6)
+        text("OPEN PLAY BRICK rev C", 20.5, 12.6, pcbnew.B_SilkS, 0.55)
+    return b
+
+
+def cmd_silk():
+    for name in ("brick-main",):
+        path = os.path.join(OUT, name + ".kicad_pcb")
+        b = pcbnew.LoadBoard(path)
+        silk_labels(b)
+        save_board(path, b)
+        print("%s: silkscreen labels added" % name)
+
+
+def cmd_dsn():
+    print("wrote %s" % export_dsn("brick-" + (sys.argv[2] if len(sys.argv) > 2 else "main"))[0])
 
 
 def cmd_freeroute():
@@ -811,4 +1018,5 @@ def cmd_check():
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "place"
-    {"place": cmd_place, "route": cmd_route, "freeroute": cmd_freeroute, "check": cmd_check, "placecheck": cmd_placecheck}[cmd]()
+    {"place": cmd_place, "route": cmd_route, "freeroute": cmd_freeroute, "check": cmd_check, "placecheck": cmd_placecheck,
+     "sesimport": cmd_sesimport, "dsn": cmd_dsn, "silk": cmd_silk}[cmd]()

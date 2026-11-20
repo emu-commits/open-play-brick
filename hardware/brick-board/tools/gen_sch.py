@@ -45,17 +45,18 @@ PIN_NAMES = {
     "WS2812B-2020": {"1": "DOUT", "2": "GND", "3": "DIN", "4": "VDD"},
     "AO3401A": {"1": "G", "2": "S", "3": "D"},
     "2N7002": {"1": "G", "2": "S", "3": "D"},
+    "SN74LV1T34DBVR": {"1": "NC", "2": "A", "3": "GND", "4": "Y", "5": "VCC"},
     "B5819W": {"1": "K", "2": "A"},
     "27.12MHz 10pF": {"1": "X1", "2": "GND", "3": "X2", "4": "GND"},
 }
 
 SHEETS = [
     ("Main board: ESP32-C6 module and USB", ["U1", "J1", "U2", "R4", "R5", "C1", "C2", "R1", "C3", "R2", "JP1", "R8", "R9"]),
-    ("Main board: power", ["D1", "Q1", "R6", "U3", "R7", "C4", "C5", "U4", "C6", "C8", "J2", "U5", "C9"]),
+    ("Main board: power", ["D1", "Q1", "R6", "U3", "R7", "C4", "C5", "U4", "C6", "C8", "J2", "R18", "R19", "C31"]),
     ("Main board: NFC reader", ["U6", "Y1", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "R10",
                                 "L1", "L2", "C20", "C21", "C22", "C23", "R11", "C24", "R12", "C25"]),
-    ("Main board: audio, motion, pixel supply, header", ["U7", "C26", "C27", "J3", "U8", "C28", "U9", "C29",
-                                                          "Q2", "R15", "Q3", "R16", "R17", "J4"]),
+    ("Main board: audio, motion, pixel supply, header", ["U7", "C26", "C27", "J3", "U9", "C29",
+                                                          "Q2", "R15", "Q3", "R16", "U10", "C30", "R17", "J4"]),
     ("Face board: NFC loop and matching", ["J5", "ANT1", "R30", "C40", "C41", "C42", "C43", "R31", "C44", "C45", "C46", "C47"]),
     ("Face board: pixels, colour sensor, lamp", ["LED1", "LED2", "LED3", "LED4", "LED5", "LED6", "LED7", "LED8",
                                                  "C50", "C51", "C52", "C53", "C54", "U20", "C55", "LED9", "R32"]),
