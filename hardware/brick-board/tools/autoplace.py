@@ -19,8 +19,9 @@ MARGIN = 0.12
 
 
 class Placer:
-    def __init__(self, board, origin, size, edge=0.3):
+    def __init__(self, board, origin, size, edge=0.3, margin=MARGIN):
         self.b = board
+        self.margin = margin   # free space kept around every placed part, mm
         self.ox, self.oy = origin
         self.w, self.h = size
         self.nx = int(round(self.w / GRID))
@@ -41,8 +42,9 @@ class Placer:
         for s in ("T", "B") if side == "both" else (side,):
             self.occ[s][i0:i1, j0:j1] = True
 
-    def footprint_box(self, f, margin=MARGIN):
+    def footprint_box(self, f, margin=None):
         """Bounding box of courtyard and pads, in board mm, plus margin."""
+        margin = self.margin if margin is None else margin
         side = "B" if f.IsFlipped() else "T"
         bb = None
         cy = f.GetCourtyard(pcbnew.B_CrtYd if side == "B" else pcbnew.F_CrtYd)
@@ -65,15 +67,15 @@ class Placer:
         for p in f.Pads():
             if p.GetAttribute() in (pcbnew.PAD_ATTRIB_PTH, pcbnew.PAD_ATTRIB_NPTH):
                 pb = p.GetBoundingBox()
-                self.block_rect("both", pcbnew.ToMM(pb.GetLeft()) - self.ox - MARGIN, pcbnew.ToMM(pb.GetTop()) - self.oy - MARGIN,
-                                pcbnew.ToMM(pb.GetRight()) - self.ox + MARGIN, pcbnew.ToMM(pb.GetBottom()) - self.oy + MARGIN)
+                self.block_rect("both", pcbnew.ToMM(pb.GetLeft()) - self.ox - self.margin, pcbnew.ToMM(pb.GetTop()) - self.oy - self.margin,
+                                pcbnew.ToMM(pb.GetRight()) - self.ox + self.margin, pcbnew.ToMM(pb.GetBottom()) - self.oy + self.margin)
 
     def block_vias(self):
         for t in self.b.GetTracks():
             if t.GetClass() == "PCB_VIA":
                 x = pcbnew.ToMM(t.GetPosition().x) - self.ox
                 y = pcbnew.ToMM(t.GetPosition().y) - self.oy
-                r = pcbnew.ToMM(t.GetWidth(pcbnew.F_Cu)) / 2 + MARGIN
+                r = pcbnew.ToMM(t.GetWidth(pcbnew.F_Cu)) / 2 + self.margin
                 self.block_rect("both", x - r, y - r, x + r, y + r)
 
     # placing ----------------------------------------------------------------
@@ -122,10 +124,10 @@ class Placer:
                     io = np.zeros((self.ny + 1, self.nx + 1), np.int32)
                     io[1:, 1:] = self.occ[other].astype(np.int32).cumsum(0).cumsum(1)
                     for hb in holes:
-                        hx0 = pcbnew.ToMM(hb.GetLeft()) - self.ox - MARGIN
-                        hy0 = pcbnew.ToMM(hb.GetTop()) - self.oy - MARGIN
-                        hx1 = pcbnew.ToMM(hb.GetRight()) - self.ox + MARGIN
-                        hy1 = pcbnew.ToMM(hb.GetBottom()) - self.oy + MARGIN
+                        hx0 = pcbnew.ToMM(hb.GetLeft()) - self.ox - self.margin
+                        hy0 = pcbnew.ToMM(hb.GetTop()) - self.oy - self.margin
+                        hx1 = pcbnew.ToMM(hb.GetRight()) - self.ox + self.margin
+                        hy1 = pcbnew.ToMM(hb.GetBottom()) - self.oy + self.margin
                         a0 = np.clip(np.floor((X + hx0) / GRID).astype(int), 0, self.nx)
                         b0 = np.clip(np.floor((Y + hy0) / GRID).astype(int), 0, self.ny)
                         a1 = np.clip(np.ceil((X + hx1) / GRID).astype(int), 0, self.nx)

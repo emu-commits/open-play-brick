@@ -1,8 +1,8 @@
 """A small grid router for the brick board, on top of KiCad's pcbnew API.
 
 Why this exists: the boards are generated from code, and the usual
-autorouter (Freerouting) could not run in the environment these files were
-made in. The boards are small (under 50 x 14 mm, about 60 nets), so a plain
+autorouter (Freerouting 2.2) needs Java 25, which the environment these files were
+first made in lacked. The boards are small (under 50 x 14 mm, about 60 nets), so a plain
 maze router does the job. KiCad's own DRC checks the result afterwards; this
 router only has to be right, not clever.
 
@@ -220,13 +220,13 @@ class Router:
 
     def blocked_for(self, code, width, relaxed=False):
         occ = self.occ_fixed if relaxed else self.occ
-        r = width / 2 + self.clear + 0.6 * self.p
+        r = width / 2 + self.clear + 1.2 * self.p   # 1.2 cells: 0.6 left occasional 0.12 mm gaps
         out = {}
         for l in self.route_layers:
             other = (occ[l] != 0) & (occ[l] != code)
             bl = ndimage.binary_dilation(other, structure=self.disk(r))
             out[l] = bl | self.no_track[l]
-        rv = self.via_d / 2 + self.clear + 0.6 * self.p
+        rv = self.via_d / 2 + self.clear + 1.2 * self.p
         vb = self.no_via.copy()
         for l in self.all_layers:
             other = (occ[l] != 0) & (occ[l] != code)

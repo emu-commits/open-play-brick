@@ -4,8 +4,13 @@
 Run with KiCad's Python (it needs the pcbnew module):
 
     /usr/bin/python3 gen_board.py place    # place parts, write ../kicad/*.kicad_pcb (unrouted)
-    /usr/bin/python3 gen_board.py route    # export DSN, run Freerouting, import, fill zones
+    /usr/bin/python3 gen_board.py route [face|main]   # route with the built-in maze router (router.py)
+    /usr/bin/python3 gen_board.py freeroute [main]    # export DSN, run Freerouting, import, fill zones
     /usr/bin/python3 gen_board.py check    # DRC and connectivity report
+
+The face board is routed with route; the main board, which is too dense for
+the maze router, with freeroute. Freerouting 2.2 needs Java 25 or later; set
+FREEROUTING_JAR and JAVA if they are not in the default places.
 
 Everything about where parts sit is in PLACEMENT below, in board coordinates
 in mm with (0, 0) at the corner of each board nearest the USB socket, x along
@@ -30,6 +35,7 @@ LIB = os.path.join(ROOT, "lib", "lcsc.pretty")
 KICAD_FP = "/usr/share/kicad/footprints"
 OUT = os.path.join(ROOT, "kicad")
 FREEROUTING = os.environ.get("FREEROUTING_JAR", "/opt/freerouting/freerouting-2.2.4-executable.jar")
+JAVA = os.environ.get("JAVA", "/usr/lib/jvm/java-25-openjdk-amd64/bin/java")
 
 OX, OY = 100.0, 100.0          # KiCad page offset of each board's origin
 MAIN_W, MAIN_H = 45.4, 13.4
@@ -37,6 +43,7 @@ FACE_W, FACE_H = 24.4, 13.4
 FACE_X = 15.8                  # face board origin in main board coordinates
 ANT_KEEPOUT_X = 40.0           # main board: no copper beyond this x (module antenna)
 NOTCH = (23.0, 25.2, 1.6)      # main board edge notch for the battery wires: x0, x1, depth
+FANOUT = 0.6                   # main board: clear ring round U6 (PN5180) for its pads to escape
 
 mm = pcbnew.FromMM
 
@@ -98,12 +105,14 @@ AUTO_MAIN = [
     ("R8", "U5", "8", B + T), ("R9", "U5", "7", B + T),
     ("R15", "Q2", "1", B + T), ("R16", "Q3", "1", B + T), ("R17", "J4", "9", B + T),
 ]
-# Face board bottom: matching network beside the loop terminals, decoupling
-# beside what it decouples.
+# Face board: matching network beside the loop terminals on the bottom;
+# pixel decoupling on top beside each pixel's supply pin, so it needs no via.
+# The face placer keeps 0.3 mm around each part (the main board's 0.12 mm
+# left pads boxed in, with no room for a track or a via).
 AUTO_FACE = [
     ("R30", "ANT1", "1", B), ("C42", "R30", "1", B), ("C43", "R30", "1", B), ("C40", "R30", "1", B), ("C41", "R30", "1", B),
     ("R31", "ANT1", "2", B), ("C46", "R31", "1", B), ("C47", "R31", "1", B), ("C44", "R31", "1", B), ("C45", "R31", "1", B),
-    ("C50", "LED1", "4", B), ("C51", "LED4", "4", B), ("C52", "LED6", "4", B), ("C53", "LED8", "4", B),
+    ("C50", "LED1", "4", T + B), ("C51", "LED4", "4", T + B), ("C52", "LED6", "4", T + B), ("C53", "LED8", "4", T + B),
     ("C54", "J5", "6", B), ("C55", "U20", "1", B), ("R32", "LED9", "2", B),
 ]
 
@@ -425,6 +434,12 @@ def build_main():
     pl.block_vias()
     for x0, y0, x1, y1, side in KEEPOUT_MAIN:
         pl.block_rect(side, x0, y0, x1, y1)
+    # Fan-out ring round the NFC reader's 0.5 mm-pitch pads: room for each pad
+    # to leave on a track and drop a via. Packed tight against the chip, its
+    # support parts walled several pads into pockets that no route could leave.
+    bb = b.FindFootprintByReference("U6").GetBoundingBox(False)
+    pl.block_rect("T", pcbnew.ToMM(bb.GetLeft()) - OX - FANOUT, pcbnew.ToMM(bb.GetTop()) - OY - FANOUT,
+                  pcbnew.ToMM(bb.GetRight()) - OX + FANOUT, pcbnew.ToMM(bb.GetBottom()) - OY + FANOUT)
     for ref, aref, apad, sides in AUTO_MAIN:
         f = place(b, by_ref[ref], nets, positioned=False)
         ap = b.FindFootprintByReference(aref).FindPadByNumber(apad)
@@ -483,7 +498,7 @@ def build_face():
     for ref in PLACEMENT:
         if ref in by_ref and ref != "ANT1":
             place(b, by_ref[ref], nets)
-    pl = autoplace.Placer(b, (OX, OY), (FACE_W, FACE_H))
+    pl = autoplace.Placer(b, (OX, OY), (FACE_W, FACE_H), margin=0.3)
     for f in b.GetFootprints():
         if f.GetReference() != "ANT1":
             pl.block_footprint(f)
@@ -700,7 +715,7 @@ def cmd_route():
     results = {}
     only = sys.argv[2] if len(sys.argv) > 2 else None
     for name, size, layers, plane, via, clr in (
-            ("brick-face", (FACE_W, FACE_H), [pcbnew.F_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew.B_Cu], None, (0.45, 0.25), 0.13),
+            ("brick-face", (FACE_W, FACE_H), [pcbnew.F_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew.B_Cu], None, (0.45, 0.25), 0.15),
             ("brick-main", (MAIN_W, MAIN_H), [pcbnew.F_Cu, pcbnew.In2_Cu, pcbnew.B_Cu], "GND", (0.5, 0.3), 0.15)):
         if only and only not in name:
             continue
@@ -714,6 +729,44 @@ def cmd_route():
         print("%s: %s" % (name, "all nets routed" if not failed else "UNROUTED: %s" % failed))
     if any(results.values()):
         sys.exit(1)
+
+
+def freeroute(name, passes=40):
+    """Route one board with Freerouting. Only the inner ground plane goes out
+    in the DSN, marked as a power layer so no signal is routed through it; the
+    flood pours on the other layers are filled afterwards, round the tracks."""
+    path = os.path.join(OUT, name + ".kicad_pcb")
+    work = os.path.join(OUT, ".freerouting")
+    os.makedirs(work, exist_ok=True)
+    dsn, ses = os.path.join(work, name + ".dsn"), os.path.join(work, name + ".ses")
+    b = pcbnew.LoadBoard(path)
+    if any(t.GetClass() != "PCB_VIA" or not t.IsLocked() for t in b.GetTracks()):
+        raise SystemExit("%s already has tracks: run place first" % name)
+    for z in list(b.Zones()):
+        if not z.GetIsRuleArea() and not z.IsOnLayer(pcbnew.In1_Cu):
+            b.Remove(z)
+    if not pcbnew.ExportSpecctraDSN(b, dsn):
+        raise SystemExit("DSN export failed")
+    s = open(dsn).read()
+    s = s.replace("(layer In1.Cu\n      (type signal)", "(layer In1.Cu\n      (type power)", 1)
+    open(dsn, "w").write(s)
+    if os.path.exists(ses):
+        os.remove(ses)
+    subprocess.run([JAVA, "-Djava.awt.headless=true", "-jar", FREEROUTING, "-de", dsn, "-do", ses,
+                    "-mp", str(passes), "--gui.enabled=false"], check=False)
+    if not os.path.exists(ses):
+        raise SystemExit("Freerouting wrote no session file")
+    b = pcbnew.LoadBoard(path)
+    if not pcbnew.ImportSpecctraSES(b, ses):
+        raise SystemExit("SES import failed")
+    fill_zones(b)
+    pcbnew.SaveBoard(path, b)
+    print("%s: routed with Freerouting" % name)
+
+
+def cmd_freeroute():
+    only = sys.argv[2] if len(sys.argv) > 2 else "main"
+    freeroute("brick-" + only)
 
 
 def cmd_placecheck():
@@ -758,4 +811,4 @@ def cmd_check():
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "place"
-    {"place": cmd_place, "route": cmd_route, "check": cmd_check, "placecheck": cmd_placecheck}[cmd]()
+    {"place": cmd_place, "route": cmd_route, "freeroute": cmd_freeroute, "check": cmd_check, "placecheck": cmd_placecheck}[cmd]()
