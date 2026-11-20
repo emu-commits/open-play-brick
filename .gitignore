@@ -5,3 +5,4 @@ firmware/port-espidf/sdkconfig
 firmware/port-espidf/managed_components/
 firmware/port-espidf/dependencies.lock
 .zig-cache/
+__pycache__/

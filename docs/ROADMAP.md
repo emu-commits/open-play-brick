@@ -50,4 +50,3 @@ The fallback is a slightly larger brick: 2 x 6, 4 x 4, or one plate taller. That
 - A bench test of a small loop antenna with a PN5180 and a real tag.
 - A reviewer with RF board-layout experience.
 - Scans of tags not yet in the catalogue.
-EOF

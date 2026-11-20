@@ -85,7 +85,18 @@ void hal_espidf_init(void (*on_radio)(const uint8_t *, int))
         .gpio_cfg = { .mclk = I2S_GPIO_UNUSED, .bclk = PIN_I2S_BCLK, .ws = PIN_I2S_LRCLK, .dout = PIN_I2S_DOUT, .din = PIN_I2S_DIN },
     };
     std.slot_cfg.slot_bit_width = I2S_SLOT_BIT_WIDTH_32BIT;
+    /* The default macro sets the word-select pulse to the data width (16
+     * clocks). With 32-bit slots, Philips framing needs it to last the whole
+     * slot, or LRCLK runs at 25 % duty and neither the amplifier nor the
+     * microphone sees a valid frame. */
+    std.slot_cfg.ws_width = 32;
+    /* Transmit the same sample in both slots, so the amplifier plays it
+     * whichever channel its SD_MODE level selects. */
+    std.slot_cfg.slot_mask = I2S_STD_SLOT_BOTH;
     ESP_ERROR_CHECK(i2s_channel_init_std_mode(i2s_tx, &std));
+    /* Receive only the left slot: the microphone's SEL pin is tied low, and
+     * the right slot carries nothing but the floating data line. */
+    std.slot_cfg.slot_mask = I2S_STD_SLOT_LEFT;
     ESP_ERROR_CHECK(i2s_channel_init_std_mode(i2s_rx, &std));
     ESP_ERROR_CHECK(i2s_channel_enable(i2s_tx));
     ESP_ERROR_CHECK(i2s_channel_enable(i2s_rx));
@@ -274,6 +285,10 @@ void hal_deep_sleep(void)
      * hold (sensor power, reader reset, pixel power) keep their levels. */
     i2s_channel_disable(i2s_tx);
     i2s_channel_disable(i2s_rx);
+#if SOC_GPIO_SUPPORT_HOLD_IO_IN_DSLP && !SOC_GPIO_SUPPORT_HOLD_SINGLE_IO_IN_DSLP
+    /* On chips without per-pin hold in deep sleep, holds need this too. */
+    gpio_deep_sleep_hold_en();
+#endif
     esp_sleep_enable_ext1_wakeup_io(1ULL << PIN_IMU_INT1, ESP_EXT1_WAKEUP_ANY_HIGH);
     esp_deep_sleep_start();
 }
