@@ -65,13 +65,16 @@ tools/design.py        every part, pin and net, with JLCPCB part numbers (the so
 tools/gen_board.py     builds both boards in KiCad: place, route, check
 tools/autoplace.py     greedy placer for the small parts
 tools/router.py        small maze router (see below)
+tools/preroute.py      routes the NFC reader's antenna-side nets first and locks them
+tools/stitch_islands.py  a via in each outer ground-pour island that has none
+tools/hand_fixes.py    the few hand edits to the routed main board, as code
 tools/nfc_antenna.py   loop inductance and PN5180 matching network
 tools/gen_sch.py       draws docs/schematic.pdf
 tools/gen_fab.py       writes the JLCPCB order files to ../fab/ (refuses a board that fails DRC)
 tools/jlc_stock.py     checks every part number against JLCPCB's live stock
 tools/kicad.sh         runs any of these in a KiCad 9 container (Docker, no install needed)
 tools/kicad-gui.sh     opens a board in KiCad 9's PCB editor from the same container
-tools/route_main.sh    routes the main board: Freerouting 1.9, then finish_route.py
+tools/route_main.sh    routes the main board: preroute, Freerouting 1.9, finish_route.py, stitch_islands.py
 tools/render.sh        SVG of a board's layers to ../render/
 kicad/                 the generated boards, rules and DRC reports
 case/brick_case.scad   printed shell and base
@@ -80,12 +83,13 @@ lib/lcsc.pretty/       footprints, from the LCSC/EasyEDA library
 
 ## Regenerating
 
-Needs KiCad 9 (its Python `pcbnew` module), numpy and scipy, reportlab for the schematic, and Freerouting for the main board. The simplest way is Docker: `tools/kicad.sh` builds a KiCad 9 image with the Python packages (`tools/docker/Dockerfile`) and runs a command in it. For Freerouting, unpack the `freerouting-2.5.0-linux-x64.zip` release (it bundles Java 25) and point `FREEROUTING_HOME` at it; the default is `~/.local/opt/freerouting/linux/freerouting-2.5.0-linux-x64`.
+Needs KiCad 9 (its Python `pcbnew` module), numpy and scipy, reportlab for the schematic, and Freerouting for the main board. The simplest way is Docker: `tools/kicad.sh` builds a KiCad 9 image with the Python packages (`tools/docker/Dockerfile`) and runs a command in it. For the main board, `tools/route_main.sh` runs Freerouting 1.9 on the host: it needs Java, `xvfb-run` and `freerouting-1.9.0.jar` (default `~/.local/opt/freerouting/freerouting-1.9.0.jar`, or set `FR19_JAR`).
 
 ```sh
 cd tools
 ./kicad.sh python3 gen_board.py place     # any command below runs the same way
-./route_main.sh                           # main board: Freerouting 1.9 + finishing pass
+./route_main.sh                           # main board (see "Routing the main board")
+./kicad.sh python3 hand_fixes.py          # the hand edits, after route_main.sh
 ```
 
 ```sh
@@ -94,6 +98,7 @@ python3 gen_board.py place        # place parts, write ../kicad/*.kicad_pcb (unr
 python3 gen_board.py placecheck   # placement DRC: overlaps, clearances
 python3 gen_board.py route face   # route the face board with the built-in router
 ./route_main.sh                   # route the main board (on the host: needs java and xvfb-run)
+python3 hand_fixes.py             # the hand edits to the routed main board
 python3 gen_board.py check        # full DRC and connectivity
 python3 gen_sch.py                # ../docs/schematic.pdf
 python3 nfc_antenna.py            # print the antenna and matching design
@@ -113,11 +118,21 @@ openscad -D 'part="base"'  -o base.stl  case/brick_case.scad
 
 ### Routing the main board
 
-The face board is routed by `tools/router.py`, a small grid maze router (A* on a 0.05 mm grid, with rip-up and retry); it finishes in under a minute. The main board takes three steps:
+The face board is routed by `tools/router.py`, a small grid maze router (A* on a 0.05 mm grid, with rip-up and retry); it finishes in under a minute. The main board takes more steps. `gen_board.py place` lays some fixed copper first:
 
-1. `gen_board.py place` also gives each signal pad on the module's two long sides a via under the module (`fanout_module`). The module is 13.2 mm wide on a 13.4 mm board, so those pads can only escape inward, and no autorouter here would place vias under a part by itself.
-2. `tools/route_main.sh` exports a DSN and runs Freerouting **1.9** on it (headless under `xvfb-run`). Freerouting 2.5 oscillated between 55 and 130 open connections on this board; 1.9 converges. `CONTINUE=1 tools/route_main.sh` routes on from existing tracks.
-3. `tools/finish_route.py` (run by `route_main.sh`) connects what Freerouting leaves with `router.py`, starting from the copper already there.
+- **Module fan-out** (`fanout_module`): each signal pad on the module's two long sides gets a via under the module, between its pads and its centre ground pads, staggered in two columns. The module is 13.2 mm wide on a 13.4 mm board, so those pads can only escape inward, and no autorouter here would place vias under a part by itself. In one straight column, 0.8 mm apart, the vias left 0.35 mm between them, less than any track needs, and walled the NFC reader off from the header on every layer.
+- **Reader fan-out** (`fanout_reader`): the PN5180's ground pins get stubs to its exposed pad, its 3V3 and VSYS pins get their own vias, and so does C19's ground pad. Left to the routers, the signal pins either side took that room first.
+
+Then `tools/route_main.sh` does the rest:
+
+1. `preroute.py --analog` routes the reader's antenna-side nets (TX1/TX2, TX1F/TX2F, RXP/RXN and their taps, VMID, VDHF, V1V8, the crystal) with `router.py` on the empty board and locks them.
+2. Freerouting **1.9** routes everything else round them (headless, under `xvfb-run`). Freerouting 2.5 oscillated between 55 and 130 open connections on this board; 1.9 converges.
+3. `finish_route.py` connects what Freerouting leaves with `router.py`, starting from the copper already there.
+4. `stitch_islands.py` puts a via in each piece of the top and bottom ground pours that has none.
+
+Last, `hand_fixes.py` applies three small edits: ground vias for C4/C5, C21 and C1, with one In2 VLED track jogged to make room for C21's, and it removes ground vias the stitching passes stacked on top of each other. Each fix names the copper it changes and refuses to run if that copper is not there, because these edits fit one routing run.
+
+The routing is not reproducible copper for copper: `router.py` and Freerouting do not lay the same tracks twice. Three runs of this recipe (60 and 150 Freerouting passes, and a clean re-run from `place`) each connected every signal net, and each left a different handful of ground joins: pour islands and capacitor ground pads. The committed board is one of those runs, finished by `hand_fixes.py`. After a new run, `gen_board.py check` lists what is left, and `hand_fixes.py` needs new fixes written for it.
 
 `PYTHONHASHSEED` is pinned (0) by `tools/kicad.sh`, because `router.py`'s rip-up order depends on set ordering.
 
@@ -130,13 +145,13 @@ These are first-board values from a calculation. NXP's procedure measures the re
 ## Routing status
 
 - **Face board (4 layers): routed.** No DRC errors, no missing connections. Its order files are in `fab/brick-face/`.
-- **Main board (6 layers): placed, 17 connections still open, so it cannot be ordered yet.** No DRC errors otherwise. `gen_fab.py` refuses to write its files until the open list is empty.
+- **Main board (6 layers): routed.** No DRC errors, no missing connections. Its order files are in `fab/brick-main/`. The DRC warnings left are silkscreen overlaps, footprint-library notices, three tiny dangling track ends, four pads with a single thermal spoke, three silk texts under KiCad's default height, and one fan-out via used on one layer only.
 
-  Most of what is left is the PN5180's NFC network on the top side, between the chip and the face-board header: TX1F, TX2F, RXN, RXP_C, RXN_C and VMID. The rest are short hops: NFC_NSS, NFC_BUSY, SPI_SCK and SPI_MISO from the chip's host-side pins, LAMP_EN and I2C_SDA at the header, one 3V3 and three GND joins. `python3 gen_board.py check` lists them with coordinates.
+  How it got there: the first draft was about 79% covered and both autorouters left 40 or more connections open. Cutting the microphone and fuel gauge, smaller sockets, 0.2 mm power tracks, 6 layers and a finishing pass brought that down to 13 to 17, almost all of them the NFC reader's own pins. Three changes finished it:
 
-  The quickest way to finish is by hand, in KiCad's interactive router: `tools/kicad-gui.sh` opens the board, and push-and-shove routing usually settles a dozen short connections like these in well under an hour. Re-running `place` discards hand routing, so do it last, or nudge parts in `PLACEMENT` and `AUTO_MAIN` first.
-
-  How the main board got here: the first draft was about 79% covered and both autorouters left 40 or more connections open. Cutting the microphone and fuel gauge and shrinking the sockets, power tracks 0.2 mm wide (0.3 mm could not reach the 0.5 mm-pitch pads), generated fan-out vias for the module, a via field beside it (the PN5180 moved 3 mm towards the USB end to make room), 6 layers, and a finishing pass with `router.py` brought it down step by step: 45, 33, 29, 19, 13 to 17 open.
+  - The reader's EMC filter coils (L1, L2), VMID capacitor (C19) and receiver taps (R11, R12) are now placed by hand, in the strip between its TX/RX side and the module, each a short stub from its pin. The placer had put them past the module's fan-out vias, so every one of those nets had to cross that wall. Its supply capacitors C12, C13 and C14 are also placed by hand, straight above their pins, and the TX1F/TX2F capacitors sit beside the header pins they feed.
+  - The module fan-out vias went under the module and are staggered (see above), and the reader's supply pins got fixed vias.
+  - The antenna-side nets are routed first, and the accelerometer (U9) moved to the free top side left of the reader. Under the board, beside the module's pads, it boxed in its own nets.
 
 ## Ordering from JLCPCB
 

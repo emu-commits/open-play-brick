@@ -66,8 +66,21 @@ PLACEMENT = {
     # pads (footprint +y), so at 90 degrees on top it enters from +x.
     "J2": (10.6, 3.4, 90, "T"),   # battery; plug enters from +x, wires drop through NOTCH
     "J3": (10.6, 6.7, 90, "B"),   # speaker; plug enters from -x, wires drop to the speaker bay
-    "U6": (23.4, 7.0, 0, "T"),    # PN5180; TX pins at the top right corner. Kept 1.8 mm clear of the
-                                  # module so the module's side column has a via field (VIA_FIELD)
+    "U6": (23.4, 7.0, 0, "T"),    # PN5180; TX pins at the top right corner
+    # The reader's EMC filter coils, VMID capacitor and receiver taps, by hand
+    # in the strip between its TX/RX side and the module's fan-out vias, each
+    # a short stub from its pin. The placer scattered them past the vias, and
+    # neither router could get the pins out (13 to 17 connections open).
+    "L1": (28.2, 2.6, 0, "T"),    # TX1 (pin 21, top right corner) -> TX1F; clear of U1.24's fan-out via
+    "L2": (28.6, 4.5, 0, "T"),    # TX2 (pin 18) -> TX2F
+    "C19": (28.0, 6.0, 0, "T"),   # VMID (pin 17)
+    "R11": (28.0, 6.75, 0, "T"),  # RXP (pin 16) -> RXP_C
+    "R12": (28.0, 7.5, 0, "T"),   # RXN (pin 15) -> RXN_C
+    "C13": (21.15, 2.45, 90, "T"),  # V1V8 (pins 28-30), straight above them: placed by the
+    "C12": (22.15, 2.45, 90, "T"),  # placer, the VSYS capacitors took this spot and V1V8 stayed open
+    "C14": (23.65, 2.45, 90, "T"),  # VDHF (pin 25), likewise
+    "U9": (18.0, 11.9, 0, "T"),   # accelerometer: on the free top side left of the reader; under the
+                                  # board beside the module's pads it boxed in its own nets
     "J4": (36.2, 6.7, 0, "T"),    # to the face board
     "U1": (34.4, 6.7, 90, "B"),   # module; body x 28.8..45.4, antenna at +x
     # ---- face, top ----------------------------------------------------------
@@ -89,17 +102,18 @@ PLACEMENT = {
 T, B = "T", "B"
 AUTO_MAIN = [
     # larger parts first, so the small ones fill in around them
-    ("L1", "U6", "21", T), ("L2", "U6", "18", T), ("Y1", "U6", "36", T),
-    ("U9", "U1", "13", B + T), ("U7", "J3", "1", B),
+    ("Y1", "U6", "36", T),
+    ("U7", "J3", "1", B),
     ("U2", "J1", "A6", B + T), ("D1", "J1", "A4B9", T + B),
     ("U3", "J2", "2", T + B), ("Q1", "J2", "2", T + B), ("U4", "Q1", "2", T + B),
     ("Q2", "J4", "6", B + T), ("Q3", "Q2", "1", B + T),
     # NFC frontend passives, top
-    ("C16", "U6", "22", T), ("C17", "U6", "22", T), ("C15", "U6", "26", T), ("C14", "U6", "25", T),
-    ("C12", "U6", "29", T), ("C13", "U6", "28", T), ("C18", "U6", "6", T), ("C19", "U6", "17", T),
-    ("R10", "U6", "10", T), ("R11", "U6", "16", T), ("R12", "U6", "15", T),
-    ("C20", "L1", "2", T), ("C21", "L1", "2", T), ("C22", "L2", "2", T), ("C23", "L2", "2", T),
-    ("C24", "R11", "2", T), ("C25", "R12", "2", T), ("C10", "Y1", "1", T), ("C11", "Y1", "3", T),
+    ("C16", "U6", "22", T), ("C17", "U6", "22", T), ("C15", "U6", "26", T),
+    ("C18", "U6", "6", T),
+    ("R10", "U6", "10", T),
+    # TX1F/TX2F filter and coupling capacitors beside the header pins they feed
+    ("C24", "J4", "2", T), ("C20", "J4", "2", T), ("C21", "J4", "2", T),
+    ("C25", "J4", "1", T), ("C22", "J4", "1", T), ("C23", "J4", "1", T), ("C10", "Y1", "1", T), ("C11", "Y1", "3", T),
     # module support
     ("C1", "U1", "3", T + B), ("C2", "U1", "3", T + B), ("R1", "U1", "8", B + T), ("C3", "U1", "8", B + T),
     ("R2", "U1", "22", B + T), ("JP1", "U1", "23", B + T),
@@ -131,7 +145,7 @@ KEEPOUT_MAIN = [
     (3.4, 4.6, 8.0, 8.8, "B"),       # the speaker plug, over the speaker bay
     (ANT_KEEPOUT_X - 0.2, 0, MAIN_W, MAIN_H, "both"),   # module antenna
     (NOTCH[0] - 0.3, 0, NOTCH[1] + 0.3, NOTCH[2] + 0.3, "both"),   # battery wire notch
-    (27.0, 0.3, 28.7, 13.1, "both"),  # VIA_FIELD: the module's side column escapes here, on both sides
+    (29.95, 0.3, 31.35, 13.1, "both"),  # the module's side-column fan-out vias (fanout_module)
 ]
 
 # ---------------------------------------------------------------------------
@@ -436,26 +450,29 @@ def fanout_module(b, via=(0.45, 0.25), width=0.2, clearance=0.15):
     itself: left to it, nearly every one of them stayed open."""
     u1 = b.FindFootprintByReference("U1")
     cx, cy = pcbnew.ToMM(u1.GetPosition().x) - OX, pcbnew.ToMM(u1.GetPosition().y) - OY
-    obstacles = []      # (x, y, half-w, half-h, net) of every pad on any layer
+    obstacles = []      # (x, y, half-w, half-h, net, on the bottom layer) of every pad and via
     for f in b.GetFootprints():
         for p in f.Pads():
             bb = p.GetBoundingBox()
             obstacles.append(((pcbnew.ToMM(bb.GetLeft() + bb.GetRight()) / 2) - OX,
                               (pcbnew.ToMM(bb.GetTop() + bb.GetBottom()) / 2) - OY,
-                              pcbnew.ToMM(bb.GetWidth()) / 2, pcbnew.ToMM(bb.GetHeight()) / 2, p.GetNetname()))
+                              pcbnew.ToMM(bb.GetWidth()) / 2, pcbnew.ToMM(bb.GetHeight()) / 2, p.GetNetname(),
+                              p.IsOnLayer(pcbnew.B_Cu)))
     for t in b.GetTracks():
         if t.GetClass() == "PCB_VIA":
             r = pcbnew.ToMM(t.GetWidth(pcbnew.F_Cu)) / 2
-            obstacles.append((pcbnew.ToMM(t.GetPosition().x) - OX, pcbnew.ToMM(t.GetPosition().y) - OY, r, r, t.GetNetname()))
+            obstacles.append((pcbnew.ToMM(t.GetPosition().x) - OX, pcbnew.ToMM(t.GetPosition().y) - OY, r, r, t.GetNetname(), True))
     vr = via[0] / 2
 
-    def free(x, y, netname):
-        for ox, oy, hw, hh, n in obstacles:
-            if n == netname:
+    def free(x, y, netname, r=None):
+        stub = r is not None        # a bottom-layer stub: only bottom-layer copper is in its way
+        r = vr if r is None else r
+        for ox, oy, hw, hh, n, on_b in obstacles:
+            if n == netname or (stub and not on_b):
                 continue
             dx = max(abs(x - ox) - hw, 0)
             dy = max(abs(y - oy) - hh, 0)
-            if math.hypot(dx, dy) < vr + clearance:
+            if math.hypot(dx, dy) < r + clearance:
                 return False
         return True
 
@@ -468,17 +485,26 @@ def fanout_module(b, via=(0.45, 0.25), width=0.2, clearance=0.15):
         bb = p.GetBoundingBox()
         w, h = pcbnew.ToMM(bb.GetWidth()), pcbnew.ToMM(bb.GetHeight())
         if w > h:
-            # The side column faces the rest of the board: its vias go outward,
-            # into VIA_FIELD beside the module. (Inward, they made a wall
-            # between the NFC reader and the face header.)
-            ux, uy, half = (-1 if cx > px else 1), 0, w / 2
+            # The side column's vias go inward, under the module, between its
+            # signal pads and its centre ground pads, staggered in two columns
+            # by pad row. Outward, beside the module, they took the strip the
+            # NFC reader's filter and receiver parts need. In a single column
+            # 0.8 mm apart they left 0.35 mm between vias, less than any track
+            # needs: a wall on every layer. Staggered, each diagonal gap is
+            # about 0.68 mm, room for one track per layer.
+            ux, uy, half = (1 if cx > px else -1), 0, w / 2
+            depths = (1.25, 1.45, 0.55, 0.85) if round((py - cy) / 0.8) % 2 else (0.55, 0.85, 1.25, 1.45)
         else:
             ux, uy, half = 0, (1 if cy > py else -1), h / 2
-        for d, side in [(d, sd) for d in (0.55, 0.85, 1.15, 1.45, 1.75) for sd in (0, 0.45, -0.45)]:
+            depths = (0.55, 0.85, 1.15, 1.45, 1.75)
+        for d, side in [(d, sd) for d in depths for sd in (0, 0.45, -0.45)]:
             # inward by d, and sideways by sd when the straight spot is taken
             vx = px + ux * (half + d - 0.25) + uy * side
             vy = py + uy * (half + d - 0.25) + ux * side
-            if free(vx, vy, n):
+            # the via, and the stub to it, which crosses the pad's neighbours' vias
+            steps = max(2, int(math.hypot(vx - px, vy - py) / 0.05))
+            if free(vx, vy, n) and all(free(px + (vx - px) * k / steps, py + (vy - py) * k / steps, n, width / 2)
+                                       for k in range(steps + 1)):
                 break
         else:
             print("  fanout: no room for a via at U1.%s (%s)" % (p.GetNumber(), n))
@@ -492,9 +518,54 @@ def fanout_module(b, via=(0.45, 0.25), width=0.2, clearance=0.15):
         t.SetLocked(True)
         b.Add(t)
         add_via(b, {}, None, vx, vy, via[0], via[1], net_obj=p.GetNet())
-        obstacles.append((vx, vy, vr, vr, n))
+        obstacles.append((vx, vy, vr, vr, n, True))
         made += 1
     print("  fanout: %d module pads given a via" % made)
+
+
+def fanout_reader(b):
+    """Fixed escapes for the PN5180's supply and ground pins and C19's
+    ground, laid before any routing. Left to the routers, the signal pins on
+    each side of them took the room first: 3V3 (pin 6, between two SPI
+    pins), VSYS (pins 12 and 13) and C19's ground pad stayed open."""
+    u6 = b.FindFootprintByReference("U6")
+    def pad(ref, num):
+        p = b.FindFootprintByReference(ref).FindPadByNumber(num)
+        return p, pcbnew.ToMM(p.GetPosition().x) - OX, pcbnew.ToMM(p.GetPosition().y) - OY
+    def stub(p, pts, width, layer=pcbnew.F_Cu):
+        for a, c in zip(pts, pts[1:]):
+            t = pcbnew.PCB_TRACK(b)
+            t.SetStart(P(*a))
+            t.SetEnd(P(*c))
+            t.SetWidth(mm(width))
+            t.SetLayer(layer)
+            t.SetNet(p.GetNet())
+            t.SetLocked(True)
+            b.Add(t)
+    ep, ex, ey = pad("U6", "41")
+    half = pcbnew.ToMM(ep.GetSize().x) / 2
+    # ground pins: a stub inward to the exposed pad (which has its own via)
+    for num in ("4", "9", "19", "27"):
+        p, x, y = pad("U6", num)
+        if abs(y - ey) > abs(x - ex):     # top or bottom row
+            stub(p, [(x, y), (x, ey + math.copysign(half - 0.1, y - ey))], 0.2)
+        else:
+            stub(p, [(x, y), (ex + math.copysign(half - 0.1, x - ex), y)], 0.2)
+    # 3V3, pin 6: straight down to a via; the SPI pins either side pass it
+    p, x, y = pad("U6", "6")
+    stub(p, [(x, y), (x, y + 0.95)], 0.2)
+    add_via(b, {}, None, x, y + 0.95, 0.45, 0.25, net_obj=p.GetNet())
+    # VSYS, pins 12 and 13: joined, with a via between them (filled and
+    # capped, JLCPCB's default on 6 layers)
+    p12, x12, y12 = pad("U6", "12")
+    p13, x13, y13 = pad("U6", "13")
+    stub(p12, [(x12, y12), (x12, y13)], 0.2)
+    add_via(b, {}, None, x12, (y12 + y13) / 2, 0.45, 0.25, net_obj=p12.GetNet())
+    # C19's ground pad: boxed in by VMID, the RXP tap and L2, with the
+    # module's pads under the board beside it; a via in the corner between
+    p, x, y = pad("C19", "2")
+    stub(p, [(x, y), (x + 0.32, y - 0.5)], 0.2)
+    add_via(b, {}, None, x + 0.32, y - 0.5, 0.45, 0.25, net_obj=p.GetNet())
 
 
 def build_main():
@@ -517,6 +588,7 @@ def build_main():
         add_via(b, {}, None, pcbnew.ToMM(pad.GetPosition().x) - OX, pcbnew.ToMM(pad.GetPosition().y) - OY,
                 0.45, 0.25, net_obj=pad.GetNet())
     fanout_module(b)
+    fanout_reader(b)
     pl = autoplace.Placer(b, (OX, OY), (MAIN_W, MAIN_H), margin=0.2)
     for f in b.GetFootprints():
         pl.block_footprint(f)
@@ -757,7 +829,7 @@ def netclass_of(board, name):
 
 
 def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.5, 0.3), clearance=0.15,
-                adopt=False, rounds=12, rip_first=()):
+                adopt=False, rounds=12, rip_first=(), only=None, stitch=True):
     """Route every net. adopt: treat the unlocked tracks already on the board
     (an earlier Freerouting pass) as this router's own, so rip-up may remove
     and re-route them."""
@@ -774,7 +846,7 @@ def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.
         for p in f.Pads():
             if p.GetNetCode() > 0:
                 names[p.GetNetname()] = p.GetNetCode()
-    todo = [n for n in names if not n.startswith("NC_") and n != plane_net]
+    todo = [n for n in names if not n.startswith("NC_") and n != plane_net and (only is None or n in only)]
     def size_of(n):
         pads = rt.net_pads(names[n])
         xs = [pcbnew.ToMM(p.GetPosition().x) for p in pads]
@@ -841,7 +913,7 @@ def route_board(board, size, route_layers, via_layers, plane_net, label, via=(0.
             if not rt.route_net(names[v], NET_WIDTHS[netclass_of(board, v)]):
                 failed.append(v)
         failed = list(dict.fromkeys(failed))
-    if plane_net and plane_net in names:
+    if stitch and plane_net and plane_net in names:
         made = rt.stitch_to_plane(names[plane_net])
         print("[%s] %d ground vias" % (label, made))
         if label == "brick-main":
